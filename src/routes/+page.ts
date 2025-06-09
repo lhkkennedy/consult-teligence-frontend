@@ -1,6 +1,8 @@
   import type { PageLoad } from '$lib/types.ts';
   
   export const load: PageLoad = async ({ fetch }) => {
+    console.log('STRAPI_URL=', import.meta.env.VITE_STRAPI_URL);
+    console.log('STRAPI_TOKEN=', import.meta.env.VITE_STRAPI_TOKEN);
     const base = import.meta.env.VITE_STRAPI_URL;
     const token = import.meta.env.VITE_STRAPI_TOKEN;
     const url = `${base}/api/consultants?populate=*&sort[0]=id:ASC`

@@ -1,0 +1,47 @@
+  import type { PageLoad } from '$lib/types.ts';
+  
+  export const load: PageLoad = async ({ fetch }) => {
+    const base = import.meta.env.VITE_STRAPI_URL;
+    const token = import.meta.env.VITE_STRAPI_TOKEN;
+    const url = `${base}/api/consultants?populate=*&sort[0]=id:ASC`
+    const res = await fetch(url,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    if (!res.ok) {
+    const text = await res.text();
+    console.error('Strapi error:', text);
+    throw new Error(`Could not load consultants (status ${res.status})`);
+    }
+    const { data } = (await res.json()) as ConsultantsResponse;
+  
+    // Map to front-end shape
+    const consultants: Consultant[] = data.map((item: RawConsultant) => ({
+        id:                item.id,
+        firstName:         item.firstName,
+        lastName:          item.lastName,
+        location:          item.location,
+        company:           item.company,
+        currentRole:       item.currentRole,
+        functionalExpertise: item.functionalExpertise,
+        geographicalExpertise: item.geographicalExpertise,
+        countryExpertise:  item.countryExpertise,
+        rate:              item.rate,
+        bio:               item.bio,
+        education:         item.education,
+        certifications:    item.certifications,
+        languages:         item.languages,
+        availability:      item.availability,
+        profileImage:      item.profileImage[0]?.url ? `${base}${item.profileImage[0].url}` : '/default-avatar.png',
+        contactInfo: {
+        email:    item.contactInfo.Email,
+        phone:    item.contactInfo.Phone,
+        linkedin: item.contactInfo.LinkedIn
+        },
+        testimonials:      item.testimonials,
+        caseStudies:       item.caseStudies
+    }));
+
+    return { consultants };
+  }

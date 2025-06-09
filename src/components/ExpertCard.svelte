@@ -9,6 +9,7 @@
   
   /** callback to parent when this card is clicked */
   export let onSelect: (id: number) => void = () => {};
+
 </script>
 
 <div
@@ -26,8 +27,9 @@
   <!-- Profile Image -->
   {#if consultant.profileImage}
     <div class="flex justify-center mb-4">
+
       <img
-        src={consultant.profileImage}
+        src={`${consultant.profileImage}`}
         alt={`${consultant.firstName} ${consultant.lastName}`}
         class="w-24 h-24 rounded-full object-cover"
       />

@@ -11,6 +11,9 @@
   // import { consultants } from '$lib/mockData.js';
   import type { Consultant, SearchFilters } from '$lib/types.ts';
 
+  const uploadPath = import.meta.env.VITE_STRAPI_UPLOAD_PATH;
+  console.log(uploadPath)
+  
   export let data;
   let consultants = data.consultants;
 

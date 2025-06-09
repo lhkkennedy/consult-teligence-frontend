@@ -10,6 +10,7 @@
   import Globe from '@lucide/svelte/icons/globe';
   import MessageCircle from '@lucide/svelte/icons/message-circle';
   export let activeProfile;
+
 </script>
 
 {#if activeProfile}
@@ -21,7 +22,7 @@
           {#if activeProfile.profileImage}
             <div class="flex justify-center mb-4">
               <img
-                src={activeProfile.profileImage}
+                src={`${activeProfile.profileImage}`}
                 alt={`${activeProfile.firstName} ${activeProfile.lastName}`}
                 class="w-32 h-32 rounded-full object-cover"
               />

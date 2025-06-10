@@ -18,7 +18,7 @@
       tabindex="0"
       role="button"
     >
-      <div class="h-40 bg-[#2D3748] flex items-center justify-center">
+      <div class="h-40 bg-[#2D3748] flex items-center justify-center [mask-image:linear-gradient(to_top,transparent,black_40%)]">
         <img 
           src={`${article.image}`}
           alt={`${article.image}`}

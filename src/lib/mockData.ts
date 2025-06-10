@@ -201,7 +201,7 @@ export const articles = [
     id: 1,
     title: 'The Future of Urban Living: Trends in 2025',
     summary: 'Explore how urban living spaces are evolving with technology integration and sustainability practices.',
-    image: 'urban-living.jpg',
+    image: '/urban-living.png',
     author: 'Emma Johnson',
     date: '2025-05-15',
     category: 'Urban Planning'
@@ -210,7 +210,7 @@ export const articles = [
     id: 2,
     title: 'Commercial Real Estate Recovery Post-Pandemic',
     summary: 'Analysis of how commercial properties are adapting to new work patterns and economic conditions.',
-    image: 'commercial-recovery.jpg',
+    image: '/commercial-recovery.png',
     author: 'John Smith',
     date: '2025-05-02',
     category: 'Commercial Real Estate'
@@ -219,7 +219,7 @@ export const articles = [
     id: 3,
     title: 'Sustainable Development in Emerging Markets',
     summary: 'How green building practices are gaining momentum in rapidly developing urban centers worldwide.',
-    image: 'sustainable-development.jpg',
+    image: '/emerging-markets.png',
     author: 'Maria Sanchez',
     date: '2025-04-28',
     category: 'Property Development'
@@ -228,7 +228,7 @@ export const articles = [
     id: 4,
     title: 'Investment Opportunities in Global Real Estate',
     summary: 'Strategic insights into promising real estate markets and sectors for investors in the coming year.',
-    image: 'investment-opportunities.jpg',
+    image: 'global-realestate.jpeg',
     author: 'Carlos Rodriguez',
     date: '2025-04-15',
     category: 'Investment Analysis'

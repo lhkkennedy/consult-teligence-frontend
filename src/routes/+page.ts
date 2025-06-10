@@ -1,5 +1,20 @@
   import type { PageLoad } from '$lib/types.ts';
-  
+  export const test_load: PageLoad = async ({ fetch }) => {
+    console.log('STRAPI_URL=', import.meta.env.VITE_STRAPI_URL);
+    console.log('STRAPI_TOKEN=', import.meta.env.VITE_STRAPI_TOKEN);
+    console.log('STRAPI_UPLOAD_PATH=', import.meta.env.VITE_STRAPI_UPLOAD_PATH);
+  const res = await fetch(`${import.meta.env.STRAPI_URL}/api/consultants?populate=*`, {
+    headers: {
+      Authorization: `Bearer ${import.meta.env.STRAPI_TOKEN}`
+    }
+  });
+
+  if (!res.ok) {
+    console.error('Strapi error:', await res.json());
+    throw error(res.status, 'Could not load consultants');
+  }
+  return { consultants: await res.json() };
+}
   export const load: PageLoad = async ({ fetch }) => {
     console.log('STRAPI_URL=', import.meta.env.VITE_STRAPI_URL);
     console.log('STRAPI_TOKEN=', import.meta.env.VITE_STRAPI_TOKEN);

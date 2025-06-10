@@ -19,7 +19,6 @@
       role="button"
     >
       <div class="h-40 bg-[#2D3748] flex items-center justify-center">
-        <span class="text-[#A0AEC0]">{article.image}</span>
         <img 
           src={`${article.image}`}
           alt={`${article.image}`}

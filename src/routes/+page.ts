@@ -32,7 +32,7 @@ export const load: PageLoad = async ({ fetch }) => {
       certifications:    item.certifications,
       languages:         item.languages,
       availability:      item.availability,
-      profileImage:      item.profileImage?.url ? `${base}${item.profileImage.url}` : '/default-avatar.png',
+      profileImage:      item.profileImage?.url ? `${import.meta.env.VITE_STRAPI_URL}${item.profileImage.url}` : '/default-avatar.png',
       contactInfo: {
       email:    item.contactInfo.Email,
       phone:    item.contactInfo.Phone,

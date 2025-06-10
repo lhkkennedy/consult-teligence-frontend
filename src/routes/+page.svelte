@@ -25,6 +25,8 @@
     subSpecialty?: string;
   } = {};
 
+  let showAll: boolean = false;
+
   // id of the selected expert (or null if none)
   let selectedExpert: number | null = null;
 
@@ -104,6 +106,7 @@
   function resetSearch() {
     searchQuery = {};
     selectedExpert = null;
+    showAll = true;
   }
 </script>
 
@@ -111,82 +114,7 @@
   <Header />
 
   <main class="flex-grow py-8 pt-24">
-    {#if Object.keys(searchQuery).length === 0 && selectedExpert === null}
-    <Hero
-      title="Connect with Real Estate Experts Worldwide"
-      subtitle="Access specialized knowledge from verified real estate professionals across 190 countries and 10 different expertise areas."
-      ctaText="Find an Expert"
-      ctaLink="#search"
-      className="mb-16"
-    />
-    <div class="container mx-auto p-6">
-
-        <section id="search" class="mb-16">
-          <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Find the Perfect Expert</h2>
-          <ExpertSearchForm onSearch={handleSearch} />
-        </section>
-
-        <section class="mb-16">
-          <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Featured Experts</h2>
-          <ExpertSearchResults
-            consultants={filteredConsultants.slice(0, 3)}
-            onExpertSelect={handleExpertSelect}
-            containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
-          />
-          <div class="text-center mt-16">
-            <button
-              class="btn btn-primary"
-              on:click={resetSearch}
-            >
-              View All Experts
-            </button>
-          </div>
-        </section>
-
-        <section class="mb-16">
-          <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Explore by Location</h2>
-          <div class="mb-12">
-            <WorldMap
-              on:regionSelect={handleRegionSelect}
-              on:countrySelect={handleCountrySelect}
-              {selectedRegion}
-              {selectedCountry}
-            />
-          </div>
-        </section>
-
-        <section class="mb-16">
-          <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Explore by Tag</h2>
-          <TagExplorer
-            on:regionSelect={handleRegionSelect}
-            on:countrySelect={handleCountrySelect}
-            {selectedRegion}
-            {selectedCountry}
-          />
-        </section>
-
-
-
-        <section class="mb-16">
-          <h2 class="text-center text-xl font-heading font-semibold mb-4 text-white">Knowledge Center</h2>
-          <p class="text-center max-w-3xl mx-auto mb-12 text-[#A0AEC0]">
-            Explore expert insights, market trends, and in-depth analysis from our global network of real estate professionals.
-          </p>
-          <KnowledgeCenter on:articleSelect={handleArticleSelect} />
-        </section>
-    </div>
-    {:else if Object.keys(searchQuery).length > 0 && selectedExpert === null}
-      <div class="container mx-auto p-6">
-        <div class="mb-16">
-          <ExpertSearchForm onSearch={handleSearch} />
-        </div>
-        <ExpertSearchResults
-          consultants={filteredConsultants}
-          onExpertSelect={handleExpertSelect}
-          containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
-        />
-      </div>
-    {:else if selectedExpert !== null && activeProfile}
+    {#if selectedExpert !== null && activeProfile}
       <div class="container mx-auto p-6">
         <div class="mb-4 pt-6">
           <button
@@ -198,6 +126,81 @@
           </button>
         </div>
         <ExpertProfile {activeProfile} />
+      </div>
+    {:else if Object.keys(searchQuery).length > 0  || showAll && selectedExpert === null}
+      <div class="container mx-auto p-6">
+        <div class="mb-16">
+          <ExpertSearchForm onSearch={handleSearch} />
+        </div>
+        <ExpertSearchResults
+          consultants={filteredConsultants}
+          onExpertSelect={handleExpertSelect}
+          containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
+        />
+      </div>
+    {:else}
+      <Hero
+        title="Connect with Real Estate Experts Worldwide"
+        subtitle="Access specialized knowledge from verified real estate professionals across 190 countries and 10 different expertise areas."
+        ctaText="Find an Expert"
+        ctaLink="#search"
+        className="mb-16"
+      />
+      <div class="container mx-auto p-6">
+
+          <section id="search" class="mb-16">
+            <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Find the Perfect Expert</h2>
+            <ExpertSearchForm onSearch={handleSearch} />
+          </section>
+
+          <section class="mb-16">
+            <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Featured Experts</h2>
+            <ExpertSearchResults
+              consultants={filteredConsultants.slice(0, 3)}
+              onExpertSelect={handleExpertSelect}
+              containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
+            />
+            <div class="text-center mt-16">
+              <button
+                class="btn btn-primary"
+                on:click={resetSearch}
+              >
+                View All Experts
+              </button>
+            </div>
+          </section>
+
+          <section class="mb-16">
+            <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Explore by Location</h2>
+            <div class="mb-12">
+              <WorldMap
+                on:regionSelect={handleRegionSelect}
+                on:countrySelect={handleCountrySelect}
+                {selectedRegion}
+                {selectedCountry}
+              />
+            </div>
+          </section>
+
+          <section class="mb-16">
+            <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Explore by Tag</h2>
+            <TagExplorer
+              on:regionSelect={handleRegionSelect}
+              on:countrySelect={handleCountrySelect}
+              {selectedRegion}
+              {selectedCountry}
+            />
+          </section>
+
+
+
+          <section class="mb-16">
+            <h2 class="text-center text-xl font-heading font-semibold mb-4 text-white">Knowledge Center</h2>
+            <p class="text-center max-w-3xl mx-auto mb-12 text-[#A0AEC0]">
+              Explore expert insights, market trends, and in-depth analysis from our global network of real estate professionals.
+            </p>
+            <KnowledgeCenter on:articleSelect={handleArticleSelect} />
+          </section>
       </div>
     {/if}
   </main>

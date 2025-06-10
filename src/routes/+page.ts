@@ -3,7 +3,7 @@
   export const load: PageLoad = async ({ fetch }) => {
     console.log('STRAPI_URL=', import.meta.env.VITE_STRAPI_URL);
     console.log('STRAPI_TOKEN=', import.meta.env.VITE_STRAPI_TOKEN);
-    console.log('STRAPI_UPLOAD_PATH', import.meta.env.STRAPI_UPLOAD_PATH);
+    console.log('STRAPI_UPLOAD_PATH=', import.meta.env.VITE_STRAPI_UPLOAD_PATH);
     const base = import.meta.env.VITE_STRAPI_URL;
     const token = import.meta.env.VITE_STRAPI_TOKEN;
     const url = `${base}/api/consultants?populate=*&sort[0]=id:ASC`

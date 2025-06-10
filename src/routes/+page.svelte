@@ -129,7 +129,7 @@
         <section class="mb-16">
           <h2 class="text-center text-2xl font-heading font-semibold mb-8 text-white">Featured Experts</h2>
           <ExpertSearchResults
-            consultants={filteredConsultants}
+            consultants={filteredConsultants.slice(0, 3)}
             onExpertSelect={handleExpertSelect}
             containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
           />

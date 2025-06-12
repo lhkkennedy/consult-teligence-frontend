@@ -18,7 +18,7 @@ module.exports = {
         'accent-pink': '#f310ff',
         'accent-coral': '#FF6B6B',
         'text-primary': '#FFFFFF',
-        'text-secondary': '#e9e8ee',
+        'text-secondary': '#a4a1b5',
         'border-gray': '#c7c6d5'
       },
       fontFamily: {

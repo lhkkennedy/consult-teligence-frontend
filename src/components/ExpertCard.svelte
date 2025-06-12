@@ -15,7 +15,7 @@
 <div
   role="button"
   tabindex="0"
-  class="expert-card cursor-pointer hover:border-[#8A2BE2] transition-all duration-300"
+  class="expert-card cursor-pointer hover:border-[#8A2BE2] transition-all duration-300 flex flex-col h-full"
   on:click={() => onSelect(consultant.id)}
   on:keydown={(e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -63,7 +63,7 @@
 
   <button 
     type="button"
-    class="btn btn-secondary w-full"
+    class="btn mt-auto btn-secondary w-full"
     on:click|stopPropagation={() => onSelect(consultant.id)}
     >
         View Profile

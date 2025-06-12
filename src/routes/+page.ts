@@ -1,7 +1,7 @@
 import type { PageLoad } from '$lib/types.ts';
 
 export const load: PageLoad = async ({ fetch }) => {
-  const res = await fetch(`${import.meta.env.VITE_STRAPI_URL}/api/consultants?populate=*`, {
+  const res = await fetch(`${import.meta.env.VITE_STRAPI_URL}/api/consultants?populate=*&pagination[limit]=100`, {
   headers: {
     Authorization: `Bearer ${import.meta.env.VITE_STRAPI_TOKEN}`
   }

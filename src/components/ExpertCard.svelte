@@ -63,7 +63,7 @@
 
   <button 
     type="button"
-    class="btn mt-auto btn-secondary w-full"
+    class="btn mt-auto btn-primary w-full"
     on:click|stopPropagation={() => onSelect(consultant.id)}
     >
         View Profile

@@ -13,8 +13,6 @@ export const load: PageLoad = async ({ fetch }) => {
   }
   const { data } = (await res.json()) as ConsultantsResponse;
 
-  console.log(await data)
-
   // Map to front-end shape
   const consultants: Consultant[] = data.map((item: RawConsultant) => ({
       id:                item.id,

@@ -8,11 +8,9 @@
   import WorldMap from '../components/WorldMap.svelte';
   import ExpertProfile from '../components/ExpertProfile.svelte';
   import KnowledgeCenter from '../components/KnowledgeCenter.svelte';
-  // import { consultants } from '$lib/mockData.js';
+  import LayoutGrid from '@lucide/svelte/icons/layout-grid';
+  import LayoutList from '@lucide/svelte/icons/layout-list';
   import type { Consultant, SearchFilters } from '$lib/types.ts';
-
-  const uploadPath = import.meta.env.VITE_STRAPI_UPLOAD_PATH;
-  console.log(uploadPath)
   
   export let data;
   let consultants = data.consultants;
@@ -40,6 +38,8 @@
   let activeProfile: Consultant | null = null;
   let filteredConsultants: Consultant[] = consultants;
   
+  let viewMode: 'grid' | 'list' = 'grid'
+
   // Filter consultants based on selected filters
   $: {
     filteredConsultants = consultants.filter(c => {
@@ -132,11 +132,43 @@
         <div class="mb-16">
           <ExpertSearchForm onSearch={handleSearch} />
         </div>
-        <ExpertSearchResults
-          consultants={filteredConsultants}
-          onExpertSelect={handleExpertSelect}
-          containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
-        />
+        <div class="container mx-auto p-6 flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-heading font-semibold text-white">
+            {#if Object.keys(searchQuery).length || showAll} Search Results {:else} Find the Perfect Expert {/if}
+          </h2>
+
+          <!-- VIEW MODE TOGGLE -->
+          <div class="space-x-2">
+            <button
+              aria-label="Grid view"
+              class="p-2 rounded hover:bg-white/10 {viewMode === 'grid' ? 'bg-white/20' : ''}"
+              on:click={() => (viewMode = 'grid')}
+            >
+              <LayoutGrid class="w-5 h-5"/>
+            </button>
+            <button
+              aria-label="List view"
+              class="p-2 rounded hover:bg-white/10 {viewMode === 'list' ? 'bg-white/20' : ''}"
+              on:click={() => (viewMode = 'list')}
+            >
+              <LayoutList class="w-5 h-5"/>
+            </button>
+          </div>
+        </div>
+        {#if viewMode === 'grid'}
+          <ExpertSearchResults
+            consultants={filteredConsultants}
+            onExpertSelect={handleExpertSelect}
+            containerClass="grid grid-cols-1 md:grid-cols-3 gap-8"
+          />
+        {:else}
+          <ExpertSearchResults
+            consultants={filteredConsultants}
+            onExpertSelect={handleExpertSelect}
+            containerClass="space-y-6"
+            itemComponent="list"
+          />
+        {/if}
       </div>
     {:else}
       <Hero

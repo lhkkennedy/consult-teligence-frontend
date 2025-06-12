@@ -1,5 +1,6 @@
 <script lang="ts">
   import ExpertCard from './ExpertCard.svelte';
+  import ExpertListItem from './ExpertListItem.svelte';
   import type { Consultant } from '$lib/types.ts';
   /** array of consultants to show */
 
@@ -10,6 +11,8 @@
 
   /** allow parent to pass layout classes */
   export let containerClass = '';
+
+  export let itemComponent: 'grid' | 'list' = 'grid';
 </script>
 
 {#if consultants.length === 0}
@@ -21,10 +24,17 @@
 {:else}
   <div class={containerClass}>
     {#each consultants as consultant}
-      <ExpertCard
-        {consultant}
-        onSelect={(id) => onExpertSelect(id)}
-      />
+      {#if itemComponent === 'list'}
+        <ExpertListItem
+          {consultant}
+          onSelect={(id) => onExpertSelect(id)}
+        />
+      {:else}
+        <ExpertCard
+          {consultant}
+          onSelect={(id) => onExpertSelect(id)}
+        />
+      {/if}
     {/each}
   </div>
 {/if}

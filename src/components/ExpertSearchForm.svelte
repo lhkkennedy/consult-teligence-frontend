@@ -44,7 +44,7 @@
 
 	<div class="mb-sm grid grid-cols-1 gap-md md:grid-cols-2">
 		<div>
-			<label for="region" class="mb-xs block text-text-primary">Region</label>
+			<label for="region" class="mb-xs block text-text-primary">Regional Expertise</label>
 			<select
 				id="region"
 				class="form-select w-full"
@@ -61,7 +61,7 @@
 		</div>
 
 		<div>
-			<label for="country" class="mb-xs block text-text-primary">Country</label>
+			<label for="country" class="mb-xs block text-text-primary">Country Expertise</label>
 			<select
 				id="country"
 				class="form-select w-full disabled:cursor-not-allowed disabled:border-text-primary disabled:bg-secondary-bg disabled:text-text-primary disabled:opacity-50"

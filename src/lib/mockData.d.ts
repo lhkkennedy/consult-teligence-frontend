@@ -1,6 +1,5 @@
 import type { Region, Specialty, CountriesMap } from './types';
 
-
 // exactly what your JS module exports:
 export declare const regions: readonly Region[];
 export declare const specialties: readonly Specialty[];

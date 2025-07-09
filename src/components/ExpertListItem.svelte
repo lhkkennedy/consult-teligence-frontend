@@ -11,7 +11,7 @@
 <div
 	role="button"
 	tabindex="0"
-	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 hover:border-[#8A2BE2]"
+	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] hover:border-accent-purple"
 	on:click={() => onSelect(consultant.id)}
 	on:keydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
@@ -30,26 +30,26 @@
 					class="h-16 w-16 rounded-full object-cover"
 				/>
 			{:else}
-				<div class="h-16 w-16 flex-shrink-0 rounded-full bg-gray-200"></div>
+				<div class="h-16 w-16 flex-shrink-0 rounded-full bg-gray-200 dark:bg-[#2D3748]"></div>
 			{/if}
 
 			<div class="flex-1">
 				<div class="mb-1 text-xs font-semibold uppercase text-accent-purple">
 					{consultant.company}
 				</div>
-				<h3 class="font-heading text-lg font-semibold leading-snug">
+				<h3 class="font-heading text-lg font-semibold leading-snug text-gray-900 dark:text-white">
 					{consultant.firstName}
 					{consultant.lastName} – {consultant.currentRole}
 				</h3>
-				<div class="mt-1 flex items-center text-sm text-text-secondary">
+				<div class="mt-1 flex items-center text-sm text-gray-600 dark:text-[#A0AEC0]">
 					<BriefCase size={16} class="mr-1" />
 					<span>{consultant.currentRole}</span>
 				</div>
-				<div class="mt-1 flex items-center text-sm text-text-secondary">
+				<div class="mt-1 flex items-center text-sm text-gray-600 dark:text-[#A0AEC0]">
 					<MapPin size={16} class="mr-1" />
 					<span>{consultant.location}</span>
 				</div>
-				<div class="mt-1 flex items-center text-sm text-text-secondary">
+				<div class="mt-1 flex items-center text-sm text-gray-600 dark:text-[#A0AEC0]">
 					<DollarSign size={16} class="mr-1" />
 					<span>${consultant.rate}/hr</span>
 				</div>
@@ -60,8 +60,8 @@
 		<div class="flex shrink-0 flex-col items-end space-y-3">
 			<button
 				type="button"
-				class="btn btn-primary mt-auto w-full"
-				on:click|stopPropagation={() => onSelect(consultant.id)}
+				class="btn btn-primary mt-auto w-full bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
+				on:click|stopPropagation={() => onSelect(consultant.documentId)}
 			>
 				View Profile
 			</button>
@@ -70,13 +70,13 @@
 
 	<!-- MIDDLE ROW: Expertise badge + stars -->
 	<div
-		class="flex items-center justify-between rounded-b-lg border-t border-border-gray px-6 pb-4 pt-4"
+		class="flex items-center justify-between rounded-b-lg border-t border-gray-200 dark:border-border-gray px-6 pb-4 pt-4"
 	>
 		<div class="flex flex-wrap gap-2">
 			{#each consultant.functionalExpertise as exp}
 				<button
 					type="button"
-					class="rounded-sm bg-secondary-bg px-3 py-1 text-sm text-text-primary hover:bg-gray-700"
+					class="rounded-sm bg-gray-100 dark:bg-secondary-bg px-3 py-1 text-sm text-gray-700 dark:text-text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
 					on:click={() => console.log('filter by', exp)}
 				>
 					{exp}

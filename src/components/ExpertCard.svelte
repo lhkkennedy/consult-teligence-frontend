@@ -14,7 +14,7 @@
 <div
 	role="button"
 	tabindex="0"
-	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 hover:border-[#8A2BE2]"
+	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] hover:border-accent-purple"
 	on:click={() => onSelect(consultant.documentId)}
 	on:keydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
@@ -33,32 +33,32 @@
 			/>
 		</div>
 	{/if}
-	<h3 class="mb-2 font-heading text-xl font-semibold">
+	<h3 class="mb-2 font-heading text-xl font-semibold text-gray-900 dark:text-white">
 		{consultant.firstName}
 		{consultant.lastName}
 	</h3>
 
-	<div class="mb-1 flex items-center text-[#A0AEC0]">
+	<div class="mb-1 flex items-center text-gray-600 dark:text-[#A0AEC0]">
 		<BriefCase size={16} class="mr-1" />
 		<span>{consultant.currentRole}</span>
 	</div>
 
-	<div class="mb-1 flex items-center text-[#A0AEC0]">
+	<div class="mb-1 flex items-center text-gray-600 dark:text-[#A0AEC0]">
 		<MapPin size={16} class="mr-1" />
 		<span>{consultant.location}</span>
 	</div>
 
-	<div class="mb-6 flex items-center text-[#A0AEC0]">
+	<div class="mb-6 flex items-center text-gray-600 dark:text-[#A0AEC0]">
 		<DollarSign size={16} class="mr-1" />
 		<span>${consultant.rate}/hr</span>
 	</div>
 
-	<div class="flex items-center justify-between rounded-b-lg border-t border-border-gray pb-4 pt-4">
+	<div class="flex items-center justify-between rounded-b-lg border-t border-gray-200 dark:border-border-gray pb-4 pt-4">
 		<div class="flex flex-wrap gap-1">
 			{#each consultant.functionalExpertise as exp}
 				<button
 					type="button"
-					class="rounded-sm bg-secondary-bg px-2 py-1 text-xs text-text-primary hover:bg-gray-700"
+					class="rounded-sm bg-gray-100 dark:bg-secondary-bg px-2 py-1 text-xs text-gray-700 dark:text-text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
 					on:click={() => console.log('filter by', exp)}
 				>
 					{exp}
@@ -69,7 +69,7 @@
 
 	<button
 		type="button"
-		class="btn btn-primary mt-auto w-full"
+		class="btn btn-primary mt-auto w-full bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
 		on:click|stopPropagation={() => onSelect(consultant.documentId)}
 	>
 		View Profile

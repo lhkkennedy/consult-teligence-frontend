@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-white text-black transition-colors duration-300;
+}
+.dark body {
+  @apply bg-[#0F1419] text-white transition-colors duration-300;
+}
+
 @layer base {
 	:root {
 		--radius: 0.625rem;

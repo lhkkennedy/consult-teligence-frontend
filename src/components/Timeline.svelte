@@ -61,7 +61,7 @@
 	<!-- Composer Toggle -->
 	<div class="mb-6">
 		<button 
-			class="btn btn-primary flex items-center space-x-2"
+			class="btn btn-primary flex items-center space-x-2 bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
 			on:click={() => showComposer = !showComposer}
 		>
 			<Plus size={18} />
@@ -71,16 +71,16 @@
 
 	<!-- Post Composer -->
 	{#if showComposer}
-		<div class="bg-[#1E2130] border border-[#2D3748] rounded-lg p-6 mb-6">
-			<h3 class="text-lg font-semibold mb-4 text-[#E2E8F0]">Create New Post</h3>
+		<div class="bg-white dark:bg-[#1E2130] border border-gray-200 dark:border-[#2D3748] rounded-lg p-6 mb-6">
+			<h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-[#E2E8F0]">Create New Post</h3>
 			
 			<div class="space-y-4">
 				<!-- Post Type -->
 				<div>
-					<label class="block text-sm font-medium text-[#A0AEC0] mb-2">Post Type</label>
+					<label class="block text-sm font-medium text-gray-600 dark:text-[#A0AEC0] mb-2">Post Type</label>
 					<select 
 						bind:value={newPost.post_type}
-						class="w-full bg-[#2D3748] border border-[#4A5568] rounded-lg px-3 py-2 text-[#E2E8F0]"
+						class="w-full bg-gray-100 dark:bg-[#2D3748] border border-gray-300 dark:border-[#4A5568] rounded-lg px-3 py-2 text-gray-900 dark:text-[#E2E8F0]"
 					>
 						<option value="Generic">Generic</option>
 						<option value="NewListing">New Listing</option>
@@ -92,10 +92,10 @@
 
 				<!-- Sentiment -->
 				<div>
-					<label class="block text-sm font-medium text-[#A0AEC0] mb-2">Sentiment</label>
+					<label class="block text-sm font-medium text-gray-600 dark:text-[#A0AEC0] mb-2">Sentiment</label>
 					<select 
 						bind:value={newPost.sentiment}
-						class="w-full bg-[#2D3748] border border-[#4A5568] rounded-lg px-3 py-2 text-[#E2E8F0]"
+						class="w-full bg-gray-100 dark:bg-[#2D3748] border border-gray-300 dark:border-[#4A5568] rounded-lg px-3 py-2 text-gray-900 dark:text-[#E2E8F0]"
 					>
 						<option value="Neutral">Neutral</option>
 						<option value="Bull">Bull</option>
@@ -105,10 +105,10 @@
 
 				<!-- Property Selection -->
 				<div>
-					<label class="block text-sm font-medium text-[#A0AEC0] mb-2">Attach Property (Optional)</label>
+					<label class="block text-sm font-medium text-gray-600 dark:text-[#A0AEC0] mb-2">Attach Property (Optional)</label>
 					<select 
 						bind:value={newPost.property_uid}
-						class="w-full bg-[#2D3748] border border-[#4A5568] rounded-lg px-3 py-2 text-[#E2E8F0]"
+						class="w-full bg-gray-100 dark:bg-[#2D3748] border border-gray-300 dark:border-[#4A5568] rounded-lg px-3 py-2 text-gray-900 dark:text-[#E2E8F0]"
 					>
 						<option value="">No property</option>
 						{#each properties as property}
@@ -119,27 +119,27 @@
 
 				<!-- Post Content -->
 				<div>
-					<label class="block text-sm font-medium text-[#A0AEC0] mb-2">Content</label>
+					<label class="block text-sm font-medium text-gray-600 dark:text-[#A0AEC0] mb-2">Content</label>
 					<textarea 
 						bind:value={newPost.body_md}
 						placeholder="Share your thoughts, updates, or insights..."
-						class="w-full bg-[#2D3748] border border-[#4A5568] rounded-lg px-3 py-3 text-[#E2E8F0] h-32 resize-none"
+						class="w-full bg-gray-100 dark:bg-[#2D3748] border border-gray-300 dark:border-[#4A5568] rounded-lg px-3 py-3 text-gray-900 dark:text-[#E2E8F0] h-32 resize-none"
 					></textarea>
-					<p class="text-xs text-[#A0AEC0] mt-1">Use **bold** and *italic* for formatting</p>
+					<p class="text-xs text-gray-600 dark:text-[#A0AEC0] mt-1">Use **bold** and *italic* for formatting</p>
 				</div>
 
 				<!-- Action Buttons -->
 				<div class="flex items-center justify-between">
 					<div class="flex items-center space-x-2">
-						<button class="p-2 text-[#A0AEC0] hover:text-white transition-colors">
+						<button class="p-2 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 							<Image size={18} />
 						</button>
-						<button class="p-2 text-[#A0AEC0] hover:text-white transition-colors">
+						<button class="p-2 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 							<MapPin size={18} />
 						</button>
 					</div>
 					<button 
-						class="btn btn-primary flex items-center space-x-2"
+						class="btn btn-primary flex items-center space-x-2 bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
 						on:click={createPost}
 						disabled={!newPost.body_md.trim()}
 					>
@@ -164,13 +164,13 @@
 	<!-- Empty State -->
 	{#if posts.length === 0}
 		<div class="text-center py-12">
-			<div class="text-[#A0AEC0] mb-4">
+			<div class="text-gray-600 dark:text-[#A0AEC0] mb-4">
 				<Plus size={48} class="mx-auto mb-4 opacity-50" />
 				<h3 class="text-lg font-medium mb-2">No posts yet</h3>
 				<p>Start sharing your real estate insights and updates</p>
 			</div>
 			<button 
-				class="btn btn-primary"
+				class="btn btn-primary bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
 				on:click={() => showComposer = true}
 			>
 				Create Your First Post

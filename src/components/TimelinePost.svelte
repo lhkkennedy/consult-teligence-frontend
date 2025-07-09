@@ -69,17 +69,17 @@
 	}
 </script>
 
-<div class="timeline-post bg-[#1E2130] border border-[#2D3748] rounded-lg p-6 mb-6">
+<div class="timeline-post bg-white dark:bg-[#1E2130] border border-gray-200 dark:border-[#2D3748] rounded-lg p-6 mb-6">
 	<!-- Post Header -->
 	<div class="flex items-start justify-between mb-4">
 		<div class="flex items-center space-x-3">
-			<div class="w-10 h-10 bg-[#2D3748] rounded-full flex items-center justify-center">
-				<span class="text-sm font-semibold">JD</span>
+			<div class="w-10 h-10 bg-gray-200 dark:bg-[#2D3748] rounded-full flex items-center justify-center">
+				<span class="text-sm font-semibold text-gray-700 dark:text-white">JD</span>
 			</div>
 			<div>
 				<div class="flex items-center space-x-2">
-					<span class="font-semibold">John Doe</span>
-					<span class="text-[#A0AEC0] text-sm">{formatDate(post.created_at)}</span>
+					<span class="font-semibold text-gray-900 dark:text-white">John Doe</span>
+					<span class="text-gray-500 dark:text-[#A0AEC0] text-sm">{formatDate(post.created_at)}</span>
 				</div>
 				<div class="flex items-center space-x-2 mt-1">
 					<span class="text-xs px-2 py-1 rounded-full border {getPostTypeColor(post.post_type)}">
@@ -95,7 +95,7 @@
 
 	<!-- Property Card (if property attached) -->
 	{#if property && post.property_uid}
-		<div class="bg-[#2D3748] rounded-lg p-4 mb-4">
+		<div class="bg-gray-100 dark:bg-[#2D3748] rounded-lg p-4 mb-4">
 			<div class="flex items-start space-x-4">
 				{#if property.images && property.images.length > 0}
 					<img 
@@ -106,20 +106,20 @@
 				{/if}
 				<div class="flex-1">
 					<div class="flex items-center space-x-2 mb-1">
-						<MapPin size={14} class="text-[#A0AEC0]" />
-						<span class="font-medium text-sm">{property.title}</span>
+						<MapPin size={14} class="text-gray-500 dark:text-[#A0AEC0]" />
+						<span class="font-medium text-sm text-gray-900 dark:text-white">{property.title}</span>
 					</div>
-					<p class="text-[#A0AEC0] text-sm mb-2">{property.address}</p>
+					<p class="text-gray-500 dark:text-[#A0AEC0] text-sm mb-2">{property.address}</p>
 					<div class="flex items-center justify-between">
 						<div class="flex items-center space-x-2">
 							{#each property.roles as role}
-								<span class="text-xs bg-[#1E2130] px-2 py-1 rounded-full text-[#A0AEC0]">
+								<span class="text-xs bg-white dark:bg-[#1E2130] px-2 py-1 rounded-full text-gray-500 dark:text-[#A0AEC0]">
 									{role}
 								</span>
 							{/each}
 						</div>
 						{#if property.headline_metric}
-							<span class="text-xs font-medium text-green-400">
+							<span class="text-xs font-medium text-green-600 dark:text-green-400">
 								{property.headline_metric}
 							</span>
 						{/if}
@@ -131,7 +131,7 @@
 
 	<!-- Post Content -->
 	<div class="mb-4">
-		<p class="text-[#E2E8F0] leading-relaxed">{@html formatBody(post.body_md)}</p>
+		<p class="text-gray-900 dark:text-[#E2E8F0] leading-relaxed">{@html formatBody(post.body_md)}</p>
 	</div>
 
 	<!-- Media Gallery -->
@@ -159,8 +159,8 @@
 
 	<!-- Comments -->
 	{#if post.comments && post.comments.length > 0}
-		<div class="bg-[#2D3748] rounded-lg p-4 mb-4">
-			<h4 class="text-sm font-medium mb-3 text-[#E2E8F0]">Comments</h4>
+		<div class="bg-gray-100 dark:bg-[#2D3748] rounded-lg p-4 mb-4">
+			<h4 class="text-sm font-medium mb-3 text-gray-900 dark:text-[#E2E8F0]">Comments</h4>
 			{#each post.comments as comment}
 				<div class="flex space-x-3 mb-3 last:mb-0">
 					{#if comment.user_avatar}
@@ -170,16 +170,16 @@
 							class="w-8 h-8 rounded-full object-cover"
 						/>
 					{:else}
-						<div class="w-8 h-8 bg-[#1E2130] rounded-full flex items-center justify-center">
-							<span class="text-xs font-semibold">{comment.user_name.charAt(0)}</span>
+						<div class="w-8 h-8 bg-gray-200 dark:bg-[#1E2130] rounded-full flex items-center justify-center">
+							<span class="text-xs font-semibold text-gray-700 dark:text-white">{comment.user_name.charAt(0)}</span>
 						</div>
 					{/if}
 					<div class="flex-1">
 						<div class="flex items-center space-x-2 mb-1">
-							<span class="text-sm font-medium text-[#E2E8F0]">{comment.user_name}</span>
-							<span class="text-xs text-[#A0AEC0]">{formatDate(comment.created_at)}</span>
+							<span class="text-sm font-medium text-gray-900 dark:text-[#E2E8F0]">{comment.user_name}</span>
+							<span class="text-xs text-gray-500 dark:text-[#A0AEC0]">{formatDate(comment.created_at)}</span>
 						</div>
-						<p class="text-sm text-[#A0AEC0]">{comment.body}</p>
+						<p class="text-sm text-gray-600 dark:text-[#A0AEC0]">{comment.body}</p>
 					</div>
 				</div>
 			{/each}
@@ -187,27 +187,27 @@
 	{/if}
 
 	<!-- Action Bar -->
-	<div class="flex items-center justify-between pt-4 border-t border-[#2D3748]">
+	<div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-[#2D3748]">
 		<div class="flex items-center space-x-6">
-			<button class="flex items-center space-x-2 text-[#A0AEC0] hover:text-white transition-colors">
+			<button class="flex items-center space-x-2 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 				<Heart size={18} />
 				<span class="text-sm">{getTotalReactions()}</span>
 			</button>
-			<button class="flex items-center space-x-2 text-[#A0AEC0] hover:text-white transition-colors">
+			<button class="flex items-center space-x-2 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 				<MessageCircle size={18} />
 				<span class="text-sm">{post.comments?.length || 0}</span>
 			</button>
-			<button class="flex items-center space-x-2 text-[#A0AEC0] hover:text-white transition-colors">
+			<button class="flex items-center space-x-2 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 				<Share2 size={18} />
 				<span class="text-sm">Share</span>
 			</button>
 		</div>
 		<div class="flex items-center space-x-2">
-			<button class="text-[#A0AEC0] hover:text-white transition-colors">
+			<button class="text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 				<Bookmark size={18} />
 			</button>
 			{#if property && post.property_uid}
-				<button class="flex items-center space-x-1 text-[#A0AEC0] hover:text-white transition-colors">
+				<button class="flex items-center space-x-1 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 					<Calendar size={16} />
 					<span class="text-sm">Tour</span>
 				</button>

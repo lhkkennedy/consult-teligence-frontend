@@ -74,6 +74,7 @@
 	],
 	"dependencies": {
 		"@lucide/svelte": "^0.513.0",
+		"date-fns": "^4.1.0",
 		"svelte-select": "^5.8.3"
 	}
 }

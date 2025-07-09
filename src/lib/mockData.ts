@@ -1,3 +1,5 @@
+import type { TimelinePost, Property, PortfolioStats } from './types.js';
+
 export const consultants = [
 	{
 		id: 1,
@@ -241,3 +243,151 @@ export const articles = [
 		category: 'Investment Analysis'
 	}
 ];
+
+// Mock Timeline Data
+export const mockTimelinePosts: TimelinePost[] = [
+	{
+		post_id: 'post_1',
+		person_id: 'p_123',
+		created_at: '2024-01-15T10:30:00Z',
+		body_md: 'Excited to bring **Dockside Industrial Park** to market at 5.25% cap rate. This 150,000 sq ft facility represents a prime opportunity for industrial investors looking for stable cash flow in the growing logistics sector.',
+		media_urls: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800'],
+		property_uid: 'pr_DE.ZH6XWP83',
+		post_type: 'NewListing',
+		sentiment: 'Bull',
+		visibility: 'Public',
+		reactions: [
+			{ id: 'r1', user_id: 'u1', reaction_type: 'like', created_at: '2024-01-15T11:00:00Z' },
+			{ id: 'r2', user_id: 'u2', reaction_type: 'celebrate', created_at: '2024-01-15T11:15:00Z' },
+			{ id: 'r3', user_id: 'u3', reaction_type: 'insightful', created_at: '2024-01-15T12:00:00Z' }
+		],
+		comments: [
+			{
+				id: 'c1',
+				user_id: 'u4',
+				body: 'Great location! What\'s the current occupancy?',
+				created_at: '2024-01-15T11:30:00Z',
+				user_name: 'Sarah Johnson',
+				user_avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100'
+			}
+		]
+	},
+	{
+		post_id: 'post_2',
+		person_id: 'p_123',
+		created_at: '2024-01-10T14:20:00Z',
+		body_md: 'Construction update: **Riverside Office Complex** is now 75% complete. The steel framework is up and we\'re on track for Q3 2024 delivery. This will be a game-changer for the downtown office market.',
+		media_urls: [
+			'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800',
+			'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800'
+		],
+		property_uid: 'pr_DE.RIVERSIDE01',
+		post_type: 'ProgressUpdate',
+		sentiment: 'Bull',
+		visibility: 'Public',
+		reactions: [
+			{ id: 'r4', user_id: 'u5', reaction_type: 'like', created_at: '2024-01-10T15:00:00Z' },
+			{ id: 'r5', user_id: 'u6', reaction_type: 'celebrate', created_at: '2024-01-10T15:30:00Z' }
+		]
+	},
+	{
+		post_id: 'post_3',
+		person_id: 'p_123',
+		created_at: '2024-01-05T09:15:00Z',
+		body_md: 'Market insight: The shift towards hybrid work is creating new opportunities in suburban office markets. Companies are looking for smaller, more flexible spaces closer to where employees live.',
+		media_urls: [],
+		post_type: 'Insight',
+		sentiment: 'Neutral',
+		visibility: 'Public',
+		reactions: [
+			{ id: 'r6', user_id: 'u7', reaction_type: 'insightful', created_at: '2024-01-05T10:00:00Z' },
+			{ id: 'r7', user_id: 'u8', reaction_type: 'like', created_at: '2024-01-05T10:30:00Z' }
+		]
+	},
+	{
+		post_id: 'post_4',
+		person_id: 'p_123',
+		created_at: '2023-12-28T16:45:00Z',
+		body_md: '🎉 **Deal Closed!** Just completed the sale of **Harborview Retail Center** for $45M at a 4.8% cap rate. Great working with the team at Harborview Properties on this transaction.',
+		media_urls: ['https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800'],
+		property_uid: 'pr_DE.HARBORVIEW01',
+		post_type: 'Closing',
+		sentiment: 'Bull',
+		visibility: 'Public',
+		reactions: [
+			{ id: 'r8', user_id: 'u9', reaction_type: 'celebrate', created_at: '2023-12-28T17:00:00Z' },
+			{ id: 'r9', user_id: 'u10', reaction_type: 'like', created_at: '2023-12-28T17:15:00Z' },
+			{ id: 'r10', user_id: 'u11', reaction_type: 'celebrate', created_at: '2023-12-28T18:00:00Z' }
+		]
+	}
+];
+
+export const mockProperties: Property[] = [
+	{
+		property_uid: 'pr_DE.ZH6XWP83',
+		title: 'Dockside Industrial Park',
+		address: '45 Fenchurch St, London EC3',
+		property_type: 'Industrial',
+		status: 'Stabilised',
+		headline_metric: '5.25% cap rate',
+		images: [
+			'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800',
+			'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800'
+		],
+		roles: ['Developer', 'Asset Manager'],
+		deal_size: 22000000,
+		irr: 12.5,
+		completion_percentage: 100
+	},
+	{
+		property_uid: 'pr_DE.RIVERSIDE01',
+		title: 'Riverside Office Complex',
+		address: '123 Riverside Dr, Manchester M1',
+		property_type: 'Office',
+		status: 'Under Construction',
+		headline_metric: '75% complete',
+		images: [
+			'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800',
+			'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800'
+		],
+		roles: ['Developer'],
+		deal_size: 35000000,
+		completion_percentage: 75
+	},
+	{
+		property_uid: 'pr_DE.HARBORVIEW01',
+		title: 'Harborview Retail Center',
+		address: '789 Harbor Blvd, Liverpool L1',
+		property_type: 'Retail',
+		status: 'Exited',
+		headline_metric: 'Sold at 4.8% cap',
+		images: [
+			'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800'
+		],
+		roles: ['Broker', 'Investor'],
+		deal_size: 45000000,
+		irr: 18.2,
+		completion_percentage: 100
+	},
+	{
+		property_uid: 'pr_DE.URBANLIVING01',
+		title: 'Urban Living Residences',
+		address: '456 City Center Ave, Birmingham B1',
+		property_type: 'Residential',
+		status: 'Planning',
+		headline_metric: 'Planning phase',
+		images: [
+			'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'
+		],
+		roles: ['Developer', 'Legal Counsel'],
+		deal_size: 28000000,
+		completion_percentage: 10
+	}
+];
+
+export const mockPortfolioStats: PortfolioStats = {
+	total_gfa: 1300000, // 1.3M sq ft
+	total_aum: 430000000, // $430M
+	deal_count: 27,
+	avg_deal_size: 16000000 // $16M
+};

@@ -1,4 +1,4 @@
-import type { PageLoad as KitPageLoad } from '@sveltejs/kit';
+// Remove the problematic import for now
 
 export interface Consultant {
 	documentId: string;
@@ -42,6 +42,12 @@ export interface CaseStudy {
 	description: string;
 }
 
+// Basic types for regions, countries, and specialties
+export type Region = 'North America' | 'South America' | 'Europe' | 'Africa' | 'Asia' | 'Middle East' | 'Oceania';
+export type Country = string;
+export type Specialty = string;
+export type SubSpecialty = string;
+
 export interface SearchFilters {
 	region?: Region;
 	country?: Country;
@@ -49,7 +55,7 @@ export interface SearchFilters {
 	keyword?: string;
 }
 
-export type PageLoad = KitPageLoad<{ consultants: Consultant[] }>;
+// PageLoad type removed to avoid import issues
 
 export interface RawConsultant {
 	id: number;
@@ -86,4 +92,60 @@ export interface RawConsultant {
 export interface ConsultantsResponse {
 	data: RawConsultant[];
 	meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } };
+}
+
+// Timeline Types
+export type PostType = 'NewListing' | 'ProgressUpdate' | 'Closing' | 'Insight' | 'Generic';
+export type Sentiment = 'Bull' | 'Bear' | 'Neutral';
+export type Visibility = 'Public' | 'Connections' | 'Private';
+
+export interface TimelinePost {
+	post_id: string;
+	person_id: string;
+	created_at: string;
+	body_md: string;
+	media_urls: string[];
+	property_uid?: string;
+	post_type: PostType;
+	sentiment: Sentiment;
+	visibility: Visibility;
+	reactions?: TimelineReaction[];
+	comments?: TimelineComment[];
+}
+
+export interface TimelineReaction {
+	id: string;
+	user_id: string;
+	reaction_type: 'like' | 'love' | 'celebrate' | 'insightful';
+	created_at: string;
+}
+
+export interface TimelineComment {
+	id: string;
+	user_id: string;
+	body: string;
+	created_at: string;
+	user_name: string;
+	user_avatar?: string;
+}
+
+export interface Property {
+	property_uid: string;
+	title: string;
+	address: string;
+	property_type: string;
+	status: 'Under Construction' | 'Stabilised' | 'Exited' | 'Planning';
+	headline_metric?: string;
+	images: string[];
+	roles: string[];
+	deal_size?: number;
+	irr?: number;
+	completion_percentage?: number;
+}
+
+export interface PortfolioStats {
+	total_gfa: number;
+	total_aum: number;
+	deal_count: number;
+	avg_deal_size: number;
 }

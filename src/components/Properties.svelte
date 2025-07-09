@@ -70,15 +70,15 @@
 	function getStatusColor(status: string): string {
 		switch (status) {
 			case 'Under Construction':
-				return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+				return 'bg-blue-500/80 text-blue-200 border-blue-500';
 			case 'Stabilised':
-				return 'bg-green-500/20 text-green-400 border-green-500/30';
+				return 'bg-green-500/80 text-green-200 border-green-500';
 			case 'Exited':
-				return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+				return 'bg-purple-500/80 text-purple-200 border-purple-500';
 			case 'Planning':
-				return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+				return 'bg-yellow-500/80 text-yellow-200 border-yellow-500';
 			default:
-				return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+				return 'bg-gray-500/80 text-gray-200 border-gray-500';
 		}
 	}
 </script>
@@ -178,7 +178,7 @@
 	<!-- Properties Grid -->
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#each sortedProperties as property}
-			<div class="bg-[#1E2130] border border-[#2D3748] rounded-lg overflow-hidden hover:border-[#4A5568] transition-colors">
+			<div class="bg-[#1E2130] border border-[#2D3748] rounded-lg overflow-hidden hover:border-[#4A5568] transition-colors flex flex-col h-full">
 				<!-- Property Image -->
 				<div class="relative h-48 bg-[#2D3748]">
 					{#if property.images && property.images.length > 0}
@@ -188,8 +188,8 @@
 							class="w-full h-full object-cover"
 						/>
 					{:else}
-						<div class="w-full h-full flex items-center justify-center">
-							<Building size={48} class="text-[#4A5568]" />
+						<div class="w-full h-full flex items-center justify-center bg-[#2D3748]">
+							<Building size={48} class="text-[#A0AEC0] opacity-60" />
 						</div>
 					{/if}
 					<div class="absolute top-3 right-3">
@@ -200,50 +200,52 @@
 				</div>
 
 				<!-- Property Details -->
-				<div class="p-4">
-					<div class="flex items-start justify-between mb-2">
-						<div class="flex-1">
-							<h3 class="font-semibold text-[#E2E8F0] mb-1">{property.title}</h3>
-							<div class="flex items-center text-[#A0AEC0] text-sm mb-2">
-								<MapPin size={14} class="mr-1" />
-								<span>{property.address}</span>
+				<div class="p-4 flex flex-col flex-1">
+					<div class="flex-1">
+						<div class="flex items-start justify-between mb-2">
+							<div class="flex-1">
+								<h3 class="font-semibold text-[#E2E8F0] mb-1">{property.title}</h3>
+								<div class="flex items-center text-[#A0AEC0] text-sm mb-2">
+									<MapPin size={14} class="mr-1" />
+									<span>{property.address}</span>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<!-- Roles -->
-					<div class="flex flex-wrap gap-1 mb-3">
-						{#each property.roles as role}
-							<span class="text-xs bg-[#2D3748] px-2 py-1 rounded-full text-[#A0AEC0]">
-								{role}
-							</span>
-						{/each}
-					</div>
-
-					<!-- Headline Metric -->
-					{#if property.headline_metric}
-						<div class="mb-3">
-							<span class="text-sm font-medium text-green-400">
-								{property.headline_metric}
-							</span>
+						<!-- Roles -->
+						<div class="flex flex-wrap gap-1 mb-3">
+							{#each property.roles as role}
+								<span class="text-xs bg-[#2D3748] px-2 py-1 rounded-full text-[#A0AEC0]">
+									{role}
+								</span>
+							{/each}
 						</div>
-					{/if}
 
-					<!-- Additional Metrics -->
-					<div class="grid grid-cols-2 gap-2 mb-4 text-xs text-[#A0AEC0]">
-						{#if property.deal_size}
-							<div>Deal Size: {formatCurrency(property.deal_size)}</div>
+						<!-- Headline Metric -->
+						{#if property.headline_metric}
+							<div class="mb-3">
+								<span class="text-sm font-medium text-green-400">
+									{property.headline_metric}
+								</span>
+							</div>
 						{/if}
-						{#if property.irr}
-							<div>IRR: {property.irr}%</div>
-						{/if}
-						{#if property.completion_percentage}
-							<div>Completion: {property.completion_percentage}%</div>
-						{/if}
+
+						<!-- Additional Metrics -->
+						<div class="grid grid-cols-2 gap-2 mb-4 text-xs text-[#A0AEC0]">
+							{#if property.deal_size}
+								<div>Deal Size: {formatCurrency(property.deal_size)}</div>
+							{/if}
+							{#if property.irr}
+								<div>IRR: {property.irr}%</div>
+							{/if}
+							{#if property.completion_percentage}
+								<div>Completion: {property.completion_percentage}%</div>
+							{/if}
+						</div>
 					</div>
 
 					<!-- Actions -->
-					<div class="flex items-center justify-between">
+					<div class="flex items-center justify-between mt-auto pt-4 border-t border-[#2D3748]">
 						<button class="flex items-center space-x-1 text-[#A0AEC0] hover:text-white transition-colors">
 							<Eye size={16} />
 							<span class="text-sm">View</span>

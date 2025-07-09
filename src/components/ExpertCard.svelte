@@ -70,7 +70,7 @@
 	<button
 		type="button"
 		class="btn btn-primary mt-auto w-full"
-		on:click|stopPropagation={() => onSelect(consultant.id)}
+		on:click|stopPropagation={() => onSelect(consultant.documentId)}
 	>
 		View Profile
 	</button>

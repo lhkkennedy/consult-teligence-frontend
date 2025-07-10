@@ -7,6 +7,10 @@
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import { user, logout } from '$lib/stores/authStore';
+	import { goto } from '$app/navigation';
+	import { get } from 'svelte/store';
+	let showProfileMenu = false;
 
 	let isMenuOpen = false;
 	let scrolled = false;
@@ -17,6 +21,21 @@
 
 	function handleScroll() {
 		scrolled = window.scrollY > 20;
+	}
+
+	function handleProfileClick() {
+		showProfileMenu = !showProfileMenu;
+	}
+
+	function handleLogout() {
+		logout();
+		showProfileMenu = false;
+		goto('/');
+	}
+
+	function handleViewProfile() {
+		showProfileMenu = false;
+		goto('/profile'); // Adjust this route as needed
 	}
 
 	onMount(() => {
@@ -91,26 +110,46 @@
 
 			<!-- Auth buttons (desktop) -->
 			<div class="hidden items-center space-x-4 md:flex">
-				<!-- Login as a ghost button with hover underline and subtle background on hover -->
-				<a
-					href="/login"
-					class="relative px-3 py-2 font-normal tracking-wide text-gray-700 dark:text-white transition
+				{#if $user}
+					<div class="relative">
+						<button
+							class="flex items-center space-x-2 rounded-full border-2 border-accent-purple px-4 py-2 text-accent-purple dark:text-white font-semibold bg-white dark:bg-[#23263a] hover:bg-accent-purple/10 transition"
+							on:click={handleProfileClick}
+							aria-label="Profile menu"
+						>
+							<span>{$user.username}</span>
+							<img src="/propeterra_logo_transparent.png" alt="Profile" class="h-8 w-8 rounded-full object-cover border border-gray-300 ml-2" />
+						</button>
+						{#if showProfileMenu}
+							<div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-[#23263a] ring-1 ring-black ring-opacity-5 z-50">
+								<div class="py-1">
+									<button class="w-full text-left px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" on:click={handleViewProfile}>View Profile</button>
+									<button class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-800" on:click={handleLogout}>Logout</button>
+								</div>
+							</div>
+						{/if}
+					</div>
+				{:else}
+					<!-- Login as a ghost button with hover underline and subtle background on hover -->
+					<a
+						href="/login"
+						class="relative px-3 py-2 font-normal tracking-wide text-gray-700 dark:text-white transition
                 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-0 before:bg-accent-purple dark:before:bg-white
                 before:transition-all before:duration-300 hover:bg-gray-100 dark:hover:bg-white/10
                 hover:before:w-full"
-				>
-					Log In
-				</a>
-
-				<!-- Sign Up as a rounded "pill" with a gradient, shadow & scale-on-hover -->
-				<a
-					href="/signup"
-					class="transform rounded-full border-2 border-accent-purple bg-accent-purple px-6
+					>
+						Log In
+					</a>
+					<!-- Sign Up as a rounded "pill" with a gradient, shadow & scale-on-hover -->
+					<a
+						href="/signup"
+						class="transform rounded-full border-2 border-accent-purple bg-accent-purple px-6
                 py-2
                 font-normal tracking-wide text-white shadow-lg transition hover:scale-105 hover:border-accent-teal hover:shadow-xl"
-				>
-					Sign Up
-				</a>
+					>
+						Sign Up
+					</a>
+				{/if}
 			</div>
 
 			<!-- Theme toggle button (desktop) -->
@@ -152,18 +191,33 @@
 					<a href="/contact" class="text-gray-800 dark:text-white hover:text-accent-purple dark:hover:text-accent-pink">Contact</a>
 				</nav>
 				<div class="mt-8 space-y-4">
-					<a
-						href="/login"
-						class="block w-full rounded border border-gray-300 dark:border-gray-600 px-4 py-2 text-center text-gray-700 dark:text-white transition hover:bg-gray-100 dark:hover:bg-gray-800"
-					>
-						Log In
-					</a>
-					<a
-						href="/signup"
-						class="block w-full rounded bg-accent-purple px-4 py-2 text-center text-white transition hover:bg-accent-purple/90"
-					>
-						Sign Up
-					</a>
+					{#if $user}
+						<button
+							class="block w-full rounded border border-gray-300 dark:border-gray-600 px-4 py-2 text-center text-gray-700 dark:text-white transition hover:bg-gray-100 dark:hover:bg-gray-800"
+							on:click={() => { handleViewProfile(); toggleMenu(); }}
+						>
+							View Profile
+						</button>
+						<button
+							class="block w-full rounded border border-red-500 px-4 py-2 text-center text-red-600 transition hover:bg-gray-100 dark:hover:bg-gray-800"
+							on:click={() => { handleLogout(); toggleMenu(); }}
+						>
+							Logout
+						</button>
+					{:else}
+						<a
+							href="/login"
+							class="block w-full rounded border border-gray-300 dark:border-gray-600 px-4 py-2 text-center text-gray-700 dark:text-white transition hover:bg-gray-100 dark:hover:bg-gray-800"
+						>
+							Log In
+						</a>
+						<a
+							href="/signup"
+							class="block w-full rounded bg-accent-purple px-4 py-2 text-center text-white transition hover:bg-accent-purple/90"
+						>
+							Sign Up
+						</a>
+					{/if}
 				</div>
 				<!-- Theme toggle button (mobile) -->
 				<div class="mt-6">

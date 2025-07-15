@@ -8,7 +8,6 @@
 	import MapPin from '@lucide/svelte/icons/map-pin';
 
 	export let post: any;
-	export let property: any;
 
 	// Format the post body with markdown-like styling
 	function formatBody(body: string): string {
@@ -29,6 +28,8 @@
 				return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
 			case 'Insight':
 				return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+			case 'property':
+				return 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30';
 			default:
 				return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
 		}
@@ -93,34 +94,34 @@
 		</div>
 	</div>
 
-	<!-- Property Card (if property attached) -->
-	{#if property && post.property_uid}
+	<!-- Property Card for property-type posts -->
+	{#if post.post_type === 'property' && post.property_data}
 		<div class="bg-gray-100 dark:bg-[#2D3748] rounded-lg p-4 mb-4">
 			<div class="flex items-start space-x-4">
-				{#if property.images && property.images.length > 0}
+				{#if post.property_data.images && post.property_data.images.length > 0}
 					<img 
-						src={property.images[0]} 
-						alt={property.title}
+						src={post.property_data.images[0]} 
+						alt={post.property_data.title}
 						class="w-16 h-16 object-cover rounded-lg"
 					/>
 				{/if}
 				<div class="flex-1">
 					<div class="flex items-center space-x-2 mb-1">
 						<MapPin size={14} class="text-gray-500 dark:text-[#A0AEC0]" />
-						<span class="font-medium text-sm text-gray-900 dark:text-white">{property.title}</span>
+						<span class="font-medium text-sm text-gray-900 dark:text-white">{post.property_data.title}</span>
 					</div>
-					<p class="text-gray-500 dark:text-[#A0AEC0] text-sm mb-2">{property.address}</p>
+					<p class="text-gray-500 dark:text-[#A0AEC0] text-sm mb-2">{post.property_data.address}</p>
 					<div class="flex items-center justify-between">
 						<div class="flex items-center space-x-2">
-							{#each property.roles as role}
+							{#each post.property_data.roles as role}
 								<span class="text-xs bg-white dark:bg-[#1E2130] px-2 py-1 rounded-full text-gray-500 dark:text-[#A0AEC0]">
 									{role}
 								</span>
 							{/each}
 						</div>
-						{#if property.headline_metric}
+						{#if post.property_data.headline_metric}
 							<span class="text-xs font-medium text-green-600 dark:text-green-400">
-								{property.headline_metric}
+								{post.property_data.headline_metric}
 							</span>
 						{/if}
 					</div>
@@ -206,7 +207,7 @@
 			<button class="text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 				<Bookmark size={18} />
 			</button>
-			{#if property && post.property_uid}
+			{#if post.post_type === 'property' && post.property_data}
 				<button class="flex items-center space-x-1 text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white transition-colors">
 					<Calendar size={16} />
 					<span class="text-sm">Tour</span>

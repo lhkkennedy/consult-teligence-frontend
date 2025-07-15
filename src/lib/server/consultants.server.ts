@@ -13,6 +13,8 @@ function mapRaw(item: RawConsultant): Consultant {
 			: item.profileImage?.url
 				? `${BASE}${item.profileImage.url}`
 				: '/default-avatar.png';
+	
+	const contactInfo = item.contactInfo || {};
 
 	return {
 		documentId: item.documentId,
@@ -33,9 +35,9 @@ function mapRaw(item: RawConsultant): Consultant {
 		availability: item.availability,
 		profileImage: url,
 		contactInfo: {
-			email: item.contactInfo.Email,
-			phone: item.contactInfo.Phone,
-			linkedin: item.contactInfo.LinkedIn
+			email: contactInfo.Email ?? null,
+			phone: contactInfo.Phone ?? null,
+			linkedin: contactInfo.LinkedIn ?? null
 		},
 		testimonials: item.testimonials ?? [],
 		caseStudies: item.caseStudies ?? []

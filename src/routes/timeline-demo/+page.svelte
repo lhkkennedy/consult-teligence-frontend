@@ -1,4 +1,5 @@
 <script lang="ts">
+	import GeneralTimeline from '$components/GeneralTimeline.svelte';
 	import ProfileTabs from '../../components/ProfileTabs.svelte';
 </script>
 
@@ -16,7 +17,9 @@
 				while the Properties tab displays a comprehensive portfolio view with metrics and filtering.
 			</p>
 		</div>
-
+		<div class="bg-[#1E2130] border border-[#2D3748] rounded-lg p-6">
+			<GeneralTimeline />
+		</div>
 		<div class="bg-[#1E2130] border border-[#2D3748] rounded-lg p-6">
 			<ProfileTabs personId="demo_user_123" />
 		</div>

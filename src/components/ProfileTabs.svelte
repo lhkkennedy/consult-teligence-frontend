@@ -5,6 +5,8 @@
 	import Building from '@lucide/svelte/icons/building';
 
 	export let personId: string;
+	export let timelineItems: any[] = [];
+	export let properties: any[] = [];
 
 	let activeTab = 'timeline';
 
@@ -31,9 +33,9 @@
 	<!-- Tab Content -->
 	<div class="tab-content bg-white dark:bg-[#1E2130] rounded-b-lg">
 		{#if activeTab === 'timeline'}
-			<Timeline {personId} />
+			<Timeline timelineItems={timelineItems} />
 		{:else if activeTab === 'properties'}
-			<Properties />
+			<Properties properties={properties} />
 		{/if}
 	</div>
 </div> 

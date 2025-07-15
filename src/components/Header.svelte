@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import ThemeToggle from './ThemeToggle.svelte';
-	import { user, logout } from '$lib/stores/authStore';
+	import { user, logout, consultantId } from '../lib/stores/authStore.ts';
 	import { goto } from '$app/navigation';
 	import { get } from 'svelte/store';
 	let showProfileMenu = false;
@@ -35,7 +35,12 @@
 
 	function handleViewProfile() {
 		showProfileMenu = false;
-		goto('/profile'); // Adjust this route as needed
+		console.log($consultantId)
+		if ($consultantId) {
+			goto(`/experts/${$consultantId}`);
+		} else {
+			goto('/experts'); // fallback if no consultantId
+		}
 	}
 
 	onMount(() => {
@@ -48,7 +53,7 @@
 	class="fixed inset-x-0 top-0 z-50 transition-all duration-300 {scrolled ? 'backdrop-blur-sm shadow-sm bg-white/95 dark:bg-transparent' : 'bg-white dark:bg-[#1E2130]'}"
 >
 	{#if !scrolled}
-		<div class="h-full bg-accent-purple/80" transition:slide={{ y: -100, duration: 300 }}>
+		<div class="h-full bg-accent-purple/80" transition:slide={{ duration: 300 }}>
 			<div class="text-md text-white mx-auto flex max-w-screen-2xl items-center p-2">
 				<p class="text-md font-normal text-white">Global Property Experts on Call</p>
 				<div class="flex-1"></div>

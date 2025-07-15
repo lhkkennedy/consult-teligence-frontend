@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { mockProperties, mockPortfolioStats } from '../lib/mockData.js';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import Eye from '@lucide/svelte/icons/eye';
 	import MessageCircle from '@lucide/svelte/icons/message-circle';
@@ -9,12 +8,21 @@
 	import Building from '@lucide/svelte/icons/building';
 	import Target from '@lucide/svelte/icons/target';
 
-	let properties = mockProperties;
-	let stats = mockPortfolioStats;
+	export let properties: any[] = [];
+	export let stats: {
+		total_gfa: number,
+		total_aum: number,
+		deal_count: number,
+		avg_deal_size: number
+	} = { total_gfa: 0, total_aum: 0, deal_count: 0, avg_deal_size: 0 };
+	export let loading: boolean = false;
+	export let error: string = '';
+	let sentinel;
+
+	let searchQuery = '';
 	let selectedRole = 'All';
 	let selectedStatus = 'All';
 	let selectedPropertyType = 'All';
-	let searchQuery = '';
 	let sortBy = 'Most recent';
 
 	// Filter options
@@ -258,15 +266,14 @@
 			</div>
 		{/each}
 	</div>
-
-	<!-- Empty State -->
-	{#if sortedProperties.length === 0}
-		<div class="text-center py-12">
-			<div class="text-gray-600 dark:text-[#A0AEC0] mb-4">
-				<Building size={48} class="mx-auto mb-4 opacity-50" />
-				<h3 class="text-lg font-medium mb-2">No properties found</h3>
-				<p>Try adjusting your filters or search terms</p>
-			</div>
-		</div>
+	{#if loading}
+		<div class="text-center py-4 text-gray-500 dark:text-[#A0AEC0]">Loading...</div>
 	{/if}
+	{#if error}
+		<div class="text-center py-4 text-red-500">{error}</div>
+	{/if}
+	{#if !loading && properties.length === 0}
+		<div class="text-center py-12 text-gray-600 dark:text-[#A0AEC0]">No properties found.</div>
+	{/if}
+	<div bind:this={sentinel}></div>
 </div> 

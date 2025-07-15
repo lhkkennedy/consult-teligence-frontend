@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { login } from '$lib/auth';
+  import { login } from '$lib/auth.ts';
   import { goto } from '$app/navigation';
   let identifier = '';
   let password = '';

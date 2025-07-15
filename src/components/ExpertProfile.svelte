@@ -11,6 +11,8 @@
 	import MessageCircle from '@lucide/svelte/icons/message-circle';
 	import ProfileTabs from './ProfileTabs.svelte';
 	export let activeProfile;
+	export let timelineItems = [];
+	export let properties = [];
 	console.log(activeProfile);
 </script>
 
@@ -196,7 +198,7 @@
 		<!-- Right Column - Timeline and Properties Tabs -->
 		<div class="w-full md:w-2/3">
 			<div class="rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] p-6">
-				<ProfileTabs personId={activeProfile.documentId} />
+				<ProfileTabs personId={activeProfile.documentId} timelineItems={timelineItems} properties={properties} />
 			</div>
 		</div>
 	</div>

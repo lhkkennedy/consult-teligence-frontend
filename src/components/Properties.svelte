@@ -188,12 +188,12 @@
 			<div class="bg-white dark:bg-[#1E2130] border border-gray-200 dark:border-[#2D3748] rounded-lg overflow-hidden hover:border-accent-purple transition-colors flex flex-col h-full">
 				<!-- Property Image -->
 				<div class="relative h-48 bg-gray-100 dark:bg-[#2D3748]">
-					{#if property.images && property.images.length > 0}
-						<img 
-							src={property.images[0]} 
-							alt={property.title}
-							class="w-full h-full object-cover"
-						/>
+					{#if property.media_urls && property.media_urls.length > 0}
+						{#if typeof property.media_urls[0] === 'string'}
+							<img src={property.media_urls[0]} alt={property.title} class="w-full h-full object-cover" />
+						{:else if property.media_urls[0]?.url}
+							<img src={property.media_urls[0].url} alt={property.title} class="w-full h-full object-cover" />
+						{/if}
 					{:else}
 						<div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-[#2D3748]">
 							<Building size={48} class="text-[#A0AEC0] opacity-60" />
@@ -221,7 +221,7 @@
 
 						<!-- Roles -->
 						<div class="flex flex-wrap gap-1 mb-3">
-							{#each property.roles as role}
+							{#each (Array.isArray(property.roles) ? property.roles : (property.roles ? property.roles.split(',').map(r => r.trim()) : [])) as role}
 								<span class="text-xs bg-gray-100 dark:bg-[#2D3748] px-2 py-1 rounded-full text-gray-600 dark:text-[#A0AEC0]">
 									{role}
 								</span>

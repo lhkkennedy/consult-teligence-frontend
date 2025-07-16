@@ -391,3 +391,548 @@ export const mockPortfolioStats: PortfolioStats = {
 	deal_count: 27,
 	avg_deal_size: 16000000 // $16M
 };
+
+// --- MOCK DATA SET 2 ---
+export const mockProperties2: Property[] = [
+  {
+    property_uid: 'pr_FR.PARISLOFT01',
+    title: 'Paris Loft Apartments',
+    address: '12 Rue de Rivoli, Paris',
+    property_type: 'Residential',
+    status: 'Under Construction',
+    headline_metric: '60% sold',
+    images: [
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 32000000,
+    completion_percentage: 60
+  },
+  {
+    property_uid: 'pr_FR.BUSINESSPARK01',
+    title: 'Business Park La Défense',
+    address: '45 Avenue de l’Arche, Courbevoie',
+    property_type: 'Office',
+    status: 'Stabilised',
+    headline_metric: '98% occupancy',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Asset Manager'],
+    deal_size: 54000000,
+    irr: 10.8,
+    completion_percentage: 100
+  }
+];
+
+export const mockTimelinePosts2: TimelinePost[] = [
+  {
+    post_id: 'post2_1',
+    person_id: 'p_201',
+    created_at: '2024-03-12T09:00:00Z',
+    body_md: 'Excavation complete at **Paris Loft Apartments**. Construction is on schedule for Q2 2025 delivery.',
+    media_urls: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'],
+    property_uid: 'pr_FR.PARISLOFT01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r21', user_id: 'u21', reaction_type: 'like', created_at: '2024-03-12T09:30:00Z' }
+    ],
+    comments: [
+      {
+        id: 'c21',
+        user_id: 'u22',
+        body: 'Will there be penthouse units available?',
+        created_at: '2024-03-12T10:00:00Z',
+        user_name: 'Marie Dubois',
+        user_avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=100'
+      }
+    ]
+  },
+  {
+    post_id: 'post2_2',
+    person_id: 'p_202',
+    created_at: '2024-03-15T14:20:00Z',
+    body_md: '**Business Park La Défense** reaches 98% occupancy. Welcoming our newest tenant, a leading fintech firm.',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_FR.BUSINESSPARK01',
+    post_type: 'Insight',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r22', user_id: 'u23', reaction_type: 'celebrate', created_at: '2024-03-15T15:00:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats2: PortfolioStats = {
+  total_gfa: 420000, // 320k + 100k
+  total_aum: 86000000, // $32M + $54M
+  deal_count: 2,
+  avg_deal_size: 43000000 // $86M / 2
+};
+
+// --- MOCK DATA SET 3 ---
+export const mockProperties3: Property[] = [
+  {
+    property_uid: 'pr_USA.SUNSETVILLAS01',
+    title: 'Sunset Villas',
+    address: '789 Palm Dr, Miami, FL',
+    property_type: 'Residential',
+    status: 'Planning',
+    headline_metric: 'Planning phase',
+    images: [
+      'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?w=800'
+    ],
+    roles: ['Developer', 'Legal Counsel'],
+    deal_size: 25000000,
+    completion_percentage: 5
+  },
+  {
+    property_uid: 'pr_USA.BAYTOWER01',
+    title: 'Bay Tower',
+    address: '300 Bay St, San Francisco, CA',
+    property_type: 'Office',
+    status: 'Under Construction',
+    headline_metric: '30% complete',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 47000000,
+    completion_percentage: 30
+  },
+  {
+    property_uid: 'pr_USA.MARKETPLAZA01',
+    title: 'Market Plaza',
+    address: '100 Market St, Dallas, TX',
+    property_type: 'Retail',
+    status: 'Stabilised',
+    headline_metric: 'Fully leased',
+    images: [
+      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800'
+    ],
+    roles: ['Asset Manager'],
+    deal_size: 39000000,
+    irr: 13.2,
+    completion_percentage: 100
+  }
+];
+
+export const mockTimelinePosts3: TimelinePost[] = [
+  {
+    post_id: 'post3_1',
+    person_id: 'p_301',
+    created_at: '2024-04-01T11:00:00Z',
+    body_md: 'Groundbreaking ceremony for **Sunset Villas**! Excited to bring luxury living to Miami.',
+    media_urls: ['https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?w=800'],
+    property_uid: 'pr_USA.SUNSETVILLAS01',
+    post_type: 'NewListing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r31', user_id: 'u31', reaction_type: 'celebrate', created_at: '2024-04-01T11:30:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post3_2',
+    person_id: 'p_302',
+    created_at: '2024-04-10T16:45:00Z',
+    body_md: '**Bay Tower** construction update: steel structure is up, 30% complete. Leasing interest is strong.',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_USA.BAYTOWER01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r32', user_id: 'u32', reaction_type: 'like', created_at: '2024-04-10T17:00:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post3_3',
+    person_id: 'p_303',
+    created_at: '2024-04-15T13:20:00Z',
+    body_md: '**Market Plaza** is now fully leased! Thanks to our team and tenants for making this a success.',
+    media_urls: ['https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800'],
+    property_uid: 'pr_USA.MARKETPLAZA01',
+    post_type: 'Closing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r33', user_id: 'u33', reaction_type: 'love', created_at: '2024-04-15T14:00:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats3: PortfolioStats = {
+  total_gfa: 350000, // 90k + 120k + 140k
+  total_aum: 111000000, // $25M + $47M + $39M
+  deal_count: 3,
+  avg_deal_size: 37000000 // $111M / 3
+};
+
+// --- MOCK DATA SET 4 ---
+export const mockProperties4: Property[] = [
+  {
+    property_uid: 'pr_JP.TOKYOTOWER01',
+    title: 'Tokyo Tower Residences',
+    address: '1-1-2 Oshiage, Sumida City, Tokyo',
+    property_type: 'Residential',
+    status: 'Under Construction',
+    headline_metric: '80% complete',
+    images: [
+      'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 41000000,
+    completion_percentage: 80
+  },
+  {
+    property_uid: 'pr_JP.SHIBUYAHUB01',
+    title: 'Shibuya Tech Hub',
+    address: '2-24-12 Shibuya, Tokyo',
+    property_type: 'Office',
+    status: 'Planning',
+    headline_metric: 'Planning phase',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Developer', 'Legal Counsel'],
+    deal_size: 37000000,
+    completion_percentage: 10
+  }
+];
+
+export const mockTimelinePosts4: TimelinePost[] = [
+  {
+    post_id: 'post4_1',
+    person_id: 'p_401',
+    created_at: '2024-05-01T10:00:00Z',
+    body_md: 'Final floors being completed at **Tokyo Tower Residences**. Move-in expected by September.',
+    media_urls: ['https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?w=800'],
+    property_uid: 'pr_JP.TOKYOTOWER01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r41', user_id: 'u41', reaction_type: 'like', created_at: '2024-05-01T10:30:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post4_2',
+    person_id: 'p_402',
+    created_at: '2024-05-10T15:00:00Z',
+    body_md: 'Announcing the **Shibuya Tech Hub** project. A new center for innovation in Tokyo.',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_JP.SHIBUYAHUB01',
+    post_type: 'NewListing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r42', user_id: 'u42', reaction_type: 'celebrate', created_at: '2024-05-10T15:30:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats4: PortfolioStats = {
+  total_gfa: 350000, // 200k + 150k
+  total_aum: 78000000, // $41M + $37M
+  deal_count: 2,
+  avg_deal_size: 39000000 // $78M / 2
+};
+
+// --- MOCK DATA SET 5 ---
+export const mockProperties5: Property[] = [
+  {
+    property_uid: 'pr_AU.SYDNEYWHARF01',
+    title: 'Sydney Wharf Offices',
+    address: '88 Wharf Rd, Sydney',
+    property_type: 'Office',
+    status: 'Stabilised',
+    headline_metric: '100% leased',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Asset Manager'],
+    deal_size: 52000000,
+    irr: 11.5,
+    completion_percentage: 100
+  },
+  {
+    property_uid: 'pr_AU.BONDIRESIDENCE01',
+    title: 'Bondi Beach Residences',
+    address: '101 Campbell Parade, Bondi Beach',
+    property_type: 'Residential',
+    status: 'Planning',
+    headline_metric: 'Planning phase',
+    images: [
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 34000000,
+    completion_percentage: 5
+  }
+];
+
+export const mockTimelinePosts5: TimelinePost[] = [
+  {
+    post_id: 'post5_1',
+    person_id: 'p_501',
+    created_at: '2024-06-01T09:00:00Z',
+    body_md: '**Sydney Wharf Offices** achieves 100% leasing. Thanks to our team and tenants!',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_AU.SYDNEYWHARF01',
+    post_type: 'Closing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r51', user_id: 'u51', reaction_type: 'love', created_at: '2024-06-01T09:30:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post5_2',
+    person_id: 'p_502',
+    created_at: '2024-06-10T13:00:00Z',
+    body_md: 'Planning approved for **Bondi Beach Residences**. Construction to start soon.',
+    media_urls: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'],
+    property_uid: 'pr_AU.BONDIRESIDENCE01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r52', user_id: 'u52', reaction_type: 'like', created_at: '2024-06-10T13:30:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats5: PortfolioStats = {
+  total_gfa: 310000, // 180k + 130k
+  total_aum: 86000000, // $52M + $34M
+  deal_count: 2,
+  avg_deal_size: 43000000 // $86M / 2
+};
+
+// --- MOCK DATA SET 6 ---
+export const mockProperties6: Property[] = [
+  {
+    property_uid: 'pr_BR.RIOCOMPLEX01',
+    title: 'Rio Business Complex',
+    address: '200 Av. Atlântica, Rio de Janeiro',
+    property_type: 'Office',
+    status: 'Under Construction',
+    headline_metric: '50% complete',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 39000000,
+    completion_percentage: 50
+  },
+  {
+    property_uid: 'pr_BR.COPACABANARES01',
+    title: 'Copacabana Residences',
+    address: '300 Rua Barata Ribeiro, Rio de Janeiro',
+    property_type: 'Residential',
+    status: 'Planning',
+    headline_metric: 'Planning phase',
+    images: [
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 27000000,
+    completion_percentage: 10
+  }
+];
+
+export const mockTimelinePosts6: TimelinePost[] = [
+  {
+    post_id: 'post6_1',
+    person_id: 'p_601',
+    created_at: '2024-07-01T08:00:00Z',
+    body_md: 'Halfway milestone reached at **Rio Business Complex**. On track for Q1 2025 delivery.',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_BR.RIOCOMPLEX01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r61', user_id: 'u61', reaction_type: 'like', created_at: '2024-07-01T08:30:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post6_2',
+    person_id: 'p_602',
+    created_at: '2024-07-10T12:00:00Z',
+    body_md: 'Excited to announce **Copacabana Residences**—luxury living in Rio. Sales open soon.',
+    media_urls: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'],
+    property_uid: 'pr_BR.COPACABANARES01',
+    post_type: 'NewListing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r62', user_id: 'u62', reaction_type: 'celebrate', created_at: '2024-07-10T12:30:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats6: PortfolioStats = {
+  total_gfa: 270000, // 150k + 120k
+  total_aum: 66000000, // $39M + $27M
+  deal_count: 2,
+  avg_deal_size: 33000000 // $66M / 2
+};
+
+// --- MOCK DATA SET 7 ---
+export const mockProperties7: Property[] = [
+  {
+    property_uid: 'pr_DE.BERLINLOFTS01',
+    title: 'Berlin Lofts',
+    address: '10 Alexanderplatz, Berlin',
+    property_type: 'Residential',
+    status: 'Under Construction',
+    headline_metric: '70% complete',
+    images: [
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 36000000,
+    completion_percentage: 70
+  },
+  {
+    property_uid: 'pr_DE.MITTEOFFICE01',
+    title: 'Mitte Office Center',
+    address: '20 Friedrichstrasse, Berlin',
+    property_type: 'Office',
+    status: 'Planning',
+    headline_metric: 'Planning phase',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Developer', 'Legal Counsel'],
+    deal_size: 31000000,
+    completion_percentage: 15
+  }
+];
+
+export const mockTimelinePosts7: TimelinePost[] = [
+  {
+    post_id: 'post7_1',
+    person_id: 'p_701',
+    created_at: '2024-08-01T10:00:00Z',
+    body_md: 'Construction at **Berlin Lofts** is 70% complete. Move-in expected by December.',
+    media_urls: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'],
+    property_uid: 'pr_DE.BERLINLOFTS01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r71', user_id: 'u71', reaction_type: 'like', created_at: '2024-08-01T10:30:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post7_2',
+    person_id: 'p_702',
+    created_at: '2024-08-10T14:00:00Z',
+    body_md: 'Introducing **Mitte Office Center**—a new business hub in Berlin. Leasing opens soon.',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_DE.MITTEOFFICE01',
+    post_type: 'NewListing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r72', user_id: 'u72', reaction_type: 'celebrate', created_at: '2024-08-10T14:30:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats7: PortfolioStats = {
+  total_gfa: 260000, // 140k + 120k
+  total_aum: 67000000, // $36M + $31M
+  deal_count: 2,
+  avg_deal_size: 33500000 // $67M / 2
+};
+
+// --- MOCK DATA SET 8 ---
+export const mockProperties8: Property[] = [
+  {
+    property_uid: 'pr_CA.TORONTOCENTRE01',
+    title: 'Toronto Centre Residences',
+    address: '123 Yonge St, Toronto',
+    property_type: 'Residential',
+    status: 'Planning',
+    headline_metric: 'Planning phase',
+    images: [
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 29000000,
+    completion_percentage: 10
+  },
+  {
+    property_uid: 'pr_CA.BAYSTREETTOWER01',
+    title: 'Bay Street Tower',
+    address: '200 Bay St, Toronto',
+    property_type: 'Office',
+    status: 'Under Construction',
+    headline_metric: '40% complete',
+    images: [
+      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'
+    ],
+    roles: ['Developer'],
+    deal_size: 43000000,
+    completion_percentage: 40
+  }
+];
+
+export const mockTimelinePosts8: TimelinePost[] = [
+  {
+    post_id: 'post8_1',
+    person_id: 'p_801',
+    created_at: '2024-09-01T09:00:00Z',
+    body_md: 'Planning underway for **Toronto Centre Residences**. Sales to open in October.',
+    media_urls: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'],
+    property_uid: 'pr_CA.TORONTOCENTRE01',
+    post_type: 'NewListing',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r81', user_id: 'u81', reaction_type: 'celebrate', created_at: '2024-09-01T09:30:00Z' }
+    ],
+    comments: []
+  },
+  {
+    post_id: 'post8_2',
+    person_id: 'p_802',
+    created_at: '2024-09-10T12:00:00Z',
+    body_md: 'Construction at **Bay Street Tower** reaches 40%. Leasing interest is high.',
+    media_urls: ['https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800'],
+    property_uid: 'pr_CA.BAYSTREETTOWER01',
+    post_type: 'ProgressUpdate',
+    sentiment: 'Bull',
+    visibility: 'Public',
+    reactions: [
+      { id: 'r82', user_id: 'u82', reaction_type: 'like', created_at: '2024-09-10T12:30:00Z' }
+    ],
+    comments: []
+  }
+];
+
+export const mockPortfolioStats8: PortfolioStats = {
+  total_gfa: 230000, // 110k + 120k
+  total_aum: 72000000, // $29M + $43M
+  deal_count: 2,
+  avg_deal_size: 36000000 // $72M / 2
+};

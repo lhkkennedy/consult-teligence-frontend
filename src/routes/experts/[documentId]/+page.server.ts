@@ -8,7 +8,8 @@ export const load: PageServerLoad = async ({ params }) => {
 	const docId = params.documentId;
 	if (!docId) throw error(400, 'Missing documentId');
 	const activeProfile = await fetchConsultant(docId);
-	const { items: timelineItems } = await fetchConsultantTimeline(docId, 1, 10);
-	const { items: properties } = await fetchConsultantProperties(docId, 1, 10);
+	const { items: timelineItems } = await fetchConsultantTimeline(docId);
+	const { items: properties } = await fetchConsultantProperties(docId);
+	console.log(properties)
 	return { activeProfile, timelineItems, properties };
 };

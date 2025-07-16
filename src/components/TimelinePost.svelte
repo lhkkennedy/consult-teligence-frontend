@@ -61,7 +61,10 @@
 
 	// Format date
 	function formatDate(dateString: string): string {
-		return formatDistanceToNow(new Date(dateString), { addSuffix: true });
+		if (!dateString) return "Unknown";
+		const date = new Date(dateString);
+		if (isNaN(date.getTime())) return "Unknown";
+		return formatDistanceToNow(date, { addSuffix: true });
 	}
 
 	// Get total reactions
@@ -79,7 +82,7 @@
 			</div>
 			<div>
 				<div class="flex items-center space-x-2">
-					<span class="font-semibold text-gray-900 dark:text-white">John Doe</span>
+					<span class="font-semibold text-gray-900 dark:text-white">{post.author_name || 'Unknown'}</span>
 					<span class="text-gray-500 dark:text-[#A0AEC0] text-sm">{formatDate(post.created_at)}</span>
 				</div>
 				<div class="flex items-center space-x-2 mt-1">

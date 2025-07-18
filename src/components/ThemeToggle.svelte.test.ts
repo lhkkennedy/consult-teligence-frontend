@@ -18,7 +18,7 @@ describe('ThemeToggle', () => {
   let mockThemeSubscribe: any;
   let mockToggleTheme: any;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
     
     // Get the mocked functions

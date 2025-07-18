@@ -1,6 +1,6 @@
-import { authToken } from '../stores/authStore';
+import { authToken } from './stores/authStore';
 import { get } from 'svelte/store';
-import type { FriendRequest, User, FriendSystemResponse, FriendsListResponse } from '../types';
+import type { FriendRequest, User, FriendSystemResponse, FriendsListResponse } from './types';
 
 const API_URL = import.meta.env.VITE_STRAPI_URL;
 

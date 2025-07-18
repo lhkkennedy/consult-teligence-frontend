@@ -5,7 +5,7 @@
 	import AddFriendButton from './AddFriendButton.svelte';
 	import type { Consultant } from '$lib/types.ts';
 	import { onMount } from 'svelte';
-	import { checkFriendshipStatus, sendFriendRequest } from '$lib/server/friends.server';
+	import { checkFriendshipStatus, sendFriendRequest } from '$lib/friends';
 	import { user } from '$lib/stores/authStore';
 
 	/** consultant data shape */

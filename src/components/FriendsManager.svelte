@@ -14,7 +14,7 @@
 		removeFriend,
 		sendFriendRequest,
 		checkFriendshipStatus
-	} from '$lib/server/friends.server';
+	} from '$lib/friends';
 
 	type Tab = 'requests' | 'sent' | 'friends';
 

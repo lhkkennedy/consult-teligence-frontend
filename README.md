@@ -1,58 +1,72 @@
-# Svelte library
+# Svelte Expert Profiles Platform
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+[![Build Status](#)](#) [![License](#)](#) [![Code Style](#)](#)
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+> **A platform for real estate professionals to showcase expertise, timelines, and property portfolios.**
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 🚀 Features
 
-```bash
-# create a new project in the current directory
-npx sv create
+| Feature                | Status    | Demo           |
+|------------------------|-----------|----------------|
+| Expert Profiles        | Complete  | [Demo](#try-it-now)      |
+| Timeline Feed          | Complete  | [Demo](#try-it-now)      |
+| Property Portfolio     | Complete  | [Demo](#try-it-now)      |
+| Authentication         | Partial   |                |
+| Search & Discovery     | Complete  |                |
+| Responsive Design      | Complete  |                |
+| API Integration        | Partial   |                |
 
-# create a new project in my-app
-npx sv create my-app
-```
+---
 
-## Developing
+## 🖼️ Screenshot
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+![screenshot](./screenshot.png)
 
-```bash
-npm run dev
+---
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## 🌐 Try It Now
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+[Live Demo](#) <!-- Replace # with your deployment link -->
 
-## Building
+---
 
-To build your library:
+## ⚡ Getting Started
 
-```bash
-npm run package
-```
+1. Clone the repo and install dependencies.
+2. Run `npm run dev` to start the app.
+3. For full setup and backend/API integration, see [PROJECT_REVIEW.md](./PROJECT_REVIEW.md).
 
-To create a production version of your showcase app:
+---
 
-```bash
-npm run build
-```
+## 🤝 How to Contribute
 
-You can preview the production build with `npm run preview`.
+- Fork the repo and create your branch.
+- Make your changes and add tests.
+- Run `npm run lint` and `npm run test`.
+- Open a pull request with a clear description.
+- See [CONTRIBUTING.md](./CONTRIBUTING.md) (if available) for more details.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Looking for your first issue? Check the [issues page](../../issues)!
 
-## Publishing
+---
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+## 🔌 API & Integration
 
-To publish your library to [npm](https://www.npmjs.com):
+- Works with mock data by default.
+- Ready for Strapi backend integration (see environment variables in [PROJECT_REVIEW.md](./PROJECT_REVIEW.md)).
+- For advanced usage, see the [full technical review](./PROJECT_REVIEW.md).
 
-```bash
-npm publish
-```
+---
+
+## 📬 Contact & Support
+
+- Maintainer: [Your Name/Team]
+- For issues, open a [GitHub issue](../../issues) or contact via [email/Slack/other].
+
+---
+
+## 📚 Full Technical Review
+
+For architecture, data models, advanced features, and roadmap, see [PROJECT_REVIEW.md](./PROJECT_REVIEW.md).

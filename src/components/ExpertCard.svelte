@@ -12,10 +12,13 @@
 	export let consultant: Consultant;
 
 	/** callback to parent when this card is clicked */
-	export let onSelect: (documentId: string) => void = () {};
+	export let onSelect: (documentId: string) => void;
 
 	let friendshipStatus: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends' = 'not_friends';
 	let loading = false;
+
+	// Ensure onSelect has a default value
+	$: onSelect = onSelect || (() => {});
 
 	onMount(async () => {
 		if ($user && $user.id !== consultant.id) {

@@ -149,3 +149,37 @@ export interface PortfolioStats {
 	deal_count: number;
 	avg_deal_size: number;
 }
+
+// Friend System Types
+export type FriendRequestStatus = 'pending' | 'accepted' | 'rejected';
+
+export interface FriendRequest {
+	id: number;
+	from: User;
+	to: User;
+	status: FriendRequestStatus;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface User {
+	id: number;
+	username: string;
+	email: string;
+	firstName?: string;
+	lastName?: string;
+	profileImage?: string;
+	company?: string;
+	currentRole?: string;
+	location?: string;
+}
+
+export interface FriendSystemResponse {
+	data: FriendRequest[];
+	meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } };
+}
+
+export interface FriendsListResponse {
+	data: User[];
+	meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } };
+}

@@ -2,13 +2,67 @@
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import BriefCase from '@lucide/svelte/icons/briefcase';
 	import DollarSign from '@lucide/svelte/icons/dollar-sign';
+	import AddFriendButton from './AddFriendButton.svelte';
 	import type { Consultant } from '$lib/types.ts';
-	/** consultant data shape */
+	import { onMount } from 'svelte';
+	import { checkFriendshipStatus, sendFriendRequest } from '$lib/server/friends.server';
+	import { user } from '$lib/stores/authStore';
 
+	/** consultant data shape */
 	export let consultant: Consultant;
 
 	/** callback to parent when this card is clicked */
-	export let onSelect: (documentId: string) => void = () => {};
+	export let onSelect: (documentId: string) => void = () {};
+
+	let friendshipStatus: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends' = 'not_friends';
+	let loading = false;
+
+	onMount(async () => {
+		if ($user && $user.id !== consultant.id) {
+			await loadFriendshipStatus();
+		}
+	});
+
+	async function loadFriendshipStatus() {
+		try {
+			const result = await checkFriendshipStatus(consultant.id);
+			if (result.status) {
+				friendshipStatus = result.status;
+			}
+		} catch (error) {
+			console.error('Failed to check friendship status:', error);
+		}
+	}
+
+	async function handleAddFriend(event: CustomEvent<{ userId: number }>) {
+		const { userId } = event.detail;
+		loading = true;
+
+		try {
+			const result = await sendFriendRequest(userId);
+			if (result.success) {
+				friendshipStatus = 'pending_sent';
+			} else {
+				console.error('Failed to send friend request:', result.error);
+			}
+		} catch (error) {
+			console.error('Failed to send friend request:', error);
+		} finally {
+			loading = false;
+		}
+	}
+
+	async function handleCancelRequest(event: CustomEvent<{ userId: number }>) {
+		// This would need to be implemented in the backend
+		// For now, just reset the status
+		friendshipStatus = 'not_friends';
+	}
+
+	async function handleAcceptRequest(event: CustomEvent<{ userId: number }>) {
+		// This would need to be implemented in the backend
+		// For now, just set as friends
+		friendshipStatus = 'friends';
+	}
 </script>
 
 <div
@@ -67,11 +121,23 @@
 		</div>
 	</div>
 
-	<button
-		type="button"
-		class="btn btn-primary mt-auto w-full bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
-		on:click|stopPropagation={() => onSelect(consultant.documentId)}
-	>
-		View Profile
-	</button>
+	<div class="flex gap-2 mt-auto">
+		{#if $user && $user.id !== consultant.id}
+			<AddFriendButton 
+				user={consultant} 
+				{friendshipStatus} 
+				{loading}
+				on:addFriend={handleAddFriend}
+				on:cancelRequest={handleCancelRequest}
+				on:acceptRequest={handleAcceptRequest}
+			/>
+		{/if}
+		<button
+			type="button"
+			class="btn btn-primary flex-1 bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
+			on:click|stopPropagation={() => onSelect(consultant.documentId)}
+		>
+			View Profile
+		</button>
+	</div>
 </div>

@@ -43,6 +43,11 @@
 		}
 	}
 
+	function handleFriends() {
+		showProfileMenu = false;
+		goto('/friends');
+	}
+
 	onMount(() => {
 		window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
@@ -129,6 +134,7 @@
 							<div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-[#23263a] ring-1 ring-black ring-opacity-5 z-50">
 								<div class="py-1">
 									<button class="w-full text-left px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" on:click={handleViewProfile}>View Profile</button>
+									<button class="w-full text-left px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" on:click={handleFriends}>My Network</button>
 									<button class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-800" on:click={handleLogout}>Logout</button>
 								</div>
 							</div>
@@ -202,6 +208,12 @@
 							on:click={() => { handleViewProfile(); toggleMenu(); }}
 						>
 							View Profile
+						</button>
+						<button
+							class="block w-full rounded border border-gray-300 dark:border-gray-600 px-4 py-2 text-center text-gray-700 dark:text-white transition hover:bg-gray-100 dark:hover:bg-gray-800"
+							on:click={() => { handleFriends(); toggleMenu(); }}
+						>
+							My Network
 						</button>
 						<button
 							class="block w-full rounded border border-red-500 px-4 py-2 text-center text-red-600 transition hover:bg-gray-100 dark:hover:bg-gray-800"

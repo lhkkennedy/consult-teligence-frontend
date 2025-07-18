@@ -12,13 +12,10 @@
 	export let consultant: Consultant;
 
 	/** callback to parent when this card is clicked */
-	export let onSelect: (documentId: string) => void;
+	export let onSelect: ((documentId: string) => void) | undefined = undefined;
 
 	let friendshipStatus: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends' = 'not_friends';
 	let loading = false;
-
-	// Ensure onSelect has a default value
-	$: onSelect = onSelect || (() => {});
 
 	onMount(async () => {
 		if ($user && $user.id !== consultant.id) {
@@ -72,11 +69,11 @@
 	role="button"
 	tabindex="0"
 	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] hover:border-accent-purple"
-	on:click={() => onSelect(consultant.documentId)}
-	on:keydown={(e) => {
+	on:click={() => onSelect?.(consultant.documentId)}
+			on:keydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
-			onSelect(consultant.documentId);
+			onSelect?.(consultant.documentId);
 		}
 	}}
 >
@@ -138,7 +135,7 @@
 		<button
 			type="button"
 			class="btn btn-primary flex-1 bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
-			on:click|stopPropagation={() => onSelect(consultant.documentId)}
+			on:click|stopPropagation={() => onSelect?.(consultant.documentId)}
 		>
 			View Profile
 		</button>

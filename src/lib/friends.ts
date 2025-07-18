@@ -14,7 +14,9 @@ function getAuthHeaders() {
 }
 
 // Send a friend request
-export async function sendFriendRequest(toUserId: number): Promise<{ success: boolean; error?: string }> {
+export async function sendFriendRequest(
+	toUserId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests`, {
 			method: 'POST',
@@ -40,7 +42,9 @@ export async function sendFriendRequest(toUserId: number): Promise<{ success: bo
 }
 
 // Accept a friend request
-export async function acceptFriendRequest(requestId: number): Promise<{ success: boolean; error?: string }> {
+export async function acceptFriendRequest(
+	requestId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests/${requestId}`, {
 			method: 'PUT',
@@ -65,7 +69,9 @@ export async function acceptFriendRequest(requestId: number): Promise<{ success:
 }
 
 // Reject a friend request
-export async function rejectFriendRequest(requestId: number): Promise<{ success: boolean; error?: string }> {
+export async function rejectFriendRequest(
+	requestId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests/${requestId}`, {
 			method: 'PUT',
@@ -90,7 +96,9 @@ export async function rejectFriendRequest(requestId: number): Promise<{ success:
 }
 
 // Remove a friend
-export async function removeFriend(friendId: number): Promise<{ success: boolean; error?: string }> {
+export async function removeFriend(
+	friendId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friends/${friendId}`, {
 			method: 'DELETE',
@@ -109,7 +117,10 @@ export async function removeFriend(friendId: number): Promise<{ success: boolean
 }
 
 // Get pending friend requests (received)
-export async function getPendingFriendRequests(): Promise<{ data: FriendRequest[]; error?: string }> {
+export async function getPendingFriendRequests(): Promise<{
+	data: FriendRequest[];
+	error?: string;
+}> {
 	try {
 		const response = await fetch(
 			`${API_URL}/api/friend-requests?populate[from][populate][0]=profileImage&populate[to][populate][0]=profileImage&filters[to][id][$eq]=${get(authToken) ? 'current' : 0}&filters[status][$eq]=pending`,
@@ -118,12 +129,11 @@ export async function getPendingFriendRequests(): Promise<{ data: FriendRequest[
 			}
 		);
 
-		const data: FriendSystemResponse = await response.json();
-
 		if (response.ok) {
+			const data: FriendSystemResponse = await response.json();
 			return { data: data.data };
 		} else {
-			return { data: [], error: data.error?.message || 'Failed to fetch friend requests' };
+			return { data: [], error: 'Failed to fetch friend requests' };
 		}
 	} catch (error) {
 		return { data: [], error: 'Network error' };
@@ -140,12 +150,11 @@ export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; 
 			}
 		);
 
-		const data: FriendSystemResponse = await response.json();
-
 		if (response.ok) {
+			const data: FriendSystemResponse = await response.json();
 			return { data: data.data };
 		} else {
-			return { data: [], error: data.error?.message || 'Failed to fetch sent requests' };
+			return { data: [], error: 'Failed to fetch sent requests' };
 		}
 	} catch (error) {
 		return { data: [], error: 'Network error' };
@@ -155,19 +164,15 @@ export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; 
 // Get friends list
 export async function getFriendsList(): Promise<{ data: User[]; error?: string }> {
 	try {
-		const response = await fetch(
-			`${API_URL}/api/friends?populate[profileImage]=*`,
-			{
-				headers: getAuthHeaders()
-			}
-		);
-
-		const data: FriendsListResponse = await response.json();
+		const response = await fetch(`${API_URL}/api/friends?populate[profileImage]=*`, {
+			headers: getAuthHeaders()
+		});
 
 		if (response.ok) {
+			const data: FriendsListResponse = await response.json();
 			return { data: data.data };
 		} else {
-			return { data: [], error: data.error?.message || 'Failed to fetch friends' };
+			return { data: [], error: 'Failed to fetch friends' };
 		}
 	} catch (error) {
 		return { data: [], error: 'Network error' };
@@ -175,15 +180,17 @@ export async function getFriendsList(): Promise<{ data: User[]; error?: string }
 }
 
 // Check if users are friends
-export async function checkFriendshipStatus(userId: number): Promise<{ status: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends'; error?: string }> {
+export async function checkFriendshipStatus(
+	userId: number
+): Promise<{
+	status: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends';
+	error?: string;
+}> {
 	try {
 		// Check if they are friends
-		const friendsResponse = await fetch(
-			`${API_URL}/api/friends?filters[user][id][$eq]=${userId}`,
-			{
-				headers: getAuthHeaders()
-			}
-		);
+		const friendsResponse = await fetch(`${API_URL}/api/friends?filters[user][id][$eq]=${userId}`, {
+			headers: getAuthHeaders()
+		});
 
 		if (friendsResponse.ok) {
 			const friendsData = await friendsResponse.json();

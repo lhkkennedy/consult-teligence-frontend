@@ -57,10 +57,13 @@
 	$: isDisabled = loading || friendshipStatus === 'friends';
 </script>
 
-<button 
+<button
 	class="add-friend-btn {buttonClass}"
-	on:click={friendshipStatus === 'pending_received' ? handleAcceptRequest : 
-		friendshipStatus === 'pending_sent' ? handleCancelRequest : handleAddFriend}
+	on:click={friendshipStatus === 'pending_received'
+		? handleAcceptRequest
+		: friendshipStatus === 'pending_sent'
+			? handleCancelRequest
+			: handleAddFriend}
 	disabled={isDisabled}
 >
 	{#if loading}

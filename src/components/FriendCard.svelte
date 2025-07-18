@@ -39,14 +39,9 @@
 			{/if}
 		</div>
 	</div>
-	
+
 	<div class="actions">
-		<button 
-			class="btn btn-remove" 
-			on:click={handleRemove}
-			disabled={loading}
-			title="Remove friend"
-		>
+		<button class="btn btn-remove" on:click={handleRemove} disabled={loading} title="Remove friend">
 			{loading ? 'Removing...' : '✕'}
 		</button>
 	</div>

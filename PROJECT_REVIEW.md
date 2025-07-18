@@ -1,6 +1,7 @@
 # Project Review: Svelte Expert Profiles Platform
 
 ## Overview
+
 A SvelteKit-based platform for showcasing real estate experts, their profiles, timelines of activity, and property portfolios. Designed as both a reusable component library and a demo application, with a focus on modularity, mock data, and extensibility for real-world API integration.
 
 ---
@@ -25,24 +26,25 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 
 ## Component Map
 
-| Component                    | Purpose/Props                                      | Parent(s)                |
-|------------------------------|----------------------------------------------------|--------------------------|
-| ExpertProfile.svelte         | Full expert profile, tabs, bio, contact, etc.      | [documentId]/+page.svelte|
-| ProfileTabs.svelte           | Tab navigation (Timeline, Properties)              | ExpertProfile, timeline-demo|
-| Timeline.svelte              | Timeline feed, post composer                       | ProfileTabs              |
-| TimelinePost.svelte          | Individual timeline post display                   | Timeline, GeneralTimeline|
-| Properties.svelte            | Property portfolio grid, metrics, filters          | ProfileTabs              |
-| GeneralTimeline.svelte       | Infinite scrolling timeline demo                   | timeline-demo            |
-| ExpertSearchForm/Results     | Search/filter experts, display results             | experts/+page.svelte     |
-| WorldMap, TagExplorer        | Visual exploration by geography/tags               | +page.svelte             |
-| KnowledgeCenter.svelte       | Article/insight display                            | +page.svelte             |
-| Header, Footer, Hero, etc.   | Layout and navigation                              | App shell                |
+| Component                  | Purpose/Props                                 | Parent(s)                    |
+| -------------------------- | --------------------------------------------- | ---------------------------- |
+| ExpertProfile.svelte       | Full expert profile, tabs, bio, contact, etc. | [documentId]/+page.svelte    |
+| ProfileTabs.svelte         | Tab navigation (Timeline, Properties)         | ExpertProfile, timeline-demo |
+| Timeline.svelte            | Timeline feed, post composer                  | ProfileTabs                  |
+| TimelinePost.svelte        | Individual timeline post display              | Timeline, GeneralTimeline    |
+| Properties.svelte          | Property portfolio grid, metrics, filters     | ProfileTabs                  |
+| GeneralTimeline.svelte     | Infinite scrolling timeline demo              | timeline-demo                |
+| ExpertSearchForm/Results   | Search/filter experts, display results        | experts/+page.svelte         |
+| WorldMap, TagExplorer      | Visual exploration by geography/tags          | +page.svelte                 |
+| KnowledgeCenter.svelte     | Article/insight display                       | +page.svelte                 |
+| Header, Footer, Hero, etc. | Layout and navigation                         | App shell                    |
 
 ---
 
 ## API Contract Examples
 
 ### Consultant (GET /api/consultants)
+
 ```json
 {
   "id": 1,
@@ -56,6 +58,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ```
 
 ### TimelinePost (GET /api/timeline-items)
+
 ```json
 {
   "post_id": "post_1",
@@ -71,6 +74,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ```
 
 ### Property (GET /api/properties)
+
 ```json
 {
   "property_uid": "pr_DE.ZH6XWP83",
@@ -83,6 +87,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Known Limitations / Technical Debt
+
 - All data is mock by default; real API integration is optional and not fully tested.
 - Error handling is minimal in some UI flows.
 - No pagination on expert search results.
@@ -94,6 +99,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Deployment/Environment Notes
+
 - Requires environment variables for Strapi integration:
   - `VITE_STRAPI_URL`
   - `VITE_STRAPI_TOKEN`
@@ -103,6 +109,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Design/UX Principles
+
 - Utility-first styling with Tailwind CSS.
 - Consistent dark mode and responsive layouts.
 - Accessible color contrasts and font sizes.
@@ -112,6 +119,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Testing Strategy
+
 - Unit tests: Vitest (see `test:unit` script).
 - E2E tests: Playwright (see `test:e2e` script).
 - Mock data used for most tests.
@@ -120,12 +128,14 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Release/Versioning Process
+
 - No formal release process; versioning is manual in `package.json`.
 - No changelog yet; recommend adding one for future releases.
 
 ---
 
 ## Contribution Guidelines
+
 - Use Prettier and ESLint for code style.
 - Write/extend unit and E2E tests for new features.
 - Use TypeScript for all new code.
@@ -135,6 +145,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Glossary
+
 - **GFA:** Gross Floor Area
 - **AUM:** Assets Under Management
 - **IRR:** Internal Rate of Return
@@ -146,6 +157,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## User/Persona Stories
+
 - **Real Estate Expert:** Wants to showcase their experience, deals, and insights to attract clients.
 - **Property Manager:** Wants to display managed properties and track updates.
 - **End User/Client:** Wants to find and vet experts by specialty, region, or track record.
@@ -154,23 +166,25 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Feature Matrix
-| Feature                        | Status      | User Roles         |
-|------------------------------- |------------ |-------------------|
-| Expert Profile Page            | Complete    | All                |
-| Timeline (Posts, Comments)     | Complete    | All                |
-| Properties Portfolio           | Complete    | All                |
-| Expert Search & Filter         | Complete    | All                |
-| World Map/Tag Explorer         | Complete    | All                |
-| Authentication (Login/Register)| Partial     | All                |
-| Real API Integration           | Partial     | All                |
-| Real-time Updates              | Planned     | All                |
-| Notifications                  | Planned     | All                |
-| Analytics                      | Planned     | Admin              |
-| Export/Download                | Planned     | All                |
+
+| Feature                         | Status   | User Roles |
+| ------------------------------- | -------- | ---------- |
+| Expert Profile Page             | Complete | All        |
+| Timeline (Posts, Comments)      | Complete | All        |
+| Properties Portfolio            | Complete | All        |
+| Expert Search & Filter          | Complete | All        |
+| World Map/Tag Explorer          | Complete | All        |
+| Authentication (Login/Register) | Partial  | All        |
+| Real API Integration            | Partial  | All        |
+| Real-time Updates               | Planned  | All        |
+| Notifications                   | Planned  | All        |
+| Analytics                       | Planned  | Admin      |
+| Export/Download                 | Planned  | All        |
 
 ---
 
 ## Error Handling & Edge Cases
+
 - Most fetches display a generic error message on failure.
 - Empty states are handled in timeline/properties grids.
 - No global error boundary; recommend adding for production.
@@ -179,6 +193,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Performance Considerations
+
 - Timeline and properties use local filtering/sorting for mock data.
 - Infinite scroll in timeline demo (GeneralTimeline.svelte).
 - Images are loaded via URLs; no lazy loading or optimization yet.
@@ -187,6 +202,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Security Considerations
+
 - Auth tokens stored in localStorage (improve for production).
 - No XSS/CSRF protection on mock/demo endpoints.
 - All API calls require secure HTTPS in production.
@@ -195,6 +211,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Accessibility (a11y)
+
 - Uses semantic HTML and ARIA roles where possible.
 - Color contrast and font size generally accessible.
 - No formal a11y audit; some components may need improvements (e.g., keyboard navigation, focus states).
@@ -202,18 +219,21 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Internationalization (i18n)
+
 - All text is in English; no i18n framework in place.
 - To add i18n: externalize strings, use a library like `svelte-i18n`.
 
 ---
 
 ## Analytics & Monitoring
+
 - No analytics or error monitoring implemented.
 - Recommend adding Sentry (errors) and Plausible/GA (usage) for production.
 
 ---
 
 ## Integration Points
+
 - Strapi backend for consultants, timeline, and properties (optional).
 - Lucide icons for UI.
 - Tailwind CSS for styling.
@@ -222,6 +242,7 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Migration/Upgrade Notes
+
 - SvelteKit, Tailwind, and dependencies are up-to-date as of June 2024.
 - If upgrading SvelteKit or Tailwind, check for breaking changes in config and scripts.
 - If switching backend, update server endpoints and data mapping functions.
@@ -229,17 +250,20 @@ A SvelteKit-based platform for showcasing real estate experts, their profiles, t
 ---
 
 ## Contact & Support
+
 - Maintainer: [Your Name/Team Here]
 - For issues, open a GitHub issue or contact via [email/Slack/other].
 
 ---
 
 ## Screenshots / Visuals
-*(Add screenshots or GIFs of the main UI features here for visual reference.)*
+
+_(Add screenshots or GIFs of the main UI features here for visual reference.)_
 
 ---
 
 ## Roadmap
+
 - Complete real API integration for all data.
 - Add real-time updates and notifications.
 - Expand analytics and admin features.

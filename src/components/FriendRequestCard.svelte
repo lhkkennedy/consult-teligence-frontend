@@ -40,20 +40,12 @@
 			{/if}
 		</div>
 	</div>
-	
+
 	<div class="actions">
-		<button 
-			class="btn btn-accept" 
-			on:click={handleAccept}
-			disabled={loading}
-		>
+		<button class="btn btn-accept" on:click={handleAccept} disabled={loading}>
 			{loading ? 'Accepting...' : 'Accept'}
 		</button>
-		<button 
-			class="btn btn-reject" 
-			on:click={handleReject}
-			disabled={loading}
-		>
+		<button class="btn btn-reject" on:click={handleReject} disabled={loading}>
 			{loading ? 'Rejecting...' : 'Reject'}
 		</button>
 	</div>

@@ -14,7 +14,7 @@
 	let selectedRegion: string | null = null;
 	let selectedCountry: string | null = null;
 
-	function handleExpertSelect(id: number) {
+	function handleExpertSelect(id: string) {
 		goto(`/experts/${id}`);
 	}
 

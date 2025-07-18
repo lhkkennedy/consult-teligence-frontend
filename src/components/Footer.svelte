@@ -2,7 +2,7 @@
 	import { specialties } from '$lib/mockData.ts';
 </script>
 
-<footer class="mt-16 bg-gray-100 dark:bg-[#1E2130] py-16">
+<footer class="mt-16 bg-gray-100 py-16 dark:bg-[#1E2130]">
 	<div class="container mx-auto px-6">
 		<div class="grid grid-cols-1 gap-12 md:grid-cols-4">
 			<div>
@@ -16,22 +16,40 @@
 			<div>
 				<h4 class="mb-4 text-lg font-medium text-gray-900 dark:text-white">Quick Links</h4>
 				<ul class="space-y-2">
-					<li><a href="/" class="text-gray-600 dark:text-[#A0AEC0] transition-colors hover:text-accent-purple dark:hover:text-white">Home</a></li>
 					<li>
-						<a href="/experts" class="text-gray-600 dark:text-[#A0AEC0] transition-colors hover:text-accent-purple dark:hover:text-white"
+						<a
+							href="/"
+							class="text-gray-600 transition-colors hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white"
+							>Home</a
+						>
+					</li>
+					<li>
+						<a
+							href="/experts"
+							class="text-gray-600 transition-colors hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white"
 							>Find Experts</a
 						>
 					</li>
 					<li>
-						<a href="/knowledge" class="text-gray-600 dark:text-[#A0AEC0] transition-colors hover:text-accent-purple dark:hover:text-white"
+						<a
+							href="/knowledge"
+							class="text-gray-600 transition-colors hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white"
 							>Knowledge Center</a
 						>
 					</li>
 					<li>
-						<a href="/about" class="text-gray-600 dark:text-[#A0AEC0] transition-colors hover:text-accent-purple dark:hover:text-white">About Us</a>
+						<a
+							href="/about"
+							class="text-gray-600 transition-colors hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white"
+							>About Us</a
+						>
 					</li>
 					<li>
-						<a href="/contact" class="text-gray-600 dark:text-[#A0AEC0] transition-colors hover:text-accent-purple dark:hover:text-white">Contact</a>
+						<a
+							href="/contact"
+							class="text-gray-600 transition-colors hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white"
+							>Contact</a
+						>
 					</li>
 				</ul>
 			</div>
@@ -43,7 +61,7 @@
 						<li>
 							<a
 								href="/experts?specialty={specialty}"
-								class="text-gray-600 dark:text-[#A0AEC0] transition-colors hover:text-accent-purple dark:hover:text-white"
+								class="text-gray-600 transition-colors hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white"
 							>
 								{specialty}
 							</a>
@@ -63,7 +81,9 @@
 			</div>
 		</div>
 
-		<div class="mt-12 border-t border-gray-300 dark:border-[#2D3748] pt-8 text-center text-gray-600 dark:text-[#A0AEC0]">
+		<div
+			class="mt-12 border-t border-gray-300 pt-8 text-center text-gray-600 dark:border-[#2D3748] dark:text-[#A0AEC0]"
+		>
 			<p>© 2025 Consulteligence. All rights reserved.</p>
 		</div>
 	</div>

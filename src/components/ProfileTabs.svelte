@@ -18,11 +18,16 @@
 
 <div class="profile-tabs">
 	<!-- Tab Navigation -->
-	<div class="flex border-b border-gray-200 dark:border-[#2D3748] mb-6 bg-white dark:bg-[#1E2130] rounded-t-lg">
+	<div
+		class="mb-6 flex rounded-t-lg border-b border-gray-200 bg-white dark:border-[#2D3748] dark:bg-[#1E2130]"
+	>
 		{#each tabs as tab}
 			<button
-				class="flex items-center space-x-2 px-6 py-3 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple {activeTab === tab.id ? 'text-accent-purple dark:text-white border-b-2 border-accent-purple dark:border-white' : 'text-gray-600 dark:text-[#A0AEC0] hover:text-accent-purple dark:hover:text-white'}"
-				on:click={() => activeTab = tab.id}
+				class="flex items-center space-x-2 px-6 py-3 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple {activeTab ===
+				tab.id
+					? 'border-b-2 border-accent-purple text-accent-purple dark:border-white dark:text-white'
+					: 'text-gray-600 hover:text-accent-purple dark:text-[#A0AEC0] dark:hover:text-white'}"
+				on:click={() => (activeTab = tab.id)}
 			>
 				<svelte:component this={tab.icon} size={18} />
 				<span>{tab.label}</span>
@@ -31,11 +36,11 @@
 	</div>
 
 	<!-- Tab Content -->
-	<div class="tab-content bg-white dark:bg-[#1E2130] rounded-b-lg">
+	<div class="tab-content rounded-b-lg bg-white dark:bg-[#1E2130]">
 		{#if activeTab === 'timeline'}
-			<Timeline timelineItems={timelineItems} />
+			<Timeline {timelineItems} />
 		{:else if activeTab === 'properties'}
-			<Properties properties={properties} />
+			<Properties {properties} />
 		{/if}
 	</div>
-</div> 
+</div>

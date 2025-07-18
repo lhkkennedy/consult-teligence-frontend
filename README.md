@@ -8,15 +8,15 @@
 
 ## 🚀 Features
 
-| Feature                | Status    | Demo           |
-|------------------------|-----------|----------------|
-| Expert Profiles        | Complete  | [Demo](#try-it-now)      |
-| Timeline Feed          | Complete  | [Demo](#try-it-now)      |
-| Property Portfolio     | Complete  | [Demo](#try-it-now)      |
-| Authentication         | Partial   |                |
-| Search & Discovery     | Complete  |                |
-| Responsive Design      | Complete  |                |
-| API Integration        | Partial   |                |
+| Feature            | Status   | Demo                |
+| ------------------ | -------- | ------------------- |
+| Expert Profiles    | Complete | [Demo](#try-it-now) |
+| Timeline Feed      | Complete | [Demo](#try-it-now) |
+| Property Portfolio | Complete | [Demo](#try-it-now) |
+| Authentication     | Partial  |                     |
+| Search & Discovery | Complete |                     |
+| Responsive Design  | Complete |                     |
+| API Integration    | Partial  |                     |
 
 ---
 

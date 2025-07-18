@@ -53,7 +53,8 @@ function getPropertyData(attr: Record<string, unknown>): TimelineItem['property_
 		property_type: prop.property_type,
 		status: prop.status,
 		headline_metric: prop.headline_metric,
-		images: prop.images?.data?.map((img: { attributes: { url: string } }) => img.attributes.url) || [],
+		images:
+			prop.images?.data?.map((img: { attributes: { url: string } }) => img.attributes.url) || [],
 		roles: prop.roles || [],
 		deal_size: prop.deal_size,
 		irr: prop.irr,
@@ -89,10 +90,10 @@ function mapStrapiTimelineItem(item: unknown): TimelineItem {
 	};
 }
 
-export async function fetchConsultantTimeline(personId: string): Promise<{ items: TimelineItem[]; meta: StrapiMeta }> {
-	const query =
-		`populate=*` + 
-		`&filters[author][documentId][$eq]=${personId}`;
+export async function fetchConsultantTimeline(
+	personId: string
+): Promise<{ items: TimelineItem[]; meta: StrapiMeta }> {
+	const query = `populate=*` + `&filters[author][documentId][$eq]=${personId}`;
 
 	const res = await fetch(`${BASE}/api/timeline-items?${query}`, {
 		headers: AUTH_HEADER

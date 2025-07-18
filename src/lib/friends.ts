@@ -1,8 +1,21 @@
 import { authToken } from './stores/authStore';
 import { get } from 'svelte/store';
 import type { FriendRequest, User, FriendSystemResponse, FriendsListResponse } from './types';
+import {
+	mockSendFriendRequest,
+	mockAcceptFriendRequest,
+	mockRejectFriendRequest,
+	mockRemoveFriend,
+	mockGetPendingFriendRequests,
+	mockGetSentFriendRequests,
+	mockGetFriendsList,
+	mockCheckFriendshipStatus
+} from './mockFriendsApi';
 
 const API_URL = import.meta.env.VITE_STRAPI_URL;
+
+// Check if we should use mock API
+const useMockApi = !API_URL || API_URL === 'undefined';
 
 // Helper function to get auth headers
 function getAuthHeaders() {
@@ -15,6 +28,10 @@ function getAuthHeaders() {
 
 // Send a friend request
 export async function sendFriendRequest(toUserId: number): Promise<{ success: boolean; error?: string }> {
+	if (useMockApi) {
+		return mockSendFriendRequest(toUserId);
+	}
+
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests`, {
 			method: 'POST',
@@ -41,6 +58,10 @@ export async function sendFriendRequest(toUserId: number): Promise<{ success: bo
 
 // Accept a friend request
 export async function acceptFriendRequest(requestId: number): Promise<{ success: boolean; error?: string }> {
+	if (useMockApi) {
+		return mockAcceptFriendRequest(requestId);
+	}
+
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests/${requestId}`, {
 			method: 'PUT',
@@ -66,6 +87,10 @@ export async function acceptFriendRequest(requestId: number): Promise<{ success:
 
 // Reject a friend request
 export async function rejectFriendRequest(requestId: number): Promise<{ success: boolean; error?: string }> {
+	if (useMockApi) {
+		return mockRejectFriendRequest(requestId);
+	}
+
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests/${requestId}`, {
 			method: 'PUT',
@@ -91,6 +116,10 @@ export async function rejectFriendRequest(requestId: number): Promise<{ success:
 
 // Remove a friend
 export async function removeFriend(friendId: number): Promise<{ success: boolean; error?: string }> {
+	if (useMockApi) {
+		return mockRemoveFriend(friendId);
+	}
+
 	try {
 		const response = await fetch(`${API_URL}/api/friends/${friendId}`, {
 			method: 'DELETE',
@@ -110,6 +139,10 @@ export async function removeFriend(friendId: number): Promise<{ success: boolean
 
 // Get pending friend requests (received)
 export async function getPendingFriendRequests(): Promise<{ data: FriendRequest[]; error?: string }> {
+	if (useMockApi) {
+		return mockGetPendingFriendRequests();
+	}
+
 	try {
 		const response = await fetch(
 			`${API_URL}/api/friend-requests?populate[from][populate][0]=profileImage&populate[to][populate][0]=profileImage&filters[to][id][$eq]=${get(authToken) ? 'current' : 0}&filters[status][$eq]=pending`,
@@ -132,6 +165,10 @@ export async function getPendingFriendRequests(): Promise<{ data: FriendRequest[
 
 // Get sent friend requests
 export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; error?: string }> {
+	if (useMockApi) {
+		return mockGetSentFriendRequests();
+	}
+
 	try {
 		const response = await fetch(
 			`${API_URL}/api/friend-requests?populate[from][populate][0]=profileImage&populate[to][populate][0]=profileImage&filters[from][id][$eq]=${get(authToken) ? 'current' : 0}&filters[status][$eq]=pending`,
@@ -154,6 +191,10 @@ export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; 
 
 // Get friends list
 export async function getFriendsList(): Promise<{ data: User[]; error?: string }> {
+	if (useMockApi) {
+		return mockGetFriendsList();
+	}
+
 	try {
 		const response = await fetch(
 			`${API_URL}/api/friends?populate[profileImage]=*`,
@@ -176,6 +217,10 @@ export async function getFriendsList(): Promise<{ data: User[]; error?: string }
 
 // Check if users are friends
 export async function checkFriendshipStatus(userId: number): Promise<{ status: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends'; error?: string }> {
+	if (useMockApi) {
+		return mockCheckFriendshipStatus(userId);
+	}
+
 	try {
 		// Check if they are friends
 		const friendsResponse = await fetch(

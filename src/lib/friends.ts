@@ -250,6 +250,9 @@ export async function checkFriendshipStatus(
 				return { status: 'pending_received' };
 			}
 		}
+	} catch (error) {
+		// Continue to the next try block if this fails
+	}
 
 	try {
 		const response = await fetch(

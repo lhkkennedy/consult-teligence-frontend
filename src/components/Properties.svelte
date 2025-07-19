@@ -185,9 +185,11 @@
 	<!-- Properties Grid -->
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#each sortedProperties as property}
+		<div>{JSON.stringify(property)}</div>
 			<div class="bg-white dark:bg-[#1E2130] border border-gray-200 dark:border-[#2D3748] rounded-lg overflow-hidden hover:border-accent-purple transition-colors flex flex-col h-full">
 				<!-- Property Image -->
 				<div class="relative h-48 bg-gray-100 dark:bg-[#2D3748]">
+					<div>{property.media_urls}</div>
 					{#if property.media_urls && property.media_urls.length > 0}
 						{#if typeof property.media_urls[0] === 'string'}
 							<img src={property.media_urls[0]} alt={property.title} class="w-full h-full object-cover" />

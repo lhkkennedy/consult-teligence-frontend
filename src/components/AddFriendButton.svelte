@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import type { User } from '$lib/types';
+	import type { Consultant } from '$lib/types';
 
-	export let user: User;
+	export let user: Consultant;
 	export let friendshipStatus: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends';
 	export let loading = false;
 
@@ -13,15 +13,21 @@
 	}>();
 
 	function handleAddFriend() {
-		dispatch('addFriend', { userId: user.id });
+		if (user.user) {
+			dispatch('addFriend', { userId: user.user.id });
+		}
 	}
 
 	function handleCancelRequest() {
-		dispatch('cancelRequest', { userId: user.id });
+		if (user.user) {
+			dispatch('cancelRequest', { userId: user.user.id });
+		}
 	}
 
 	function handleAcceptRequest() {
-		dispatch('acceptRequest', { userId: user.id });
+		if (user.user) {
+			dispatch('acceptRequest', { userId: user.user.id });
+		}
 	}
 
 	$: buttonText = (() => {

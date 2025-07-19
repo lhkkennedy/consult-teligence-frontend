@@ -18,16 +18,18 @@
 	let loading = false;
 
 	onMount(async () => {
-		if ($user && $user.id !== consultant.id) {
+		if ($user && consultant.user && $user.id !== consultant.user.id) {
 			await loadFriendshipStatus();
 		}
 	});
 
 	async function loadFriendshipStatus() {
 		try {
-			const result = await checkFriendshipStatus(consultant.id);
-			if (result.status) {
-				friendshipStatus = result.status;
+			if (consultant.user) {
+				const result = await checkFriendshipStatus(consultant.user.id);
+				if (result.status) {
+					friendshipStatus = result.status;
+				}
 			}
 		} catch (error) {
 			console.error('Failed to check friendship status:', error);
@@ -122,7 +124,7 @@
 	</div>
 
 	<div class="flex gap-2 mt-auto">
-		{#if $user && $user.id !== consultant.id}
+		{#if $user && consultant.user && $user.id !== consultant.user.id}
 			<AddFriendButton 
 				user={consultant} 
 				{friendshipStatus} 

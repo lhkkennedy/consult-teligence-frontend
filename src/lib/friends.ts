@@ -1,12 +1,26 @@
 import { authToken } from './stores/authStore';
 import { get } from 'svelte/store';
 import type { FriendRequest, User, FriendSystemResponse, FriendsListResponse } from './types';
+import {
+	mockSendFriendRequest,
+	mockAcceptFriendRequest,
+	mockRejectFriendRequest,
+	mockRemoveFriend,
+	mockGetPendingFriendRequests,
+	mockGetSentFriendRequests,
+	mockGetFriendsList,
+	mockCheckFriendshipStatus
+} from './mockFriendsApi';
 
 const API_URL = import.meta.env.VITE_STRAPI_URL;
+
+// Check if we should use mock API
+const useMockApi = !API_URL || API_URL === 'undefined';
 
 // Helper function to get auth headers
 function getAuthHeaders() {
 	const token = get(authToken);
+	console.log('Auth token:', token ? 'Present' : 'Missing');
 	return {
 		'Content-Type': 'application/json',
 		...(token && { Authorization: `Bearer ${token}` })
@@ -18,18 +32,31 @@ export async function sendFriendRequest(
 	toUserId: number
 ): Promise<{ success: boolean; error?: string }> {
 	try {
+		const requestBody = {
+			data: {
+				to: toUserId
+			}
+		};
+		
+		const token = get(authToken);
+		console.log('Sending friend request:', {
+			url: `${API_URL}/api/friend-requests`,
+			toUserId: toUserId,
+			toUserIdType: typeof toUserId,
+			currentUserToken: token ? 'Present' : 'Missing',
+			body: requestBody,
+			headers: getAuthHeaders()
+		});
+		
 		const response = await fetch(`${API_URL}/api/friend-requests`, {
 			method: 'POST',
 			headers: getAuthHeaders(),
-			body: JSON.stringify({
-				data: {
-					to: toUserId,
-					status: 'pending'
-				}
-			})
+			body: JSON.stringify(requestBody)
 		});
 
+		console.log('Response status:', response.status);
 		const data = await response.json();
+		console.log('Response data:', data);
 
 		if (response.ok) {
 			return { success: true };
@@ -96,6 +123,7 @@ export async function rejectFriendRequest(
 }
 
 // Remove a friend
+
 export async function removeFriend(
 	friendId: number
 ): Promise<{ success: boolean; error?: string }> {
@@ -117,13 +145,14 @@ export async function removeFriend(
 }
 
 // Get pending friend requests (received)
+
 export async function getPendingFriendRequests(): Promise<{
 	data: FriendRequest[];
 	error?: string;
 }> {
 	try {
 		const response = await fetch(
-			`${API_URL}/api/friend-requests?populate[from][populate][0]=profileImage&populate[to][populate][0]=profileImage&filters[to][id][$eq]=${get(authToken) ? 'current' : 0}&filters[status][$eq]=pending`,
+			`${API_URL}/api/friend-requests/pending`,
 			{
 				headers: getAuthHeaders()
 			}
@@ -142,9 +171,13 @@ export async function getPendingFriendRequests(): Promise<{
 
 // Get sent friend requests
 export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; error?: string }> {
+	if (useMockApi) {
+		return mockGetSentFriendRequests();
+	}
+
 	try {
 		const response = await fetch(
-			`${API_URL}/api/friend-requests?populate[from][populate][0]=profileImage&populate[to][populate][0]=profileImage&filters[from][id][$eq]=${get(authToken) ? 'current' : 0}&filters[status][$eq]=pending`,
+			`${API_URL}/api/friend-requests/sent`,
 			{
 				headers: getAuthHeaders()
 			}
@@ -163,6 +196,10 @@ export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; 
 
 // Get friends list
 export async function getFriendsList(): Promise<{ data: User[]; error?: string }> {
+	if (useMockApi) {
+		return mockGetFriendsList();
+	}
+
 	try {
 		const response = await fetch(`${API_URL}/api/friends?populate[profileImage]=*`, {
 			headers: getAuthHeaders()
@@ -214,22 +251,29 @@ export async function checkFriendshipStatus(
 			}
 		}
 
-		// Check for sent requests
-		const sentResponse = await fetch(
-			`${API_URL}/api/friend-requests?filters[status][$eq]=pending&filters[from][id][$eq]=${get(authToken) ? 'current' : 0}&filters[to][id][$eq]=${userId}`,
+	try {
+		const response = await fetch(
+			`${API_URL}/api/friends/status/${userId}`,
 			{
 				headers: getAuthHeaders()
 			}
 		);
 
-		if (sentResponse.ok) {
-			const sentData = await sentResponse.json();
-			if (sentData.data && sentData.data.length > 0) {
-				return { status: 'pending_sent' };
+		if (response.ok) {
+			const data = await response.json();
+			switch (data.status) {
+				case 'friends':
+					return { status: 'friends' };
+				case 'request_sent':
+					return { status: 'pending_sent' };
+				case 'request_received':
+					return { status: 'pending_received' };
+				default:
+					return { status: 'not_friends' };
 			}
+		} else {
+			return { status: 'not_friends', error: 'Failed to check friendship status' };
 		}
-
-		return { status: 'not_friends' };
 	} catch (error) {
 		return { status: 'not_friends', error: 'Network error' };
 	}

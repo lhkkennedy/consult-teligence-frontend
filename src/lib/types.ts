@@ -3,6 +3,11 @@
 export interface Consultant {
 	documentId: string;
 	id: number;
+	user?: {
+		id: number;
+		username: string;
+		email: string;
+	};
 	firstName: string;
 	lastName: string;
 	location: string;
@@ -67,6 +72,11 @@ export interface SearchFilters {
 export interface RawConsultant {
 	id: number;
 	documentId: string;
+	user?: {
+		id: number;
+		username: string;
+		email: string;
+	};
 	firstName: string;
 	lastName: string;
 	location: string;
@@ -179,6 +189,7 @@ export interface User {
 	company?: string;
 	currentRole?: string;
 	location?: string;
+	documentId?: string; // For navigation to expert profiles
 }
 
 export interface FriendSystemResponse {

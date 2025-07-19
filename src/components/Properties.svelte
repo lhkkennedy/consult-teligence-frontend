@@ -217,6 +217,7 @@
 			>
 				<!-- Property Image -->
 				<div class="relative h-48 bg-gray-100 dark:bg-[#2D3748]">
+					<div>{property.media_urls}</div>
 					{#if property.media_urls && property.media_urls.length > 0}
 						{#if typeof property.media_urls[0] === 'string'}
 							<img

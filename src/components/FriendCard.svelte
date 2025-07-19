@@ -1,21 +1,22 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import type { User } from '$lib/types';
 
 	export let friend: User;
 	export let loading = false;
-
-	const dispatch = createEventDispatcher<{
-		remove: { friendId: number };
-		viewProfile: { friendId: number };
-	}>();
+	export let onRemove: (friendId: number) => void;
+	export let onViewProfile: (documentId: string | number) => void;
 
 	function handleRemove() {
-		dispatch('remove', { friendId: friend.id });
+		onRemove(friend.id);
 	}
 
 	function handleViewProfile() {
-		dispatch('viewProfile', { friendId: friend.id });
+		if (friend.documentId) {
+			onViewProfile(friend.documentId);
+		} else {
+			// Fallback to numeric ID if documentId is not available
+			onViewProfile(friend.id);
+		}
 	}
 
 	$: fullName = `${friend.firstName || ''} ${friend.lastName || ''}`.trim() || friend.username;

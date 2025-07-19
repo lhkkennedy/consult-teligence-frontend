@@ -1,26 +1,22 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import type { FriendRequest } from '$lib/types';
 
 	export let request: FriendRequest;
 	export let loading = false;
-
-	const dispatch = createEventDispatcher<{
-		accept: { requestId: number };
-		reject: { requestId: number };
-	}>();
+	export let onAccept: (requestId: number) => void;
+	export let onReject: (requestId: number) => void;
 
 	function handleAccept() {
-		dispatch('accept', { requestId: request.id });
+		onAccept(request.id);
 	}
 
 	function handleReject() {
-		dispatch('reject', { requestId: request.id });
+		onReject(request.id);
 	}
 
-	$: user = request.from;
-	$: fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username;
-	$: profileImageUrl = user.profileImage || '/default-avatar.png';
+	$: user = request?.from || {};
+	$: fullName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username || 'Unknown User' : 'Unknown User';
+	$: profileImageUrl = user?.profileImage || '/default-avatar.png';
 </script>
 
 <div class="friend-request-card">
@@ -28,14 +24,14 @@
 		<img src={profileImageUrl} alt={fullName} class="avatar" />
 		<div class="user-details">
 			<h4 class="name">{fullName}</h4>
-			{#if user.company && user.currentRole}
+			{#if user?.company && user?.currentRole}
 				<p class="role">{user.currentRole} at {user.company}</p>
-			{:else if user.company}
+			{:else if user?.company}
 				<p class="role">{user.company}</p>
-			{:else if user.currentRole}
+			{:else if user?.currentRole}
 				<p class="role">{user.currentRole}</p>
 			{/if}
-			{#if user.location}
+			{#if user?.location}
 				<p class="location">📍 {user.location}</p>
 			{/if}
 		</div>

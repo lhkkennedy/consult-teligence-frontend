@@ -3,9 +3,15 @@
 	import { user } from '$lib/stores/authStore';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { setupMockAuth, isMockAuthSet } from '$lib/mockAuth';
 
 	onMount(() => {
-		// Redirect to login if not authenticated
+		// If no user is authenticated and we're in mock mode, set up mock auth
+		if (!$user && !isMockAuthSet()) {
+			setupMockAuth();
+		}
+		
+		// Redirect to login if still not authenticated
 		if (!$user) {
 			goto('/login');
 		}

@@ -32,7 +32,7 @@
 		showAll = false;
 	}
 
-	function handleExpertSelect(id: number) {
+	function handleExpertSelect(id: string) {
 		goto(`/experts/${id}`);
 	}
 

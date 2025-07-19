@@ -5,18 +5,18 @@
 	import type { Consultant } from '$lib/types.ts';
 
 	export let consultant: Consultant;
-	export let onSelect: (id: number) => void = () => {};
+	export let onSelect: (id: string) => void = () => {};
 </script>
 
 <div
 	role="button"
 	tabindex="0"
-	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] hover:border-accent-purple"
-	on:click={() => onSelect(consultant.id)}
+	class="expert-card flex h-full cursor-pointer flex-col border border-gray-200 bg-white transition-all duration-300 hover:border-accent-purple dark:border-[#2D3748] dark:bg-[#1E2130]"
+	on:click={() => onSelect(consultant.documentId)}
 	on:keydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
-			onSelect(consultant.id);
+			onSelect(consultant.documentId);
 		}
 	}}
 >
@@ -70,13 +70,13 @@
 
 	<!-- MIDDLE ROW: Expertise badge + stars -->
 	<div
-		class="flex items-center justify-between rounded-b-lg border-t border-gray-200 dark:border-border-gray px-6 pb-4 pt-4"
+		class="flex items-center justify-between rounded-b-lg border-t border-gray-200 px-6 pb-4 pt-4 dark:border-border-gray"
 	>
 		<div class="flex flex-wrap gap-2">
 			{#each consultant.functionalExpertise as exp}
 				<button
 					type="button"
-					class="rounded-sm bg-gray-100 dark:bg-secondary-bg px-3 py-1 text-sm text-gray-700 dark:text-text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+					class="rounded-sm bg-gray-100 px-3 py-1 text-sm text-gray-700 hover:bg-gray-200 dark:bg-secondary-bg dark:text-text-primary dark:hover:bg-gray-700"
 					on:click={() => console.log('filter by', exp)}
 				>
 					{exp}

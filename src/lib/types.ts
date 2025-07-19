@@ -48,7 +48,14 @@ export interface CaseStudy {
 }
 
 // Basic types for regions, countries, and specialties
-export type Region = 'North America' | 'South America' | 'Europe' | 'Africa' | 'Asia' | 'Middle East' | 'Oceania';
+export type Region =
+	| 'North America'
+	| 'South America'
+	| 'Europe'
+	| 'Africa'
+	| 'Asia'
+	| 'Middle East'
+	| 'Oceania';
 export type Country = string;
 export type Specialty = string;
 export type SubSpecialty = string;

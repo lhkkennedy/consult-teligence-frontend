@@ -21,7 +21,9 @@
 		<div class="w-full md:w-1/3">
 			<div class="sticky top-24 space-y-6">
 				<!-- Profile Card -->
-				<div class="rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] p-6">
+				<div
+					class="rounded-lg border border-gray-200 bg-white p-6 dark:border-[#2D3748] dark:bg-[#1E2130]"
+				>
 					<div class="mb-6 text-center">
 						<!-- Profile Image -->
 						{#if activeProfile.profileImage}
@@ -59,7 +61,7 @@
 						</div>
 					</div>
 
-					<div class="border-t border-gray-200 dark:border-[#2D3748] pt-6">
+					<div class="border-t border-gray-200 pt-6 dark:border-[#2D3748]">
 						<h3 class="mb-4 text-lg font-semibold">Contact Information</h3>
 
 						{#if activeProfile.contactInfo}
@@ -95,14 +97,19 @@
 						{/if}
 
 						<div class="mt-6">
-							<button class="btn btn-primary mb-3 w-full bg-accent-purple text-white dark:bg-accent-purple dark:text-white">Contact Expert</button>
+							<button
+								class="btn btn-primary mb-3 w-full bg-accent-purple text-white dark:bg-accent-purple dark:text-white"
+								>Contact Expert</button
+							>
 							<button class="btn btn-secondary w-full">Schedule Consultation</button>
 						</div>
 					</div>
 				</div>
 
 				<!-- About & Expertise -->
-				<div class="rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] p-6">
+				<div
+					class="rounded-lg border border-gray-200 bg-white p-6 dark:border-[#2D3748] dark:bg-[#1E2130]"
+				>
 					<div class="mb-4 flex items-center">
 						<BriefCase size={20} class="mr-2" />
 						<h3 class="text-xl font-semibold">About & Expertise</h3>
@@ -145,7 +152,10 @@
 							</h4>
 							<div class="flex flex-wrap gap-2">
 								{#each activeProfile.languages as language}
-									<span class="rounded-full bg-gray-200 dark:bg-[#2D3748] px-3 py-1 text-gray-600 dark:text-[#A0AEC0]">{language}</span>
+									<span
+										class="rounded-full bg-gray-200 px-3 py-1 text-gray-600 dark:bg-[#2D3748] dark:text-[#A0AEC0]"
+										>{language}</span
+									>
 								{/each}
 							</div>
 						</div>
@@ -154,7 +164,9 @@
 
 				<!-- Case Studies -->
 				{#if activeProfile.caseStudies && activeProfile.caseStudies.length > 0}
-					<div class="rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] p-6">
+					<div
+						class="rounded-lg border border-gray-200 bg-white p-6 dark:border-[#2D3748] dark:bg-[#1E2130]"
+					>
 						<div class="mb-4 flex items-center">
 							<Book size={20} class="mr-2" />
 							<h3 class="text-xl font-semibold">Case Studies</h3>
@@ -162,7 +174,9 @@
 
 						<div class="space-y-6">
 							{#each activeProfile.caseStudies as caseStudy}
-								<div class="border-b border-gray-200 dark:border-[#2D3748] pb-6 last:border-0 last:pb-0">
+								<div
+									class="border-b border-gray-200 pb-6 last:border-0 last:pb-0 dark:border-[#2D3748]"
+								>
 									<h4 class="mb-2 text-lg font-medium">{caseStudy.title}</h4>
 									<p class="text-gray-600 dark:text-[#A0AEC0]">{caseStudy.description}</p>
 								</div>
@@ -173,7 +187,9 @@
 
 				<!-- Testimonials -->
 				{#if activeProfile.testimonials && activeProfile.testimonials.length > 0}
-					<div class="rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] p-6">
+					<div
+						class="rounded-lg border border-gray-200 bg-white p-6 dark:border-[#2D3748] dark:bg-[#1E2130]"
+					>
 						<div class="mb-4 flex items-center">
 							<MessageCircle size={20} class="mr-2" />
 							<h3 class="text-xl font-semibold">Testimonials</h3>
@@ -181,7 +197,9 @@
 
 						<div class="space-y-6">
 							{#each activeProfile.testimonials as testimonial}
-								<div class="border-b border-gray-200 dark:border-[#2D3748] pb-6 last:border-0 last:pb-0">
+								<div
+									class="border-b border-gray-200 pb-6 last:border-0 last:pb-0 dark:border-[#2D3748]"
+								>
 									<p class="mb-3 italic text-gray-600 dark:text-[#A0AEC0]">"{testimonial.text}"</p>
 									<div>
 										<p class="font-medium">{testimonial.name}</p>
@@ -197,8 +215,10 @@
 
 		<!-- Right Column - Timeline and Properties Tabs -->
 		<div class="w-full md:w-2/3">
-			<div class="rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] p-6">
-				<ProfileTabs personId={activeProfile.documentId} timelineItems={timelineItems} properties={properties} />
+			<div
+				class="rounded-lg border border-gray-200 bg-white p-6 dark:border-[#2D3748] dark:bg-[#1E2130]"
+			>
+				<ProfileTabs personId={activeProfile.documentId} {timelineItems} {properties} />
 			</div>
 		</div>
 	</div>

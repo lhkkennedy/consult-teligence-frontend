@@ -10,6 +10,6 @@ export const load: PageServerLoad = async ({ params }) => {
 	const activeProfile = await fetchConsultant(docId);
 	const { items: timelineItems } = await fetchConsultantTimeline(docId);
 	const { items: properties } = await fetchConsultantProperties(docId);
-	console.log(properties)
+	console.log(properties);
 	return { activeProfile, timelineItems, properties };
 };

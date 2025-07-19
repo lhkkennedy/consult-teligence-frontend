@@ -62,9 +62,9 @@
 			const result = await acceptFriendRequest(requestId);
 			if (result.success) {
 				// Remove from pending requests and add to friends
-				const request = pendingRequests.find(r => r.id === requestId);
+				const request = pendingRequests.find((r) => r.id === requestId);
 				if (request) {
-					pendingRequests = pendingRequests.filter(r => r.id !== requestId);
+					pendingRequests = pendingRequests.filter((r) => r.id !== requestId);
 					friends = [...friends, request.from];
 				}
 			} else {
@@ -83,7 +83,7 @@
 		try {
 			const result = await rejectFriendRequest(requestId);
 			if (result.success) {
-				pendingRequests = pendingRequests.filter(r => r.id !== requestId);
+				pendingRequests = pendingRequests.filter((r) => r.id !== requestId);
 			} else {
 				error = result.error || 'Failed to reject request';
 			}
@@ -100,7 +100,7 @@
 		try {
 			const result = await removeFriend(friendId);
 			if (result.success) {
-				friends = friends.filter(f => f.id !== friendId);
+				friends = friends.filter((f) => f.id !== friendId);
 			} else {
 				error = result.error || 'Failed to remove friend';
 			}
@@ -135,19 +135,16 @@
 	{/if}
 
 	<div class="tabs">
-		<button 
+		<button
 			class="tab {activeTab === 'requests' ? 'active' : ''}"
 			on:click={() => setTab('requests')}
 		>
 			Friend Requests ({pendingRequests.length})
 		</button>
-		<button 
-			class="tab {activeTab === 'sent' ? 'active' : ''}"
-			on:click={() => setTab('sent')}
-		>
+		<button class="tab {activeTab === 'sent' ? 'active' : ''}" on:click={() => setTab('sent')}>
 			Sent Requests ({sentRequests.length})
 		</button>
-		<button 
+		<button
 			class="tab {activeTab === 'friends' ? 'active' : ''}"
 			on:click={() => setTab('friends')}
 		>
@@ -164,8 +161,8 @@
 					</div>
 				{:else}
 					{#each pendingRequests as request (request.id)}
-						<FriendRequestCard 
-							{request} 
+						<FriendRequestCard
+							{request}
 							{loading}
 							onAccept={handleAcceptRequest}
 							onReject={handleRejectRequest}
@@ -183,7 +180,11 @@
 					{#each sentRequests as request (request.id)}
 						<div class="sent-request-card">
 							<div class="user-info">
-								<img src={request.to.profileImage || '/default-avatar.png'} alt={request.to.username} class="avatar" />
+								<img
+									src={request.to.profileImage || '/default-avatar.png'}
+									alt={request.to.username}
+									class="avatar"
+								/>
 								<div class="user-details">
 									<h4 class="name">{request.to.firstName} {request.to.lastName}</h4>
 									{#if request.to.company}
@@ -206,8 +207,8 @@
 					</div>
 				{:else}
 					{#each friends as friend (friend.id)}
-						<FriendCard 
-							{friend} 
+						<FriendCard
+							{friend}
 							{loading}
 							onRemove={handleRemoveFriend}
 							onViewProfile={handleViewProfile}

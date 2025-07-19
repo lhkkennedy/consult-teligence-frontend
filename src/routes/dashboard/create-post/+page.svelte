@@ -23,7 +23,11 @@
 
 	const postTypes: { value: PostType; label: string; description: string }[] = [
 		{ value: 'NewListing', label: 'New Listing', description: 'Announce a new property listing' },
-		{ value: 'ProgressUpdate', label: 'Progress Update', description: 'Share construction or development progress' },
+		{
+			value: 'ProgressUpdate',
+			label: 'Progress Update',
+			description: 'Share construction or development progress'
+		},
 		{ value: 'Closing', label: 'Closing', description: 'Announce a successful deal closure' },
 		{ value: 'Insight', label: 'Market Insight', description: 'Share market analysis or insights' },
 		{ value: 'Generic', label: 'General Post', description: 'General update or announcement' }
@@ -95,7 +99,7 @@
 		if (files && files.length > 0) {
 			// In a real app, you would upload to your server/cloud storage
 			// For now, we'll create mock URLs
-			Array.from(files).forEach(file => {
+			Array.from(files).forEach((file) => {
 				const mockUrl = URL.createObjectURL(file);
 				formData.media_urls = [...formData.media_urls, mockUrl];
 			});
@@ -115,32 +119,34 @@
 </script>
 
 <div class="min-h-screen bg-gray-50 dark:bg-[#0F1419]">
-	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+	<div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
 		<!-- Header -->
 		<div class="mb-8">
-			<div class="flex items-center space-x-4 mb-4">
+			<div class="mb-4 flex items-center space-x-4">
 				<button
 					on:click={() => goto('/dashboard')}
-					class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+					class="flex items-center space-x-2 text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 				>
 					<ArrowLeft class="h-5 w-5" />
 					<span>Back to Dashboard</span>
 				</button>
 			</div>
 			<h1 class="text-3xl font-bold text-gray-900 dark:text-white">Create New Post</h1>
-			<p class="mt-2 text-gray-600 dark:text-gray-400">Share updates about your properties and market insights</p>
+			<p class="mt-2 text-gray-600 dark:text-gray-400">
+				Share updates about your properties and market insights
+			</p>
 		</div>
 
-		<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+		<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
 			<!-- Form -->
 			<div class="lg:col-span-2">
 				<form on:submit|preventDefault={handleSubmit} class="space-y-6">
 					<!-- Post Type -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+						<label class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
 							Post Type
 						</label>
-						<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 							{#each postTypes as type}
 								<label class="relative">
 									<input
@@ -149,7 +155,12 @@
 										value={type.value}
 										class="sr-only"
 									/>
-									<div class="cursor-pointer p-4 border-2 rounded-lg transition-colors {formData.post_type === type.value ? 'border-accent-purple bg-accent-purple/5' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'}">
+									<div
+										class="cursor-pointer rounded-lg border-2 p-4 transition-colors {formData.post_type ===
+										type.value
+											? 'border-accent-purple bg-accent-purple/5'
+											: 'border-gray-200 hover:border-gray-300 dark:border-gray-700'}"
+									>
 										<div class="font-medium text-gray-900 dark:text-white">{type.label}</div>
 										<div class="text-sm text-gray-500 dark:text-gray-400">{type.description}</div>
 									</div>
@@ -160,23 +171,28 @@
 
 					<!-- Content -->
 					<div>
-						<label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+						<label
+							for="content"
+							class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+						>
 							Post Content
 						</label>
 						<textarea
 							id="content"
 							bind:value={formData.body_md}
 							rows="6"
-							class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-accent-purple focus:border-transparent bg-white dark:bg-[#1E2130] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 {errors.body_md ? 'border-red-500' : ''}"
+							class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-transparent focus:ring-2 focus:ring-accent-purple dark:border-gray-600 dark:bg-[#1E2130] dark:text-white dark:placeholder-gray-400 {errors.body_md
+								? 'border-red-500'
+								: ''}"
 							placeholder="Share your thoughts, updates, or insights... Use **bold** and *italic* for formatting."
 						></textarea>
 						{#if errors.body_md}
-							<div class="flex items-center mt-2 text-red-600 dark:text-red-400">
-								<AlertCircle class="h-4 w-4 mr-1" />
+							<div class="mt-2 flex items-center text-red-600 dark:text-red-400">
+								<AlertCircle class="mr-1 h-4 w-4" />
 								<span class="text-sm">{errors.body_md}</span>
 							</div>
 						{/if}
-						<div class="flex justify-between items-center mt-2">
+						<div class="mt-2 flex items-center justify-between">
 							<div class="text-sm text-gray-500 dark:text-gray-400">
 								{formData.body_md.length}/1000 characters
 							</div>
@@ -188,12 +204,12 @@
 
 					<!-- Sentiment -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+						<label class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
 							Market Sentiment
 						</label>
 						<div class="flex space-x-4">
 							{#each sentiments as sentiment}
-								<label class="flex items-center space-x-2 cursor-pointer">
+								<label class="flex cursor-pointer items-center space-x-2">
 									<input
 										type="radio"
 										bind:group={formData.sentiment}
@@ -210,13 +226,16 @@
 					<!-- Property Attachment -->
 					{#if userProperties.length > 0}
 						<div>
-							<label for="property" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+							<label
+								for="property"
+								class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+							>
 								Attach Property (Optional)
 							</label>
 							<select
 								id="property"
 								bind:value={formData.property_uid}
-								class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-accent-purple focus:border-transparent bg-white dark:bg-[#1E2130] text-gray-900 dark:text-white"
+								class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-transparent focus:ring-2 focus:ring-accent-purple dark:border-gray-600 dark:bg-[#1E2130] dark:text-white"
 							>
 								<option value="">Select a property...</option>
 								{#each userProperties as property}
@@ -230,11 +249,13 @@
 
 					<!-- Media Upload -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+						<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
 							Add Images (Optional)
 						</label>
-						<div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-							<Image class="h-12 w-12 text-gray-400 mx-auto mb-4" />
+						<div
+							class="rounded-lg border-2 border-dashed border-gray-300 p-6 text-center dark:border-gray-600"
+						>
+							<Image class="mx-auto mb-4 h-12 w-12 text-gray-400" />
 							<input
 								type="file"
 								accept="image/*"
@@ -245,11 +266,11 @@
 							/>
 							<label
 								for="image-upload"
-								class="cursor-pointer text-accent-purple hover:text-accent-purple/80 font-medium"
+								class="cursor-pointer font-medium text-accent-purple hover:text-accent-purple/80"
 							>
 								Click to upload images
 							</label>
-							<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+							<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
 								PNG, JPG, GIF up to 10MB each
 							</p>
 						</div>
@@ -258,21 +279,21 @@
 					<!-- Media Preview -->
 					{#if formData.media_urls.length > 0}
 						<div>
-							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+							<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
 								Uploaded Images
 							</label>
-							<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+							<div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
 								{#each formData.media_urls as url, index}
 									<div class="relative">
 										<img
 											src={url}
 											alt="Uploaded image"
-											class="w-full h-32 object-cover rounded-lg"
+											class="h-32 w-full rounded-lg object-cover"
 										/>
 										<button
 											type="button"
 											on:click={() => removeImage(index)}
-											class="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+											class="absolute right-2 top-2 rounded-full bg-red-500 p-1 text-white transition-colors hover:bg-red-600"
 										>
 											<X class="h-4 w-4" />
 										</button>
@@ -284,12 +305,12 @@
 
 					<!-- Visibility -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+						<label class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
 							Visibility
 						</label>
 						<div class="space-y-3">
 							{#each visibilityOptions as option}
-								<label class="flex items-start space-x-3 cursor-pointer">
+								<label class="flex cursor-pointer items-start space-x-3">
 									<input
 										type="radio"
 										bind:group={formData.visibility}
@@ -311,8 +332,10 @@
 
 					<!-- Submit Error -->
 					{#if errors.submit}
-						<div class="flex items-center p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-							<AlertCircle class="h-5 w-5 text-red-600 dark:text-red-400 mr-2" />
+						<div
+							class="flex items-center rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20"
+						>
+							<AlertCircle class="mr-2 h-5 w-5 text-red-600 dark:text-red-400" />
 							<span class="text-red-600 dark:text-red-400">{errors.submit}</span>
 						</div>
 					{/if}
@@ -322,11 +345,11 @@
 						<button
 							type="submit"
 							disabled={submitting}
-							class="flex-1 bg-accent-purple text-white py-3 px-6 rounded-lg hover:bg-accent-purple/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+							class="flex-1 rounded-lg bg-accent-purple px-6 py-3 text-white transition-colors hover:bg-accent-purple/90 disabled:cursor-not-allowed disabled:opacity-50"
 						>
 							{#if submitting}
 								<div class="flex items-center justify-center">
-									<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+									<div class="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
 									Creating Post...
 								</div>
 							{:else}
@@ -335,8 +358,8 @@
 						</button>
 						<button
 							type="button"
-							on:click={() => showPreview = !showPreview}
-							class="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+							on:click={() => (showPreview = !showPreview)}
+							class="rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
 						>
 							{showPreview ? 'Hide' : 'Show'} Preview
 						</button>
@@ -348,12 +371,14 @@
 			<div class="lg:col-span-1">
 				<div class="sticky top-8">
 					{#if showPreview}
-						<div class="bg-white dark:bg-[#1E2130] rounded-lg shadow-sm p-6">
-							<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Preview</h3>
+						<div class="rounded-lg bg-white p-6 shadow-sm dark:bg-[#1E2130]">
+							<h3 class="mb-4 text-lg font-medium text-gray-900 dark:text-white">Preview</h3>
 							<div class="space-y-4">
 								<!-- Post Header -->
 								<div class="flex items-center space-x-3">
-									<div class="w-10 h-10 bg-gray-200 dark:bg-[#2D3748] rounded-full flex items-center justify-center">
+									<div
+										class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-[#2D3748]"
+									>
 										<span class="text-sm font-semibold text-gray-700 dark:text-white">
 											{$user?.username?.charAt(0) || 'U'}
 										</span>
@@ -368,21 +393,25 @@
 
 								<!-- Post Type and Sentiment -->
 								<div class="flex items-center space-x-2">
-									<span class="text-xs px-2 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200">
+									<span
+										class="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+									>
 										{formData.post_type.replace(/([A-Z])/g, ' $1').trim()}
 									</span>
-									<span class="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+									<span
+										class="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+									>
 										{formData.sentiment}
 									</span>
 								</div>
 
 								<!-- Post Content -->
 								{#if formData.body_md}
-									<div class="text-gray-900 dark:text-white leading-relaxed">
+									<div class="leading-relaxed text-gray-900 dark:text-white">
 										{@html formatBody(formData.body_md)}
 									</div>
 								{:else}
-									<div class="text-gray-400 dark:text-gray-500 italic">
+									<div class="italic text-gray-400 dark:text-gray-500">
 										Your post content will appear here...
 									</div>
 								{/if}
@@ -391,21 +420,19 @@
 								{#if formData.media_urls.length > 0}
 									<div class="grid grid-cols-2 gap-2">
 										{#each formData.media_urls.slice(0, 4) as url}
-											<img
-												src={url}
-												alt="Preview"
-												class="w-full h-20 object-cover rounded-lg"
-											/>
+											<img src={url} alt="Preview" class="h-20 w-full rounded-lg object-cover" />
 										{/each}
 									</div>
 								{/if}
 
 								<!-- Property Attachment Preview -->
 								{#if formData.property_uid}
-									{@const property = userProperties.find(p => p.property_uid === formData.property_uid)}
+									{@const property = userProperties.find(
+										(p) => p.property_uid === formData.property_uid
+									)}
 									{#if property}
-										<div class="bg-gray-100 dark:bg-[#2D3748] rounded-lg p-3">
-											<div class="font-medium text-sm text-gray-900 dark:text-white">
+										<div class="rounded-lg bg-gray-100 p-3 dark:bg-[#2D3748]">
+											<div class="text-sm font-medium text-gray-900 dark:text-white">
 												{property.title}
 											</div>
 											<div class="text-sm text-gray-500 dark:text-gray-400">
@@ -417,23 +444,23 @@
 							</div>
 						</div>
 					{:else}
-						<div class="bg-white dark:bg-[#1E2130] rounded-lg shadow-sm p-6">
-							<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Tips</h3>
+						<div class="rounded-lg bg-white p-6 shadow-sm dark:bg-[#1E2130]">
+							<h3 class="mb-4 text-lg font-medium text-gray-900 dark:text-white">Tips</h3>
 							<div class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
 								<div class="flex items-start space-x-2">
-									<CheckCircle class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+									<CheckCircle class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
 									<span>Use **bold** and *italic* for emphasis</span>
 								</div>
 								<div class="flex items-start space-x-2">
-									<CheckCircle class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+									<CheckCircle class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
 									<span>Attach properties to provide context</span>
 								</div>
 								<div class="flex items-start space-x-2">
-									<CheckCircle class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+									<CheckCircle class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
 									<span>Choose the right sentiment for market context</span>
 								</div>
 								<div class="flex items-start space-x-2">
-									<CheckCircle class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+									<CheckCircle class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
 									<span>Add images to make your posts more engaging</span>
 								</div>
 							</div>

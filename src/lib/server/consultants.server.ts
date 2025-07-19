@@ -1,9 +1,13 @@
 // src/lib/server/consultants.server.ts
 import { VITE_STRAPI_URL, VITE_STRAPI_TOKEN } from '$env/static/private';
+import { error } from '@sveltejs/kit';
 import type { Consultant, RawConsultant, ConsultantsResponse } from '$lib/types';
 
-const BASE = VITE_STRAPI_URL!;
-const AUTH_HEADER = { Authorization: `Bearer ${VITE_STRAPI_TOKEN!}` };
+const BASE = VITE_STRAPI_URL || 'http://localhost:1337';
+
+function getAuthHeaders() {
+	return VITE_STRAPI_TOKEN ? { Authorization: `Bearer ${VITE_STRAPI_TOKEN}` } : {};
+}
 
 function mapRaw(item: RawConsultant): Consultant {
 	// if your RawConsultant.profileImage is an array, pick [0].url, adjust here
@@ -13,7 +17,7 @@ function mapRaw(item: RawConsultant): Consultant {
 			: item.profileImage?.url
 				? `${BASE}${item.profileImage.url}`
 				: '/default-avatar.png';
-	
+
 	const contactInfo = item.contactInfo || {};
 
 	return {
@@ -54,10 +58,10 @@ export async function fetchConsultants(limit?: number): Promise<Consultant[]> {
 	if (limit) params.set('pagination[limit]', limit.toString());
 
 	const res = await fetch(`${BASE}/api/consultants?${params}`, {
-		headers: AUTH_HEADER
+		headers: getAuthHeaders()
 	});
 	if (!res.ok) {
-		throw new Error(res.status, `Could not fetch list: ${res.statusText}`);
+		throw new Error(`Could not fetch list: ${res.statusText}`);
 	}
 	const { data } = (await res.json()) as ConsultantsResponse;
 	return data.map(mapRaw);
@@ -65,7 +69,7 @@ export async function fetchConsultants(limit?: number): Promise<Consultant[]> {
 
 export async function fetchConsultant(documentId: string): Promise<Consultant> {
 	const res = await fetch(`${BASE}/api/consultants/${documentId}?populate=*`, {
-		headers: AUTH_HEADER
+		headers: getAuthHeaders()
 	});
 	if (res.status === 404) throw error(404, `Not found`);
 	if (!res.ok) throw error(res.status, res.statusText);

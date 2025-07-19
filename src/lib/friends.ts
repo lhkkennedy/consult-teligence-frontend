@@ -28,11 +28,9 @@ function getAuthHeaders() {
 }
 
 // Send a friend request
-export async function sendFriendRequest(toUserId: number): Promise<{ success: boolean; error?: string }> {
-	if (useMockApi) {
-		return mockSendFriendRequest(toUserId);
-	}
-
+export async function sendFriendRequest(
+	toUserId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const requestBody = {
 			data: {
@@ -71,11 +69,9 @@ export async function sendFriendRequest(toUserId: number): Promise<{ success: bo
 }
 
 // Accept a friend request
-export async function acceptFriendRequest(requestId: number): Promise<{ success: boolean; error?: string }> {
-	if (useMockApi) {
-		return mockAcceptFriendRequest(requestId);
-	}
-
+export async function acceptFriendRequest(
+	requestId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests/${requestId}`, {
 			method: 'PUT',
@@ -100,11 +96,9 @@ export async function acceptFriendRequest(requestId: number): Promise<{ success:
 }
 
 // Reject a friend request
-export async function rejectFriendRequest(requestId: number): Promise<{ success: boolean; error?: string }> {
-	if (useMockApi) {
-		return mockRejectFriendRequest(requestId);
-	}
-
+export async function rejectFriendRequest(
+	requestId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friend-requests/${requestId}`, {
 			method: 'PUT',
@@ -129,11 +123,10 @@ export async function rejectFriendRequest(requestId: number): Promise<{ success:
 }
 
 // Remove a friend
-export async function removeFriend(friendId: number): Promise<{ success: boolean; error?: string }> {
-	if (useMockApi) {
-		return mockRemoveFriend(friendId);
-	}
 
+export async function removeFriend(
+	friendId: number
+): Promise<{ success: boolean; error?: string }> {
 	try {
 		const response = await fetch(`${API_URL}/api/friends/${friendId}`, {
 			method: 'DELETE',
@@ -152,11 +145,11 @@ export async function removeFriend(friendId: number): Promise<{ success: boolean
 }
 
 // Get pending friend requests (received)
-export async function getPendingFriendRequests(): Promise<{ data: FriendRequest[]; error?: string }> {
-	if (useMockApi) {
-		return mockGetPendingFriendRequests();
-	}
 
+export async function getPendingFriendRequests(): Promise<{
+	data: FriendRequest[];
+	error?: string;
+}> {
 	try {
 		const response = await fetch(
 			`${API_URL}/api/friend-requests/pending`,
@@ -165,12 +158,11 @@ export async function getPendingFriendRequests(): Promise<{ data: FriendRequest[
 			}
 		);
 
-		const data: FriendSystemResponse = await response.json();
-
 		if (response.ok) {
+			const data: FriendSystemResponse = await response.json();
 			return { data: data.data };
 		} else {
-			return { data: [], error: data.error?.message || 'Failed to fetch friend requests' };
+			return { data: [], error: 'Failed to fetch friend requests' };
 		}
 	} catch (error) {
 		return { data: [], error: 'Network error' };
@@ -191,12 +183,11 @@ export async function getSentFriendRequests(): Promise<{ data: FriendRequest[]; 
 			}
 		);
 
-		const data: FriendSystemResponse = await response.json();
-
 		if (response.ok) {
+			const data: FriendSystemResponse = await response.json();
 			return { data: data.data };
 		} else {
-			return { data: [], error: data.error?.message || 'Failed to fetch sent requests' };
+			return { data: [], error: 'Failed to fetch sent requests' };
 		}
 	} catch (error) {
 		return { data: [], error: 'Network error' };
@@ -210,19 +201,15 @@ export async function getFriendsList(): Promise<{ data: User[]; error?: string }
 	}
 
 	try {
-		const response = await fetch(
-			`${API_URL}/api/friends`,
-			{
-				headers: getAuthHeaders()
-			}
-		);
-
-		const data: FriendsListResponse = await response.json();
+		const response = await fetch(`${API_URL}/api/friends?populate[profileImage]=*`, {
+			headers: getAuthHeaders()
+		});
 
 		if (response.ok) {
+			const data: FriendsListResponse = await response.json();
 			return { data: data.data };
 		} else {
-			return { data: [], error: data.error?.message || 'Failed to fetch friends' };
+			return { data: [], error: 'Failed to fetch friends' };
 		}
 	} catch (error) {
 		return { data: [], error: 'Network error' };
@@ -230,10 +217,39 @@ export async function getFriendsList(): Promise<{ data: User[]; error?: string }
 }
 
 // Check if users are friends
-export async function checkFriendshipStatus(userId: number): Promise<{ status: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends'; error?: string }> {
-	if (useMockApi) {
-		return mockCheckFriendshipStatus(userId);
-	}
+export async function checkFriendshipStatus(
+	userId: number
+): Promise<{
+	status: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends';
+	error?: string;
+}> {
+	try {
+		// Check if they are friends
+		const friendsResponse = await fetch(`${API_URL}/api/friends?filters[user][id][$eq]=${userId}`, {
+			headers: getAuthHeaders()
+		});
+
+		if (friendsResponse.ok) {
+			const friendsData = await friendsResponse.json();
+			if (friendsData.data && friendsData.data.length > 0) {
+				return { status: 'friends' };
+			}
+		}
+
+		// Check for pending requests
+		const requestsResponse = await fetch(
+			`${API_URL}/api/friend-requests?filters[status][$eq]=pending&filters[from][id][$eq]=${userId}&filters[to][id][$eq]=${get(authToken) ? 'current' : 0}`,
+			{
+				headers: getAuthHeaders()
+			}
+		);
+
+		if (requestsResponse.ok) {
+			const requestsData = await requestsResponse.json();
+			if (requestsData.data && requestsData.data.length > 0) {
+				return { status: 'pending_received' };
+			}
+		}
 
 	try {
 		const response = await fetch(

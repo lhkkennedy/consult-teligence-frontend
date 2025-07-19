@@ -37,7 +37,7 @@
 	// when the overlay finishes fading (opacity transition), unmount
 	function handleTransitionEnd(e: TransitionEvent) {
 		if (isDestroyed) return;
-		
+
 		if (e.target === e.currentTarget && e.propertyName === 'opacity') {
 			if (timeoutId) {
 				clearTimeout(timeoutId);
@@ -49,7 +49,7 @@
 	// Handle click events to force unmount if user clicks during loading
 	function handleClick() {
 		if (isDestroyed) return;
-		
+
 		console.warn('LoadingScreen: User clicked during loading, forcing unmount');
 		if (timeoutId) {
 			clearTimeout(timeoutId);
@@ -58,9 +58,9 @@
 	}
 </script>
 
-<div 
-	class="loader-overlay" 
-	class:loaded 
+<div
+	class="loader-overlay"
+	class:loaded
 	on:transitionend={handleTransitionEnd}
 	on:click={handleClick}
 	role="dialog"

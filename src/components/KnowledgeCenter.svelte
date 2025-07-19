@@ -12,14 +12,14 @@
 <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 	{#each articles as article (article.id)}
 		<div
-			class="cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] transition-all duration-300 hover:border-accent-purple dark:hover:border-[#4A90E2]"
+			class="cursor-pointer overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:border-accent-purple dark:border-[#2D3748] dark:bg-[#1E2130] dark:hover:border-[#4A90E2]"
 			on:click={() => handleArticleSelect(article.id)}
 			on:keydown={(e) => e.key === 'Enter' && handleArticleSelect(article.id)}
 			tabindex="0"
 			role="button"
 		>
 			<div
-				class="flex h-40 items-center justify-center bg-gray-100 dark:bg-[#2D3748] [mask-image:linear-gradient(to_top,transparent,black_40%)]"
+				class="flex h-40 items-center justify-center bg-gray-100 [mask-image:linear-gradient(to_top,transparent,black_40%)] dark:bg-[#2D3748]"
 			>
 				<img src={`${article.image}`} alt={`${article.image}`} />
 			</div>

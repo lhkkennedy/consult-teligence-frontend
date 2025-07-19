@@ -7,7 +7,7 @@
 	export let consultants: Consultant[] = [];
 
 	/** callback prop in lieu of createEventDispatcher */
-	export let onExpertSelect: (id: number) => void = () => {};
+	export let onExpertSelect: (id: string) => void = () => {};
 
 	/** allow parent to pass layout classes */
 	export let containerClass = '';

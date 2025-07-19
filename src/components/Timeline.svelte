@@ -1,9 +1,9 @@
 <script lang="ts">
-import TimelinePost from './TimelinePost.svelte';
+	import TimelinePost from './TimelinePost.svelte';
 
-export let timelineItems: any[] = [];
-export let loading: boolean = false;
-export let error: string = '';
+	export let timelineItems: any[] = [];
+	export let loading: boolean = false;
+	export let error: string = '';
 </script>
 
 <div class="timeline-container">
@@ -14,12 +14,12 @@ export let error: string = '';
 		{/each}
 	</div>
 	{#if loading}
-		<div class="text-center py-4 text-gray-500 dark:text-[#A0AEC0]">Loading...</div>
+		<div class="py-4 text-center text-gray-500 dark:text-[#A0AEC0]">Loading...</div>
 	{/if}
 	{#if error}
-		<div class="text-center py-4 text-red-500">{error}</div>
+		<div class="py-4 text-center text-red-500">{error}</div>
 	{/if}
 	{#if !loading && timelineItems.length === 0}
-		<div class="text-center py-12 text-gray-600 dark:text-[#A0AEC0]">No posts yet.</div>
+		<div class="py-12 text-center text-gray-600 dark:text-[#A0AEC0]">No posts yet.</div>
 	{/if}
-</div> 
+</div>

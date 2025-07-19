@@ -20,6 +20,7 @@ const useMockApi = !API_URL || API_URL === 'undefined';
 // Helper function to get auth headers
 function getAuthHeaders() {
 	const token = get(authToken);
+	console.log('Auth token:', token ? 'Present' : 'Missing');
 	return {
 		'Content-Type': 'application/json',
 		...(token && { Authorization: `Bearer ${token}` })
@@ -33,18 +34,31 @@ export async function sendFriendRequest(toUserId: number): Promise<{ success: bo
 	}
 
 	try {
+		const requestBody = {
+			data: {
+				to: toUserId
+			}
+		};
+		
+		const token = get(authToken);
+		console.log('Sending friend request:', {
+			url: `${API_URL}/api/friend-requests`,
+			toUserId: toUserId,
+			toUserIdType: typeof toUserId,
+			currentUserToken: token ? 'Present' : 'Missing',
+			body: requestBody,
+			headers: getAuthHeaders()
+		});
+		
 		const response = await fetch(`${API_URL}/api/friend-requests`, {
 			method: 'POST',
 			headers: getAuthHeaders(),
-			body: JSON.stringify({
-				data: {
-					to: toUserId,
-					status: 'pending'
-				}
-			})
+			body: JSON.stringify(requestBody)
 		});
 
+		console.log('Response status:', response.status);
 		const data = await response.json();
+		console.log('Response data:', data);
 
 		if (response.ok) {
 			return { success: true };

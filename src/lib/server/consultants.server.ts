@@ -19,6 +19,11 @@ function mapRaw(item: RawConsultant): Consultant {
 	return {
 		documentId: item.documentId,
 		id: item.id,
+		user: item.user ? {
+			id: item.user.id,
+			username: item.user.username,
+			email: item.user.email
+		} : undefined,
 		firstName: item.firstName,
 		lastName: item.lastName,
 		location: item.location,

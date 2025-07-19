@@ -55,8 +55,7 @@
 		}
 	}
 
-	async function handleAcceptRequest(event: CustomEvent<{ requestId: number }>) {
-		const { requestId } = event.detail;
+	async function handleAcceptRequest(requestId: number) {
 		loading = true;
 
 		try {
@@ -78,8 +77,7 @@
 		}
 	}
 
-	async function handleRejectRequest(event: CustomEvent<{ requestId: number }>) {
-		const { requestId } = event.detail;
+	async function handleRejectRequest(requestId: number) {
 		loading = true;
 
 		try {
@@ -96,8 +94,7 @@
 		}
 	}
 
-	async function handleRemoveFriend(event: CustomEvent<{ friendId: number }>) {
-		const { friendId } = event.detail;
+	async function handleRemoveFriend(friendId: number) {
 		loading = true;
 
 		try {
@@ -114,9 +111,8 @@
 		}
 	}
 
-	async function handleViewProfile(event: CustomEvent<{ friendId: number }>) {
-		const { friendId } = event.detail;
-		goto(`/experts/${friendId}`);
+	function handleViewProfile(documentId: string | number) {
+		goto(`/experts/${documentId}`);
 	}
 
 	function setTab(tab: Tab) {
@@ -171,8 +167,8 @@
 						<FriendRequestCard 
 							{request} 
 							{loading}
-							on:accept={handleAcceptRequest}
-							on:reject={handleRejectRequest}
+							onAccept={handleAcceptRequest}
+							onReject={handleRejectRequest}
 						/>
 					{/each}
 				{/if}
@@ -213,8 +209,8 @@
 						<FriendCard 
 							{friend} 
 							{loading}
-							on:remove={handleRemoveFriend}
-							on:viewProfile={handleViewProfile}
+							onRemove={handleRemoveFriend}
+							onViewProfile={handleViewProfile}
 						/>
 					{/each}
 				{/if}

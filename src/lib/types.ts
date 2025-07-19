@@ -182,6 +182,7 @@ export interface User {
 	company?: string;
 	currentRole?: string;
 	location?: string;
+	documentId?: string; // For navigation to expert profiles
 }
 
 export interface FriendSystemResponse {

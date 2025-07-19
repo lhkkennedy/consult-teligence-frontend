@@ -116,6 +116,11 @@
 					>Home</a
 				>
 				<a
+					href="/feed"
+					class="text-gray-700 transition hover:text-accent-purple dark:text-white dark:hover:text-accent-pink"
+					>Feed</a
+				>
+				<a
 					href="/experts"
 					class="text-gray-700 transition hover:text-accent-purple dark:text-white dark:hover:text-accent-pink"
 					>Experts</a

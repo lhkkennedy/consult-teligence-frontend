@@ -279,6 +279,8 @@ export const assertions = {
       return true;
     } catch {
       return false;
+    } finally {
+      // Cleanup if needed
     }
   },
   isValidPhoneNumber: (phone: string) => {

@@ -36,7 +36,7 @@
 
 1. Clone the repo and install dependencies.
 2. Run `npm run dev` to start the app.
-3. For full setup and backend/API integration, see [PROJECT_REVIEW.md](./PROJECT_REVIEW.md).
+3. For full setup and backend/API integration, see [Technical Review](./docs/development/PROJECT_REVIEW.md).
 
 ---
 
@@ -55,8 +55,8 @@ Looking for your first issue? Check the [issues page](../../issues)!
 ## 🔌 API & Integration
 
 - Works with mock data by default.
-- Ready for Strapi backend integration (see environment variables in [PROJECT_REVIEW.md](./PROJECT_REVIEW.md)).
-- For advanced usage, see the [full technical review](./PROJECT_REVIEW.md).
+- Ready for Strapi backend integration (see environment variables in [Technical Review](./docs/development/PROJECT_REVIEW.md)).
+- For advanced usage, see the [API Documentation](./docs/api/) and [full technical review](./docs/development/PROJECT_REVIEW.md).
 
 ---
 
@@ -67,6 +67,12 @@ Looking for your first issue? Check the [issues page](../../issues)!
 
 ---
 
-## 📚 Full Technical Review
+## 📚 Documentation
 
-For architecture, data models, advanced features, and roadmap, see [PROJECT_REVIEW.md](./PROJECT_REVIEW.md).
+For comprehensive documentation, see our [Documentation Index](./docs/README.md):
+
+- **[Platform Specification](./docs/specifications/REAL_ESTATE_NETWORK_SPEC.md)** - Complete platform overview and vision
+- **[Feature Backlog](./docs/specifications/FEATURE_BACKLOG.md)** - Detailed feature roadmap with user stories
+- **[UI/UX Design Specification](./docs/specifications/UI_UX_DESIGN_SPEC.md)** - Design system and user experience guidelines
+- **[Project Summary](./docs/specifications/PROJECT_SUMMARY.md)** - Executive summary and implementation strategy
+- **[Technical Review](./docs/development/PROJECT_REVIEW.md)** - Architecture, data models, and technical details

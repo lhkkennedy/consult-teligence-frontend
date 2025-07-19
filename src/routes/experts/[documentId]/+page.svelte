@@ -4,7 +4,7 @@
 	import type { Consultant } from '../../../lib/types.ts';
 
 	// SvelteKit injects the data from +page.server.ts here
-	export let data: { activeProfile: Consultant, timelineItems: any[], properties: any[] };
+	export let data: { activeProfile: Consultant; timelineItems: any[]; properties: any[] };
 	const { activeProfile, timelineItems, properties } = data;
 
 	function goBack() {

@@ -1,7 +1,10 @@
 import { VITE_STRAPI_URL, VITE_STRAPI_TOKEN } from '$env/static/private';
 
-const BASE = VITE_STRAPI_URL!;
-const AUTH_HEADER = { Authorization: `Bearer ${VITE_STRAPI_TOKEN!}` };
+const BASE = VITE_STRAPI_URL || 'http://localhost:1337';
+
+function getAuthHeaders() {
+	return VITE_STRAPI_TOKEN ? { Authorization: `Bearer ${VITE_STRAPI_TOKEN}` } : {};
+}
 
 type PropertyTimelineItem = {
 	property_uid: string;
@@ -38,13 +41,15 @@ function mapStrapiPropertyTimelineItem(item: unknown): PropertyTimelineItem {
 	};
 }
 
-export async function fetchConsultantProperties(personId: string, page: number = 1, pageSize: number = 10): Promise<{ items: PropertyTimelineItem[]; meta: StrapiMeta }> {
-	const query =
-		`populate=*` + 
-		`&filters[author][documentId][$eq]=${personId}`;
+export async function fetchConsultantProperties(
+	personId: string,
+	page: number = 1,
+	pageSize: number = 10
+): Promise<{ items: PropertyTimelineItem[]; meta: StrapiMeta }> {
+	const query = `populate=*` + `&filters[author][documentId][$eq]=${personId}`;
 
 	const res = await fetch(`${BASE}/api/timeline-items?${query}`, {
-		headers: AUTH_HEADER
+		headers: getAuthHeaders()
 	});
 	if (!res.ok) {
 		throw new Error(`Could not fetch properties: ${res.statusText}`);
@@ -54,4 +59,4 @@ export async function fetchConsultantProperties(personId: string, page: number =
 		items: (data.data || []).map(mapStrapiPropertyTimelineItem),
 		meta: data.meta as StrapiMeta
 	};
-} 
+}

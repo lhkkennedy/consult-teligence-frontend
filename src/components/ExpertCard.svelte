@@ -3,7 +3,7 @@
 	import BriefCase from '@lucide/svelte/icons/briefcase';
 	import DollarSign from '@lucide/svelte/icons/dollar-sign';
 	import AddFriendButton from './AddFriendButton.svelte';
-	import type { Consultant } from '$lib/types.ts';
+	import type { Consultant, User } from '$lib/types.ts';
 	import { onMount } from 'svelte';
 	import { checkFriendshipStatus, sendFriendRequest } from '$lib/friends';
 	import { user } from '$lib/stores/authStore';
@@ -14,8 +14,24 @@
 	/** callback to parent when this card is clicked */
 	export let onSelect: ((documentId: string) => void) | undefined = undefined;
 
-	let friendshipStatus: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends' = 'not_friends';
+	let friendshipStatus: 'friends' | 'pending_sent' | 'pending_received' | 'not_friends' =
+		'not_friends';
 	let loading = false;
+
+	// Map consultant to user for AddFriendButton
+	function mapConsultantToUser(consultant: Consultant): User {
+		return {
+			id: consultant.id,
+			username: `${consultant.firstName.toLowerCase()}.${consultant.lastName.toLowerCase()}`,
+			email: consultant.contactInfo.email,
+			firstName: consultant.firstName,
+			lastName: consultant.lastName,
+			profileImage: consultant.profileImage,
+			company: consultant.company,
+			currentRole: consultant.currentRole,
+			location: consultant.location
+		};
+	}
 
 	onMount(async () => {
 		if ($user && consultant.user && $user.id !== consultant.user.id) {
@@ -70,9 +86,9 @@
 <div
 	role="button"
 	tabindex="0"
-	class="expert-card flex h-full cursor-pointer flex-col transition-all duration-300 border border-gray-200 dark:border-[#2D3748] bg-white dark:bg-[#1E2130] hover:border-accent-purple"
+	class="expert-card flex h-full cursor-pointer flex-col border border-gray-200 bg-white transition-all duration-300 hover:border-accent-purple dark:border-[#2D3748] dark:bg-[#1E2130]"
 	on:click={() => onSelect?.(consultant.documentId)}
-			on:keydown={(e) => {
+	on:keydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
 			onSelect?.(consultant.documentId);
@@ -109,12 +125,14 @@
 		<span>${consultant.rate}/hr</span>
 	</div>
 
-	<div class="flex items-center justify-between rounded-b-lg border-t border-gray-200 dark:border-border-gray pb-4 pt-4">
+	<div
+		class="flex items-center justify-between rounded-b-lg border-t border-gray-200 pb-4 pt-4 dark:border-border-gray"
+	>
 		<div class="flex flex-wrap gap-1">
 			{#each consultant.functionalExpertise as exp}
 				<button
 					type="button"
-					class="rounded-sm bg-gray-100 dark:bg-secondary-bg px-2 py-1 text-xs text-gray-700 dark:text-text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+					class="rounded-sm bg-gray-100 px-2 py-1 text-xs text-gray-700 hover:bg-gray-200 dark:bg-secondary-bg dark:text-text-primary dark:hover:bg-gray-700"
 					on:click={() => console.log('filter by', exp)}
 				>
 					{exp}
@@ -123,11 +141,11 @@
 		</div>
 	</div>
 
-	<div class="flex gap-2 mt-auto">
-		{#if $user && consultant.user && $user.id !== consultant.user.id}
-			<AddFriendButton 
-				user={consultant} 
-				{friendshipStatus} 
+	<div class="mt-auto flex gap-2">
+		{#if $user && $user.id !== consultant.id}
+			<AddFriendButton
+				user={mapConsultantToUser(consultant)}
+				{friendshipStatus}
 				{loading}
 				on:addFriend={handleAddFriend}
 				on:cancelRequest={handleCancelRequest}

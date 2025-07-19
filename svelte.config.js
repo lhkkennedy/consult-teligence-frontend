@@ -17,7 +17,7 @@ const config = {
 		alias: {
 			$lib: 'src/lib',
 			$components: 'src/components',
-			$routes: 'src/routes',
+			$routes: 'src/routes'
 		}
 	}
 };

@@ -4,187 +4,187 @@ import { authToken, user, consultantId, logout, type User } from './authStore';
 
 // Mock localStorage
 const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
+	getItem: vi.fn(),
+	setItem: vi.fn(),
+	removeItem: vi.fn(),
+	clear: vi.fn()
 };
 
 describe('authStore', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    
-    // Reset stores to initial state
-    authToken.set(null);
-    user.set(null);
-    consultantId.set(null);
-    
-    // Mock localStorage
-    Object.defineProperty(global, 'localStorage', {
-      value: localStorageMock,
-      writable: true,
-    });
-    
-    // Mock window
-    Object.defineProperty(global, 'window', {
-      value: { localStorage: localStorageMock },
-      writable: true,
-    });
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
 
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
+		// Reset stores to initial state
+		authToken.set(null);
+		user.set(null);
+		consultantId.set(null);
 
-  describe('stores initialization', () => {
-    it('should initialize with null values', () => {
-      expect(get(authToken)).toBe(null);
-      expect(get(user)).toBe(null);
-      expect(get(consultantId)).toBe(null);
-    });
+		// Mock localStorage
+		Object.defineProperty(global, 'localStorage', {
+			value: localStorageMock,
+			writable: true
+		});
 
-    it('should load data from localStorage on initialization', () => {
-      const mockJwt = 'test-jwt-token';
-      const mockUser: User = {
-        id: 1,
-        username: 'testuser',
-        email: 'test@example.com',
-      };
-      const mockConsultantId = 'consultant-123';
+		// Mock window
+		Object.defineProperty(global, 'window', {
+			value: { localStorage: localStorageMock },
+			writable: true
+		});
+	});
 
-      localStorageMock.getItem.mockImplementation((key) => {
-        switch (key) {
-          case 'jwt':
-            return mockJwt;
-          case 'user':
-            return JSON.stringify(mockUser);
-          case 'consultantId':
-            return mockConsultantId;
-          default:
-            return null;
-        }
-      });
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
 
-      // This would happen during module initialization
-      expect(localStorageMock.getItem).toHaveBeenCalledWith('jwt');
-      expect(localStorageMock.getItem).toHaveBeenCalledWith('user');
-      expect(localStorageMock.getItem).toHaveBeenCalledWith('consultantId');
-    });
-  });
+	describe('stores initialization', () => {
+		it('should initialize with null values', () => {
+			expect(get(authToken)).toBe(null);
+			expect(get(user)).toBe(null);
+			expect(get(consultantId)).toBe(null);
+		});
 
-  describe('authToken store', () => {
-    it('should update auth token', () => {
-      const token = 'test-jwt-token';
-      authToken.set(token);
-      expect(get(authToken)).toBe(token);
-    });
+		it('should load data from localStorage on initialization', () => {
+			const mockJwt = 'test-jwt-token';
+			const mockUser: User = {
+				id: 1,
+				username: 'testuser',
+				email: 'test@example.com'
+			};
+			const mockConsultantId = 'consultant-123';
 
-    it('should handle null token', () => {
-      authToken.set('some-token');
-      authToken.set(null);
-      expect(get(authToken)).toBe(null);
-    });
-  });
+			localStorageMock.getItem.mockImplementation((key) => {
+				switch (key) {
+					case 'jwt':
+						return mockJwt;
+					case 'user':
+						return JSON.stringify(mockUser);
+					case 'consultantId':
+						return mockConsultantId;
+					default:
+						return null;
+				}
+			});
 
-  describe('user store', () => {
-    it('should update user data', () => {
-      const mockUser: User = {
-        id: 1,
-        username: 'testuser',
-        email: 'test@example.com',
-      };
-      
-      user.set(mockUser);
-      expect(get(user)).toEqual(mockUser);
-    });
+			// This would happen during module initialization
+			expect(localStorageMock.getItem).toHaveBeenCalledWith('jwt');
+			expect(localStorageMock.getItem).toHaveBeenCalledWith('user');
+			expect(localStorageMock.getItem).toHaveBeenCalledWith('consultantId');
+		});
+	});
 
-    it('should handle null user', () => {
-      const mockUser: User = {
-        id: 1,
-        username: 'testuser',
-        email: 'test@example.com',
-      };
-      
-      user.set(mockUser);
-      user.set(null);
-      expect(get(user)).toBe(null);
-    });
-  });
+	describe('authToken store', () => {
+		it('should update auth token', () => {
+			const token = 'test-jwt-token';
+			authToken.set(token);
+			expect(get(authToken)).toBe(token);
+		});
 
-  describe('consultantId store', () => {
-    it('should update consultant ID', () => {
-      const consultantIdValue = 'consultant-123';
-      consultantId.set(consultantIdValue);
-      expect(get(consultantId)).toBe(consultantIdValue);
-    });
+		it('should handle null token', () => {
+			authToken.set('some-token');
+			authToken.set(null);
+			expect(get(authToken)).toBe(null);
+		});
+	});
 
-    it('should handle null consultant ID', () => {
-      consultantId.set('some-id');
-      consultantId.set(null);
-      expect(get(consultantId)).toBe(null);
-    });
-  });
+	describe('user store', () => {
+		it('should update user data', () => {
+			const mockUser: User = {
+				id: 1,
+				username: 'testuser',
+				email: 'test@example.com'
+			};
 
-  describe('logout function', () => {
-    it('should clear all stores and localStorage', () => {
-      // Set initial values
-      authToken.set('test-token');
-      user.set({
-        id: 1,
-        username: 'testuser',
-        email: 'test@example.com',
-      });
-      consultantId.set('consultant-123');
+			user.set(mockUser);
+			expect(get(user)).toEqual(mockUser);
+		});
 
-      // Call logout
-      logout();
+		it('should handle null user', () => {
+			const mockUser: User = {
+				id: 1,
+				username: 'testuser',
+				email: 'test@example.com'
+			};
 
-      // Check stores are cleared
-      expect(get(authToken)).toBe(null);
-      expect(get(user)).toBe(null);
-      // Note: consultantId is not cleared by the logout function in authStore.ts
-      // This is expected behavior as it only clears authToken and user
+			user.set(mockUser);
+			user.set(null);
+			expect(get(user)).toBe(null);
+		});
+	});
 
-      // Check localStorage is cleared
-      expect(localStorageMock.removeItem).toHaveBeenCalledWith('jwt');
-      expect(localStorageMock.removeItem).toHaveBeenCalledWith('user');
-    });
+	describe('consultantId store', () => {
+		it('should update consultant ID', () => {
+			const consultantIdValue = 'consultant-123';
+			consultantId.set(consultantIdValue);
+			expect(get(consultantId)).toBe(consultantIdValue);
+		});
 
-    it('should not throw error when localStorage is not available', () => {
-      // Mock localStorage to be undefined temporarily
-      const originalLocalStorage = global.localStorage;
-      // @ts-ignore
-      delete global.localStorage;
-      
-      expect(() => logout()).not.toThrow();
-      
-      // Restore localStorage
-      global.localStorage = originalLocalStorage;
-    });
-  });
+		it('should handle null consultant ID', () => {
+			consultantId.set('some-id');
+			consultantId.set(null);
+			expect(get(consultantId)).toBe(null);
+		});
+	});
 
-  describe('User interface', () => {
-    it('should accept valid user object', () => {
-      const validUser: User = {
-        id: 1,
-        username: 'testuser',
-        email: 'test@example.com',
-      };
+	describe('logout function', () => {
+		it('should clear all stores and localStorage', () => {
+			// Set initial values
+			authToken.set('test-token');
+			user.set({
+				id: 1,
+				username: 'testuser',
+				email: 'test@example.com'
+			});
+			consultantId.set('consultant-123');
 
-      user.set(validUser);
-      expect(get(user)).toEqual(validUser);
-    });
+			// Call logout
+			logout();
 
-    it('should handle user with additional properties', () => {
-      const userWithExtra: User = {
-        id: 1,
-        username: 'testuser',
-        email: 'test@example.com',
-        // Additional properties from Strapi
-      };
+			// Check stores are cleared
+			expect(get(authToken)).toBe(null);
+			expect(get(user)).toBe(null);
+			// Note: consultantId is not cleared by the logout function in authStore.ts
+			// This is expected behavior as it only clears authToken and user
 
-      user.set(userWithExtra);
-      expect(get(user)).toEqual(userWithExtra);
-    });
-  });
+			// Check localStorage is cleared
+			expect(localStorageMock.removeItem).toHaveBeenCalledWith('jwt');
+			expect(localStorageMock.removeItem).toHaveBeenCalledWith('user');
+		});
+
+		it('should not throw error when localStorage is not available', () => {
+			// Mock localStorage to be undefined temporarily
+			const originalLocalStorage = global.localStorage;
+			// @ts-ignore
+			delete global.localStorage;
+
+			expect(() => logout()).not.toThrow();
+
+			// Restore localStorage
+			global.localStorage = originalLocalStorage;
+		});
+	});
+
+	describe('User interface', () => {
+		it('should accept valid user object', () => {
+			const validUser: User = {
+				id: 1,
+				username: 'testuser',
+				email: 'test@example.com'
+			};
+
+			user.set(validUser);
+			expect(get(user)).toEqual(validUser);
+		});
+
+		it('should handle user with additional properties', () => {
+			const userWithExtra: User = {
+				id: 1,
+				username: 'testuser',
+				email: 'test@example.com'
+				// Additional properties from Strapi
+			};
+
+			user.set(userWithExtra);
+			expect(get(user)).toEqual(userWithExtra);
+		});
+	});
 });

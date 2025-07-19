@@ -112,7 +112,7 @@ export interface ConsultantsResponse {
 }
 
 // Timeline Types
-export type PostType = 'NewListing' | 'ProgressUpdate' | 'Closing' | 'Insight' | 'Generic';
+export type PostType = 'NewListing' | 'ProgressUpdate' | 'Closing' | 'Insight' | 'Generic' | 'property';
 export type Sentiment = 'Bull' | 'Bear' | 'Neutral';
 export type Visibility = 'Public' | 'Connections' | 'Private';
 

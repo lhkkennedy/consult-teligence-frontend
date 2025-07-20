@@ -1,49 +1,26 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import Header from '../../components/Header.svelte';
 	import FeedPost from '../../components/FeedPost.svelte';
 	import FeedFilters from '../../components/FeedFilters.svelte';
 	import FeedCategories from '../../components/FeedCategories.svelte';
 	import FeedSearch from '../../components/FeedSearch.svelte';
 	import LoadingScreen from '../../components/LoadingScreen.svelte';
-	import { mockTimelinePosts, mockTimelinePosts2, mockTimelinePosts3 } from '../../lib/mockData.js';
 	import type { TimelinePost } from '../../lib/types.js';
+	import type { PageData } from './$types';
 
-	// Feed state
-	let posts: TimelinePost[] = [];
-	let filteredPosts: TimelinePost[] = [];
-	let loading = true;
-	let error = '';
-	let currentCategory = 'all';
-	let searchQuery = '';
-	let sortBy = 'recent';
-	let filters = {
-		postTypes: [] as string[],
-		sentiments: [] as string[],
-		dateRange: 'all' as string,
-		hasMedia: false,
-		hasComments: false,
-		dealSize: 'all' as string,
-		location: '' as string,
-		propertyType: [] as string[]
-	};
+	// Props from server load function
+	export let data: PageData;
 
-	// Pagination
-	let currentPage = 1;
-	let postsPerPage = 10;
-	let hasMorePosts = true;
+	// Extract data from props
+	$: ({ posts, feedStats, marketInsights, recommendedConnections, pagination, filters, error } = data);
 
-	// Advanced features
-	let showAdvancedFilters = false;
+	// Local state
+	let loading = false;
 	let isRefreshing = false;
 	let lastRefreshTime = new Date();
-	let feedStats = {
-		totalPosts: 0,
-		newPosts: 0,
-		activeDeals: 0,
-		trendingTopics: 0
-	};
 
 	// Enhanced features
 	let showNotifications = false;
@@ -53,23 +30,6 @@
 		{ id: 3, type: 'deal_update', message: 'Deal status updated to "Under Contract"', time: '10m ago', read: true }
 	];
 	let unreadNotifications = notifications.filter(n => !n.read).length;
-
-	// Smart recommendations
-	let recommendedConnections = [
-		{ id: 1, name: 'Alex Thompson', company: 'Thompson Capital', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100', mutualConnections: 5, specialty: 'Commercial Real Estate' },
-		{ id: 2, name: 'Maria Garcia', company: 'Garcia Development', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100', mutualConnections: 3, specialty: 'Residential Development' },
-		{ id: 3, name: 'David Chen', company: 'Chen Investment Group', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100', mutualConnections: 7, specialty: 'Investment Management' }
-	];
-
-	// Market insights
-	let marketInsights = {
-		trendingTopics: ['Commercial Real Estate', 'Market Analysis', 'Investment Opportunities', 'Deal Flow'],
-		marketSentiment: 'Bullish',
-		sentimentScore: 75,
-		activeDeals: 234,
-		avgDealSize: '$15.2M',
-		topMarkets: ['New York', 'Los Angeles', 'Chicago', 'Miami', 'San Francisco']
-	};
 
 	// User preferences and personalization
 	let userPreferences = {
@@ -84,174 +44,55 @@
 		}
 	};
 
-	// Combine all mock timeline posts with enhanced data
-	const allPosts = [
-		...mockTimelinePosts,
-		...mockTimelinePosts2,
-		...mockTimelinePosts3
-	].map((post, index) => ({
-		...post,
-		author_name: getAuthorName(index),
-		author_avatar: getAuthorAvatar(index),
-		author_company: getAuthorCompany(index),
-		author_role: getAuthorRole(index),
-		property_data: getPropertyData(post.property_uid),
-		engagement_score: Math.floor(Math.random() * 100) + 10,
-		deal_size: getDealSize(index),
-		location: getLocation(index),
-		property_type: getPropertyType(index),
-		is_trending: Math.random() > 0.7,
-		is_featured: Math.random() > 0.8,
-		read_time: Math.floor(Math.random() * 5) + 1,
-		tags: getTags(post.post_type, post.sentiment),
-		view_count: Math.floor(Math.random() * 1000) + 50,
-		share_count: Math.floor(Math.random() * 50) + 5,
-		save_count: Math.floor(Math.random() * 20) + 2,
-		author_verified: Math.random() > 0.3,
-		author_followers: Math.floor(Math.random() * 5000) + 100,
-		deal_stage: getDealStage(post.post_type),
-		roi_estimate: getROIEstimate(),
-		market_trend: getMarketTrend()
-	}));
+	// Navigation functions
+	function updateUrl(newFilters: Partial<typeof filters>) {
+		const url = new URL(window.location.href);
+		const updatedFilters = { ...filters, ...newFilters };
 
-	function getAuthorName(index: number): string {
-		const authors = ['John Smith', 'Emma Johnson', 'Carlos Rodriguez', 'Sarah Chen', 'Michael Davis', 'Lisa Wang', 'David Thompson', 'Maria Garcia'];
-		return authors[index % authors.length];
-	}
-
-	function getAuthorAvatar(index: number): string {
-		const avatars = [
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-			'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
-			'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-			'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
-			'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100',
-			'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100',
-			'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-			'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100'
-		];
-		return avatars[index % avatars.length];
-	}
-
-	function getAuthorCompany(index: number): string {
-		const companies = ['Smith & Associates', 'Urban Development Partners', 'Global Hospitality Advisors', 'Chen Real Estate Group', 'Davis Investment Group', 'Wang Properties', 'Thompson Capital', 'Garcia Development'];
-		return companies[index % companies.length];
-	}
-
-	function getAuthorRole(index: number): string {
-		const roles = ['Senior Real Estate Consultant', 'Director of Development', 'Head of Investments', 'Principal Broker', 'Investment Manager', 'Development Director', 'Capital Partner', 'Development Manager'];
-		return roles[index % roles.length];
-	}
-
-	function getPropertyData(propertyUid?: string) {
-		if (!propertyUid) return null;
-		const properties = [
-			{
-				title: 'Dockside Industrial Park',
-				address: '45 Fenchurch St, London EC3',
-				images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800'],
-				roles: ['Developer', 'Investor'],
-				headline_metric: '5.25% cap rate',
-				deal_size: 22000000,
-				property_type: 'Industrial'
-			},
-			{
-				title: 'Riverside Office Complex',
-				address: '123 Riverside Dr, Manchester M1',
-				images: ['https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800'],
-				roles: ['Developer'],
-				headline_metric: '75% complete',
-				deal_size: 35000000,
-				property_type: 'Office'
-			},
-			{
-				title: 'Harborview Retail Center',
-				address: '789 Harbor Blvd, Liverpool L1',
-				images: ['https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800'],
-				roles: ['Broker', 'Investor'],
-				headline_metric: 'Sold at 4.8% cap',
-				deal_size: 45000000,
-				property_type: 'Retail'
+		// Update URL parameters
+		Object.entries(updatedFilters).forEach(([key, value]) => {
+			if (value && value !== 'all' && (Array.isArray(value) ? value.length > 0 : true)) {
+				if (Array.isArray(value)) {
+					url.searchParams.set(key, value.join(','));
+				} else {
+					url.searchParams.set(key, value.toString());
+				}
+			} else {
+				url.searchParams.delete(key);
 			}
-		];
-		return properties[Math.floor(Math.random() * properties.length)];
+		});
+
+		// Navigate to new URL
+		goto(url.pathname + url.search, { replaceState: true });
 	}
 
-	function getDealSize(index: number): string {
-		const sizes = ['< $5M', '$5M - $25M', '$25M - $100M', '$100M+'];
-		return sizes[index % sizes.length];
+	// Handle category change
+	function handleCategoryChange(category: string) {
+		updateUrl({ category });
 	}
 
-	function getLocation(index: number): string {
-		const locations = ['New York, NY', 'London, UK', 'Los Angeles, CA', 'Chicago, IL', 'Miami, FL', 'San Francisco, CA', 'Boston, MA', 'Seattle, WA'];
-		return locations[index % locations.length];
+	// Handle search
+	function handleSearch(query: string) {
+		updateUrl({ search: query });
 	}
 
-	function getPropertyType(index: number): string {
-		const types = ['Office', 'Retail', 'Industrial', 'Residential', 'Hospitality', 'Mixed-Use'];
-		return types[index % types.length];
+	// Handle filter change
+	function handleFilterChange(newFilters: Partial<typeof filters>) {
+		updateUrl(newFilters);
 	}
 
-	function getTags(postType: string, sentiment: string): string[] {
-		const tags = [];
-		if (postType === 'NewListing') tags.push('#NewListing', '#Investment');
-		if (postType === 'Closing') tags.push('#DealClosed', '#Success');
-		if (postType === 'Insight') tags.push('#MarketInsights', '#Analysis');
-		if (sentiment === 'Bull') tags.push('#Bullish', '#Opportunity');
-		if (sentiment === 'Bear') tags.push('#MarketWatch', '#Caution');
-		return tags;
-	}
-
-	function getDealStage(postType: string): string {
-		switch (postType) {
-			case 'NewListing': return 'Lead';
-			case 'ProgressUpdate': return 'Under Contract';
-			case 'Closing': return 'Closed';
-			default: return 'Active';
-		}
-	}
-
-	function getROIEstimate(): string {
-		const rois = ['8.5%', '12.3%', '15.7%', '9.2%', '11.8%'];
-		return rois[Math.floor(Math.random() * rois.length)];
-	}
-
-	function getMarketTrend(): string {
-		const trends = ['Rising', 'Stable', 'Declining', 'Volatile'];
-		return trends[Math.floor(Math.random() * trends.length)];
-	}
-
-	// Load posts with enhanced functionality
-	async function loadPosts() {
-		loading = true;
-		try {
-			// Simulate API call with realistic delay
-			await new Promise(resolve => setTimeout(resolve, 800));
-			posts = allPosts;
-			updateFeedStats();
-			applyFilters();
-			loading = false;
-		} catch (err) {
-			error = 'Failed to load posts';
-			loading = false;
-		}
+	// Handle sort change
+	function handleSortChange(sort: string) {
+		updateUrl({ sortBy: sort });
 	}
 
 	// Refresh feed
 	async function refreshFeed() {
 		isRefreshing = true;
 		try {
-			await new Promise(resolve => setTimeout(resolve, 500));
-			// Simulate new posts being added
-			const newPosts = allPosts.slice(0, 3).map(post => ({
-				...post,
-				post_id: `new_${Date.now()}_${Math.random()}`,
-				created_at: new Date().toISOString()
-			}));
-			posts = [...newPosts, ...posts];
+			// Reload the page to get fresh data
+			await goto(window.location.href, { replaceState: true });
 			lastRefreshTime = new Date();
-			updateFeedStats();
-			applyFilters();
 		} catch (err) {
 			console.error('Failed to refresh feed:', err);
 		} finally {
@@ -259,195 +100,84 @@
 		}
 	}
 
-	// Update feed statistics
-	function updateFeedStats() {
-		feedStats = {
-			totalPosts: posts.length,
-			newPosts: Math.floor(Math.random() * 10) + 1,
-			activeDeals: posts.filter(p => p.post_type === 'NewListing' || p.post_type === 'ProgressUpdate').length,
-			trendingTopics: posts.filter(p => p.is_trending).length
-		};
-	}
-
-	// Enhanced filtering with more options
-	function applyFilters() {
-		let filtered = [...posts];
-
-		// Apply category filter
-		if (currentCategory !== 'all') {
-			switch (currentCategory) {
-				case 'following':
-					// Simulate following filter
-					filtered = filtered.filter((_, index) => index % 2 === 0);
-					break;
-				case 'trending':
-					// Show trending posts
-					filtered = filtered.filter(post => post.is_trending || (post.reactions?.length || 0) > 3);
-					break;
-				case 'saved':
-					// Simulate saved posts
-					filtered = filtered.filter((_, index) => index % 3 === 0);
-					break;
-				case 'discover':
-					// Show posts from new connections or trending topics
-					filtered = filtered.filter(post => post.is_featured || post.engagement_score > 70);
-					break;
-			}
-		}
-
-		// Apply search filter with enhanced matching
-		if (searchQuery) {
-			const query = searchQuery.toLowerCase();
-			filtered = filtered.filter(post =>
-				post.body_md.toLowerCase().includes(query) ||
-				(post as any).author_name?.toLowerCase().includes(query) ||
-				(post as any).author_company?.toLowerCase().includes(query) ||
-				(post as any).location?.toLowerCase().includes(query) ||
-				(post as any).tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
-				post.property_data?.title?.toLowerCase().includes(query)
-			);
-		}
-
-		// Apply post type filters
-		if (filters.postTypes.length > 0) {
-			filtered = filtered.filter(post => filters.postTypes.includes(post.post_type));
-		}
-
-		// Apply sentiment filters
-		if (filters.sentiments.length > 0) {
-			filtered = filtered.filter(post => filters.sentiments.includes(post.sentiment));
-		}
-
-		// Apply media filter
-		if (filters.hasMedia) {
-			filtered = filtered.filter(post => post.media_urls && post.media_urls.length > 0);
-		}
-
-		// Apply comments filter
-		if (filters.hasComments) {
-			filtered = filtered.filter(post => post.comments && post.comments.length > 0);
-		}
-
-		// Apply deal size filter
-		if (filters.dealSize !== 'all') {
-			filtered = filtered.filter(post => (post as any).deal_size === filters.dealSize);
-		}
-
-		// Apply location filter
-		if (filters.location) {
-			filtered = filtered.filter(post => 
-				(post as any).location?.toLowerCase().includes(filters.location.toLowerCase())
-			);
-		}
-
-		// Apply property type filter
-		if (filters.propertyType.length > 0) {
-			filtered = filtered.filter(post => 
-				filters.propertyType.includes((post as any).property_type)
-			);
-		}
-
-		// Apply sorting with enhanced algorithms
-		switch (sortBy) {
-			case 'recent':
-				filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-				break;
-			case 'popular':
-				filtered.sort((a, b) => (b.reactions?.length || 0) - (a.reactions?.length || 0));
-				break;
-			case 'trending':
-				filtered.sort((a, b) => {
-					const aScore = (a.reactions?.length || 0) + (a.comments?.length || 0) * 2 + (a as any).engagement_score;
-					const bScore = (b.reactions?.length || 0) + (b.comments?.length || 0) * 2 + (b as any).engagement_score;
-					return bScore - aScore;
-				});
-				break;
-			case 'engagement':
-				filtered.sort((a, b) => (b as any).engagement_score - (a as any).engagement_score);
-				break;
-		}
-
-		filteredPosts = filtered;
-		currentPage = 1;
-		hasMorePosts = filteredPosts.length > postsPerPage;
-	}
-
 	// Load more posts
-	function loadMorePosts() {
-		if (!hasMorePosts) return;
-		currentPage++;
-		hasMorePosts = filteredPosts.length > currentPage * postsPerPage;
-	}
-
-	// Get paginated posts
-	$: paginatedPosts = filteredPosts.slice(0, currentPage * postsPerPage);
-
-	// Handle category change
-	function handleCategoryChange(category: string) {
-		currentCategory = category;
-		applyFilters();
-	}
-
-	// Handle search
-	function handleSearch(query: string) {
-		searchQuery = query;
-		applyFilters();
-	}
-
-	// Handle filter change
-	function handleFilterChange(newFilters: any) {
-		filters = { ...filters, ...newFilters };
-		applyFilters();
-	}
-
-	// Handle sort change
-	function handleSortChange(sort: string) {
-		sortBy = sort;
-		applyFilters();
+	async function loadMorePosts() {
+		if (!pagination.hasMore || loading) return;
+		
+		loading = true;
+		try {
+			const nextPage = pagination.page + 1;
+			const url = new URL(window.location.href);
+			url.searchParams.set('page', nextPage.toString());
+			await goto(url.pathname + url.search, { replaceState: true });
+		} catch (err) {
+			console.error('Failed to load more posts:', err);
+		} finally {
+			loading = false;
+		}
 	}
 
 	// Enhanced post interaction handling
-	function handlePostInteraction(postId: string, action: string, data?: any) {
-		// Update post in the array
-		const postIndex = posts.findIndex(p => p.post_id === postId);
-		if (postIndex !== -1) {
-			const post = posts[postIndex];
+	async function handlePostInteraction(postId: string, action: string, data?: any) {
+		try {
+			const API_BASE_URL = 'http://localhost:1337/api';
+			
 			switch (action) {
 				case 'like':
-					if (!post.reactions) post.reactions = [];
-					post.reactions.push({
-						id: `r_${Date.now()}`,
-						user_id: 'current_user',
-						reaction_type: 'like',
-						created_at: new Date().toISOString()
+					await fetch(`${API_BASE_URL}/posts/${postId}/reactions`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							reaction_type: 'like',
+							user_id: 'current_user' // This should come from auth
+						})
 					});
 					break;
 				case 'comment':
-					if (!post.comments) post.comments = [];
-					post.comments.push({
-						id: `c_${Date.now()}`,
-						user_id: 'current_user',
-						body: data?.comment || 'Great post!',
-						created_at: new Date().toISOString(),
-						user_name: 'Current User',
-						user_avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100'
+					await fetch(`${API_BASE_URL}/posts/${postId}/comments`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							body: data?.comment || 'Great post!',
+							user_id: 'current_user' // This should come from auth
+						})
 					});
 					break;
 				case 'save':
-					// Toggle save state
-					(post as any).is_saved = !(post as any).is_saved;
+					await fetch(`${API_BASE_URL}/posts/${postId}/saves`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							user_id: 'current_user' // This should come from auth
+						})
+					});
 					break;
 				case 'share':
-					// Handle share action
-					console.log('Sharing post:', postId);
+					await fetch(`${API_BASE_URL}/posts/${postId}/shares`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							share_type: 'network',
+							user_id: 'current_user' // This should come from auth
+						})
+					});
 					break;
-				case 'follow':
-					// Handle follow action
-					console.log('Following author of post:', postId);
+				case 'view':
+					await fetch(`${API_BASE_URL}/posts/${postId}/views`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							user_id: 'current_user', // This should come from auth
+							duration: data?.duration || 0
+						})
+					});
 					break;
 			}
-			posts = [...posts];
-			applyFilters();
+
+			// Refresh the feed to show updated data
+			await refreshFeed();
+		} catch (error) {
+			console.error(`Failed to handle ${action} interaction:`, error);
 		}
 	}
 
@@ -475,7 +205,6 @@
 	// Auto-refresh every 5 minutes
 	let refreshInterval: NodeJS.Timeout;
 	onMount(() => {
-		loadPosts();
 		refreshInterval = setInterval(refreshFeed, 5 * 60 * 1000);
 		
 		return () => {
@@ -625,18 +354,21 @@
 			<!-- Enhanced Sidebar -->
 			<div class="lg:col-span-1 space-y-6">
 				<!-- Search -->
-				<FeedSearch on:search={handleSearch} />
+				<FeedSearch 
+					initialQuery={filters.search}
+					onSearch={handleSearch}
+				/>
 
 				<!-- Categories -->
 				<FeedCategories 
-					currentCategory={currentCategory} 
+					currentCategory={filters.category} 
 					onCategoryChange={handleCategoryChange} 
 				/>
 
 				<!-- Enhanced Filters -->
 				<FeedFilters 
 					filters={filters}
-					sortBy={sortBy}
+					sortBy={filters.sortBy}
 					onFilterChange={handleFilterChange}
 					onSortChange={handleSortChange}
 				/>
@@ -715,9 +447,7 @@
 
 			<!-- Enhanced Main Feed -->
 			<div class="lg:col-span-3">
-				{#if loading}
-					<LoadingScreen />
-				{:else if error}
+				{#if error}
 					<div class="rounded-lg bg-red-50 p-4 dark:bg-red-900/20">
 						<div class="flex">
 							<div class="flex-shrink-0">
@@ -728,10 +458,16 @@
 							<div class="ml-3">
 								<h3 class="text-sm font-medium text-red-800 dark:text-red-200">Error</h3>
 								<div class="mt-2 text-sm text-red-700 dark:text-red-300">{error}</div>
+								<button
+									on:click={refreshFeed}
+									class="mt-2 text-sm text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300"
+								>
+									Try again
+								</button>
 							</div>
 						</div>
 					</div>
-				{:else if paginatedPosts.length === 0}
+				{:else if posts.length === 0}
 					<div class="rounded-lg bg-white p-8 text-center dark:bg-[#1E2130]">
 						<svg class="mx-auto h-12 w-12 text-gray-400 dark:text-[#4A5568]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -743,18 +479,9 @@
 						<div class="mt-4">
 							<button
 								on:click={() => {
-									filters = {
-										postTypes: [],
-										sentiments: [],
-										dateRange: 'all',
-										hasMedia: false,
-										hasComments: false,
-										dealSize: 'all',
-										location: '',
-										propertyType: []
-									};
-									searchQuery = '';
-									applyFilters();
+									const url = new URL(window.location.href);
+									url.search = '';
+									goto(url.pathname, { replaceState: true });
 								}}
 								class="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
 							>
@@ -765,7 +492,7 @@
 				{:else}
 					<!-- Enhanced Posts -->
 					<div class="space-y-6">
-						{#each paginatedPosts as post (post.post_id)}
+						{#each posts as post (post.post_id)}
 							<FeedPost 
 								{post} 
 								onInteraction={handlePostInteraction}
@@ -774,19 +501,28 @@
 					</div>
 
 					<!-- Enhanced Load More -->
-					{#if hasMorePosts}
+					{#if pagination.hasMore}
 						<div class="mt-8 text-center">
 							<button
 								on:click={loadMorePosts}
-								class="inline-flex items-center rounded-md bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
+								disabled={loading}
+								class="inline-flex items-center rounded-md bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-600"
 							>
-								Load More Posts
-								<span class="ml-2 text-xs opacity-75">
-									({filteredPosts.length - paginatedPosts.length} remaining)
-								</span>
+								{#if loading}
+									<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+										<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+										<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+									</svg>
+									Loading...
+								{:else}
+									Load More Posts
+									<span class="ml-2 text-xs opacity-75">
+										({pagination.total - posts.length} remaining)
+									</span>
+								{/if}
 							</button>
 						</div>
-					{:else if paginatedPosts.length > 0}
+					{:else if posts.length > 0}
 						<div class="mt-8 text-center">
 							<div class="rounded-lg bg-gray-50 p-4 dark:bg-[#2D3748]">
 								<p class="text-sm text-gray-500 dark:text-[#A0AEC0]">

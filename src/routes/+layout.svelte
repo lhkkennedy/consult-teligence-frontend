@@ -34,7 +34,7 @@
 </script>
 
 <!-- +layout.svelte -->
-<div class="flex min-h-screen flex-col bg-primary-bg">
+<div class="flex min-h-screen flex-col bg-primary-bg pt-24">
 	<Header />
 	<slot />
 	<Footer />

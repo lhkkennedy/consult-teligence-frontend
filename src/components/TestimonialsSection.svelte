@@ -82,7 +82,7 @@
 		};
 	});
 
-	function setTestimonial(index: number) {
+	function setTestimonial(index) {
 		currentTestimonial = index;
 	}
 </script>

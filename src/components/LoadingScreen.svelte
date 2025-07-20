@@ -56,6 +56,20 @@
 		}
 		onFinish();
 	}
+
+	// Handle keyboard events for accessibility
+	function handleKeydown(event: KeyboardEvent) {
+		if (isDestroyed) return;
+
+		if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			console.warn('LoadingScreen: User pressed key during loading, forcing unmount');
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+			onFinish();
+		}
+	}
 </script>
 
 <div
@@ -63,8 +77,10 @@
 	class:loaded
 	on:transitionend={handleTransitionEnd}
 	on:click={handleClick}
+	on:keydown={handleKeydown}
 	role="dialog"
 	aria-label="Loading"
+	tabindex="0"
 >
 	<div class="panel left bg-primary-bg"></div>
 	<div class="panel right bg-primary-bg"></div>

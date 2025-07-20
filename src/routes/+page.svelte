@@ -105,47 +105,14 @@
 				</p>
 			</div>
 			
-			<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-				<div class="lg:col-span-2">
+			<div>
+				<div>
 					<WorldMap
 						on:regionSelect={handleRegionSelect}
 						on:countrySelect={handleCountrySelect}
 						{selectedRegion}
 						{selectedCountry}
 					/>
-				</div>
-				<div class="space-y-6">
-					<div class="bg-[#2D3748] rounded-lg p-6">
-						<h3 class="text-xl font-semibold text-white mb-4">Network Statistics</h3>
-						<div class="space-y-4">
-							<div class="flex justify-between items-center">
-								<span class="text-[#A0AEC0]">Countries Covered</span>
-								<span class="text-white font-bold">190</span>
-							</div>
-							<div class="flex justify-between items-center">
-								<span class="text-[#A0AEC0]">Expert Categories</span>
-								<span class="text-white font-bold">13</span>
-							</div>
-							<div class="flex justify-between items-center">
-								<span class="text-[#A0AEC0]">Active Experts</span>
-								<span class="text-white font-bold">2,500+</span>
-							</div>
-							<div class="flex justify-between items-center">
-								<span class="text-[#A0AEC0]">Projects Completed</span>
-								<span class="text-white font-bold">15,000+</span>
-							</div>
-						</div>
-					</div>
-					
-					<div class="bg-[#2D3748] rounded-lg p-6">
-						<h3 class="text-xl font-semibold text-white mb-4">Quick Search</h3>
-						<TagExplorer
-							on:regionSelect={handleRegionSelect}
-							on:countrySelect={handleCountrySelect}
-							{selectedRegion}
-							{selectedCountry}
-						/>
-					</div>
 				</div>
 			</div>
 		</div>

@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import Search from '@lucide/svelte/icons/search';
 	import X from '@lucide/svelte/icons/x';
 	import TrendingUp from '@lucide/svelte/icons/trending-up';
 	import Hash from '@lucide/svelte/icons/hash';
 
-	const dispatch = createEventDispatcher();
+	// Props
+	export let initialQuery = '';
+	export let onSearch: (query: string) => void;
 
-	let searchQuery = '';
+	let searchQuery = initialQuery;
 	let showSuggestions = false;
 	let searchInput: HTMLInputElement;
 
@@ -23,7 +24,7 @@
 
 	function handleSearch() {
 		if (searchQuery.trim()) {
-			dispatch('search', searchQuery.trim());
+			onSearch(searchQuery.trim());
 			showSuggestions = false;
 		}
 	}
@@ -35,7 +36,7 @@
 
 	function handleClearSearch() {
 		searchQuery = '';
-		dispatch('search', '');
+		onSearch('');
 		showSuggestions = false;
 		if (searchInput) {
 			searchInput.focus();
@@ -61,6 +62,11 @@
 		} else if (event.key === 'Escape') {
 			handleClearSearch();
 		}
+	}
+
+	// Update searchQuery when initialQuery changes
+	$: if (initialQuery !== searchQuery) {
+		searchQuery = initialQuery;
 	}
 
 	// Filter suggestions based on current query

@@ -119,15 +119,39 @@ export type Visibility = 'Public' | 'Connections' | 'Private';
 export interface TimelinePost {
 	post_id: string;
 	person_id: string;
+	author_id?: string; // Added for API compatibility
+	author_name?: string; // Added for API compatibility
+	author_avatar?: string; // Added for API compatibility
+	author_company?: string; // Added for API compatibility
+	author_role?: string; // Added for API compatibility
+	author_verified?: boolean; // Added for API compatibility
+	author_followers?: number; // Added for API compatibility
 	created_at: string;
+	updated_at?: string; // Added for API compatibility
 	body_md: string;
 	media_urls: string[];
 	property_uid?: string;
+	property_data?: Property; // Added for API compatibility
 	post_type: PostType;
 	sentiment: Sentiment;
 	visibility: Visibility;
 	reactions?: TimelineReaction[];
 	comments?: TimelineComment[];
+	// Additional properties for enhanced feed functionality
+	engagement_score?: number; // Added for API compatibility
+	deal_size?: string; // Added for API compatibility
+	location?: string; // Added for API compatibility
+	property_type?: string; // Added for API compatibility
+	is_trending?: boolean; // Added for API compatibility
+	is_featured?: boolean; // Added for API compatibility
+	read_time?: number; // Added for API compatibility
+	tags?: string[]; // Added for API compatibility
+	view_count?: number; // Added for API compatibility
+	share_count?: number; // Added for API compatibility
+	save_count?: number; // Added for API compatibility
+	deal_stage?: string; // Added for API compatibility
+	roi_estimate?: string; // Added for API compatibility
+	market_trend?: string; // Added for API compatibility
 }
 
 export interface TimelineReaction {

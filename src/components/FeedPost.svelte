@@ -226,13 +226,22 @@
 						>{post.author_name || 'Unknown'}</span
 					>
 					{#if post.author_verified}
-						<CheckCircle size={14} class="text-blue-500" title="Verified" />
+						<div class="relative">
+							<CheckCircle size={14} class="text-blue-500" />
+							<span class="sr-only">Verified</span>
+						</div>
 					{/if}
 					{#if post.is_trending}
-						<TrendingUp size={14} class="text-orange-500" title="Trending" />
+						<div class="relative">
+							<TrendingUp size={14} class="text-orange-500" />
+							<span class="sr-only">Trending</span>
+						</div>
 					{/if}
 					{#if post.is_featured}
-						<Star size={14} class="text-yellow-500" title="Featured" />
+						<div class="relative">
+							<Star size={14} class="text-yellow-500" />
+							<span class="sr-only">Featured</span>
+						</div>
 					{/if}
 					<span class="text-sm text-gray-500 dark:text-[#A0AEC0]"
 						>{formatDate(post.created_at)}</span
@@ -501,13 +510,13 @@
 
 		<!-- External Link -->
 		{#if post.property_data}
-			<a
-				href="#"
+			<button
+				on:click={() => window.open(`/properties/${post.property_data.property_uid}`, '_blank')}
 				class="flex items-center space-x-1 rounded-full px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-[#A0AEC0] dark:hover:bg-[#2D3748] dark:hover:text-white"
 			>
 				<ExternalLink size={16} />
 				<span>View Details</span>
-			</a>
+			</button>
 		{/if}
 	</div>
 

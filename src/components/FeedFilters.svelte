@@ -191,9 +191,10 @@
 
 	<!-- Sort Options -->
 	<div class="mb-4">
-		<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Sort by</label>
+		<label for="sort-select" class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Sort by</label>
 		<div class="relative">
 			<button
+				id="sort-select"
 				on:click={() => (showSortMenu = !showSortMenu)}
 				class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-[#4A5568] dark:bg-[#2D3748] dark:text-white"
 			>
@@ -224,7 +225,7 @@
 		<div class="space-y-4">
 			<!-- Post Types -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Post Types</label>
+				<span class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Post Types</span>
 				<div class="space-y-2">
 					{#each postTypes as type}
 						<label class="flex items-center">
@@ -244,7 +245,7 @@
 
 			<!-- Sentiments -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Market Sentiment</label>
+				<span class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Market Sentiment</span>
 				<div class="space-y-2">
 					{#each sentiments as sentiment}
 						<label class="flex items-center">
@@ -264,12 +265,13 @@
 
 			<!-- Date Range -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Date Range</label>
+				<label for="date-range-select" class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Date Range</label>
 				<div class="relative">
 					<Calendar size={16} class="absolute left-3 top-2.5 text-gray-400" />
 					<select
+						id="date-range-select"
 						value={filters.dateRange}
-						on:change={(e) => handleDateRangeChange(e.target.value)}
+						on:change={(e) => handleDateRangeChange((e.target as HTMLSelectElement).value)}
 						class="w-full rounded-md border border-gray-300 bg-white pl-10 pr-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-[#4A5568] dark:bg-[#2D3748] dark:text-white"
 					>
 						{#each dateRanges as range}
@@ -281,12 +283,13 @@
 
 			<!-- Deal Size -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Deal Size</label>
+				<label for="deal-size-select" class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Deal Size</label>
 				<div class="relative">
 					<DollarSign size={16} class="absolute left-3 top-2.5 text-gray-400" />
 					<select
+						id="deal-size-select"
 						value={filters.dealSize}
-						on:change={(e) => handleDealSizeChange(e.target.value)}
+						on:change={(e) => handleDealSizeChange((e.target as HTMLSelectElement).value)}
 						class="w-full rounded-md border border-gray-300 bg-white pl-10 pr-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-[#4A5568] dark:bg-[#2D3748] dark:text-white"
 					>
 						{#each dealSizes as size}
@@ -298,10 +301,11 @@
 
 			<!-- Location -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Location</label>
+				<label for="location-input" class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Location</label>
 				<div class="relative">
 					<MapPin size={16} class="absolute left-3 top-2.5 text-gray-400" />
 					<input
+						id="location-input"
 						type="text"
 						value={filters.location}
 						on:input={handleLocationChange}
@@ -313,7 +317,7 @@
 
 			<!-- Property Types -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Property Types</label>
+				<span class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Property Types</span>
 				<div class="space-y-2">
 					{#each propertyTypes as type}
 						<label class="flex items-center">
@@ -333,7 +337,7 @@
 
 			<!-- Content Filters -->
 			<div>
-				<label class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Content</label>
+				<span class="block text-xs font-medium text-gray-700 dark:text-[#A0AEC0] mb-2">Content</span>
 				<div class="space-y-2">
 					<label class="flex items-center">
 						<input

@@ -1,9 +1,10 @@
-import { VITE_STRAPI_URL, VITE_STRAPI_TOKEN } from '$env/static/private';
+import { VITE_STRAPI_URL } from '$env/static/private';
 
 const BASE = VITE_STRAPI_URL || 'http://localhost:1337';
 
-function getAuthHeaders() {
-	return VITE_STRAPI_TOKEN ? { Authorization: `Bearer ${VITE_STRAPI_TOKEN}` } : {};
+function getAuthHeaders(): Record<string, string> {
+	// For public endpoints, we don't need authentication
+	return {};
 }
 
 type PropertyTimelineItem = {

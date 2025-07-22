@@ -1,12 +1,15 @@
 // src/lib/server/consultants.server.ts
-import { VITE_STRAPI_URL, VITE_STRAPI_TOKEN } from '$env/static/private';
+import { VITE_STRAPI_URL } from '$env/static/private';
 import { error } from '@sveltejs/kit';
 import type { Consultant, RawConsultant, ConsultantsResponse } from '$lib/types';
 
 const BASE = VITE_STRAPI_URL || 'http://localhost:1337';
 
-function getAuthHeaders() {
-	return VITE_STRAPI_TOKEN ? { Authorization: `Bearer ${VITE_STRAPI_TOKEN}` } : {};
+function getAuthHeaders(): Record<string, string> {
+	// For public endpoints, we don't need authentication
+	// If you have an API token for additional features, you can add it here
+	// return VITE_STRAPI_TOKEN ? { Authorization: `Bearer ${VITE_STRAPI_TOKEN}` } : {};
+	return {};
 }
 
 function mapRaw(item: RawConsultant): Consultant {

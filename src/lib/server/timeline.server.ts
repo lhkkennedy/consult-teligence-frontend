@@ -1,8 +1,12 @@
 // @ts-expect-error: $env/static/private is a Vite/SvelteKit env import
-import { VITE_STRAPI_URL, VITE_STRAPI_TOKEN } from '$env/static/private';
+import { VITE_STRAPI_URL } from '$env/static/private';
 
 const BASE = VITE_STRAPI_URL!;
-const AUTH_HEADER = { Authorization: `Bearer ${VITE_STRAPI_TOKEN!}` };
+
+function getAuthHeaders(): Record<string, string> {
+	// For public endpoints, we don't need authentication
+	return {};
+}
 
 type TimelineItem = {
 	post_id: string;
@@ -96,7 +100,7 @@ export async function fetchConsultantTimeline(
 	const query = `populate=*` + `&filters[author][documentId][$eq]=${personId}`;
 
 	const res = await fetch(`${BASE}/api/timeline-items?${query}`, {
-		headers: AUTH_HEADER
+		headers: getAuthHeaders()
 	});
 	if (!res.ok) {
 		throw new Error(`Could not fetch timeline: ${res.statusText}`);

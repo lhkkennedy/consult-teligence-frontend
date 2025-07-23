@@ -1,7 +1,4 @@
-// @ts-expect-error: $env/static/private is a Vite/SvelteKit env import
-import { VITE_STRAPI_URL } from '$env/static/private';
-
-const BASE = VITE_STRAPI_URL!;
+const BASE = 'http://localhost:1337';
 
 function getAuthHeaders(): Record<string, string> {
 	// For public endpoints, we don't need authentication

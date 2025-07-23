@@ -1,9 +1,8 @@
 // src/lib/server/consultants.server.ts
-import { VITE_STRAPI_URL } from '$env/static/private';
 import { error } from '@sveltejs/kit';
 import type { Consultant, RawConsultant, ConsultantsResponse } from '$lib/types';
 
-const BASE = VITE_STRAPI_URL || 'http://localhost:1337';
+const BASE = 'http://localhost:1337';
 
 function getAuthHeaders(): Record<string, string> {
 	// For public endpoints, we don't need authentication

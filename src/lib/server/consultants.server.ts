@@ -19,7 +19,7 @@ function mapRaw(item: RawConsultant): Consultant {
 			? `${BASE}${item.profileImage[0].url}`
 			: item.profileImage?.url
 				? `${BASE}${item.profileImage.url}`
-				: '/default-avatar.png';
+				: '/default-user.webp';
 
 	const contactInfo = item.contactInfo || {};
 
